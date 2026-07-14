@@ -626,7 +626,7 @@ h2,h3{text-wrap:balance}
     <p class="fine">Marginalia — <b>demand:</b> ~1&nbsp;GW at the prime movers, as computed above. <b>A treader:</b> ~60&nbsp;W for a ten-hour day; a child at the crank, ~15&nbsp;W. <b>Replacement:</b> 10⁹&nbsp;÷&nbsp;60 ≈ 17 million treading at every hour, ×2.4 for relays ≈ 40 million; ÷&nbsp;20 places the wheel ≈ 850,000 wheels, whose sheds ≈ 42&nbsp;km² — a five-hundredth part of Wales, the scheme’s one economy. <b>As found:</b> Britain’s ~1.5 million paupers yield ~37&nbsp;MW ≈ 4 per cent ≈ four days the word; its ~65,000 workhouse orphans ~0.4&nbsp;MW ≈ an hour. <b>The ledger:</b> a pauper’s keep, ~5d the day, buys ~2&nbsp;MJ of work; a ton of coal at 10s buys 1.5&nbsp;GJ — near thirty-fold the value. The penal wheel was struck off by the Prison Act of 1898.</p>
   </div>
   <p class="colophon">Devised by <b>MESSRS. HORROCKS &amp; CLAUDE</b> (an engine of the very kind depicted)<br>
-  <span class="warrant"><span class="crown" aria-hidden="true">♛ </span>By Warrant of Her Majesty — Purveyors of Analytical Language Engines — MMXXVI</span>
+  <span class="warrant"><span class="crown" aria-hidden="true">♛ </span>By Warrant of Her Majesty — Purveyors of Analytical Language Engines — © MMXXVI</span>
   <span class="addr">Oldham, Lancs.</span></p>
 </footer>
 
@@ -1213,8 +1213,8 @@ async function runMill(quick){
   let vals=dialVals(lastW);
   $$('#mill .floor').forEach(f=>f.classList.remove('lit'));
   $$('#mill .fbar').forEach(b=>b.style.transform='scaleY(0.05)');
-  const XL=58, XR=286, BARX=k=>176+k*11;
-  const setPos=(x,dy)=>{ charge.style.transform=`translate(${(x-XL).toFixed(1)}px,${dy.toFixed(1)}px)`; };
+  const BASE=58, XL=164, XR=266, BARX=k=>176+k*11;   /* travel confined to the bar field, clear of the gears */
+  const setPos=(x,dy)=>{ charge.style.transform=`translate(${(x-BASE).toFixed(1)}px,${dy.toFixed(1)}px)`; };
   charge.style.transition='none';
   setPos(XL,0);
   charge.setAttribute('opacity',1);
