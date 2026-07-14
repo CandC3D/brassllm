@@ -154,6 +154,7 @@ body{
 .holecap{font-size:10.5px;color:#77602f;margin-top:7px;font-family:var(--mono)}
 
 /* station II — slugs */
+#cutterbox svg{display:block;width:100%}
 #rack{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;min-height:52px}
 .slug{
   display:inline-flex;flex-direction:column;align-items:center;gap:1px;padding:5px 9px 3px;border-radius:6px;
@@ -170,11 +171,12 @@ body{
 
 /* station III — dials */
 .dcol{
-  background:linear-gradient(#f0e6cb,#e0d1ac);border:1px solid #9c8557;border-radius:8px;padding:8px 9px 9px;
-  display:flex;flex-direction:column;align-items:center;gap:7px;
+  background:linear-gradient(#f0e6cb,#e0d1ac);border:1px solid #9c8557;border-radius:8px;padding:9px 8px;
+  display:flex;flex-direction:row;align-items:center;gap:6px;
 }
-.dcol .dw{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink);max-width:96px;text-align:center;overflow-wrap:anywhere}
-.dials{display:grid;grid-template-columns:repeat(4,22px);gap:5px}
+.dcol .dw{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink);
+  writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.06em;max-height:204px;overflow:hidden}
+.dials{display:flex;flex-direction:column;gap:4px}
 .dial{width:22px;height:22px;border-radius:50%;position:relative;border:2px solid #6b5320;
   background:radial-gradient(circle at 35% 30%, #fdf6e2, #d9c99e 62%, #b39a63);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
 .dial i{position:absolute;left:calc(50% - 1px);bottom:50%;width:2px;height:8px;background:#5a1f14;border-radius:1px;
@@ -193,7 +195,7 @@ body{
 .aslug.last{outline:2px solid var(--glow);box-shadow:0 0 12px rgba(255,217,138,.5)}
 .attn-legend{display:flex;gap:18px;justify-content:center;margin-top:8px;font-size:12px;color:#c9b787}
 .attn-legend span::before{content:"";display:inline-block;width:22px;height:3px;border-radius:2px;margin-right:7px;vertical-align:middle}
-.attn-legend .la::before{background:var(--brass-hi)}
+.attn-legend .la::before{background:#d9dde2}
 .attn-legend .lb::before{background:#cf9a62}
 
 /* station V — the mill */
@@ -212,8 +214,8 @@ body{
 html.running .gspin{animation-play-state:running}
 
 /* station VI — gauges */
-#gauges{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:flex-end}
-.tube-unit{display:flex;flex-direction:column;align-items:center;gap:6px;width:66px}
+#gauges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:flex-start}
+.tube-unit{display:flex;flex-direction:column;align-items:center;gap:6px;width:62px}
 .tube-unit .pct{font-family:var(--mono);font-size:11.5px;color:#d8c793;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tube-unit.lead .pct{color:var(--glow);font-weight:700}
 .tube{width:26px;height:150px;border-radius:13px;position:relative;overflow:hidden;
@@ -221,7 +223,7 @@ html.running .gspin{animation-play-state:running}
 .fluid{position:absolute;left:3px;right:3px;bottom:3px;height:1.5%;border-radius:10px;min-height:3px;
   background:linear-gradient(#c1573f,#8e2f1d);transition:height calc(1.1s*var(--tk)) cubic-bezier(.25,1,.35,1)}
 .tube-unit.others .fluid{background:linear-gradient(#79a68d,#4c7a63)}
-.tlabel{font-family:var(--mono);font-size:11px;color:#e6d9b5;letter-spacing:.03em;max-width:66px;text-align:center;overflow-wrap:anywhere;line-height:1.25}
+.tlabel{font-family:var(--mono);font-size:11px;color:#e6d9b5;letter-spacing:.03em;max-width:62px;text-align:center;overflow-wrap:anywhere;line-height:1.25;min-height:2.5em}
 .tube-unit.others .tlabel{color:#a9c7b4;font-style:italic}
 
 /* station VII — governor & lottery */
@@ -270,7 +272,25 @@ html.running .gspin{animation-play-state:running}
   background-image:radial-gradient(circle at 7px 3px,#a59062 0 1.7px,rgba(0,0,0,0) 2.6px);background-size:16px 6px}
 #tape::before{top:3px}
 #tape::after{bottom:3px}
-.stamp{font-family:var(--mono);font-size:15.5px;letter-spacing:.04em;padding:1px 4px;white-space:nowrap}
+.stamp{font-family:var(--mono);font-size:15.5px;letter-spacing:.04em;padding:1px 4px;white-space:nowrap;display:inline-block}
+.stamp.inked{animation:inkpress calc(.32s*var(--tk)) ease-out}
+@keyframes inkpress{0%{transform:scale(1.3);opacity:.35}55%{transform:scale(.93);opacity:1}100%{transform:scale(1)}}
+#tape.thud{animation:thud calc(.3s*var(--tk)) ease-out}
+@keyframes thud{30%{transform:translateY(2px)}}
+.stamper{position:fixed;z-index:98;pointer-events:none;width:30px;height:52px;
+  transform:translate(-50%,calc(-100% - 26px))}
+.stamper::before{content:"";position:absolute;left:calc(50% - 4px);top:0;width:8px;height:28px;
+  background:linear-gradient(#8a6a2a,#5c4718);border-radius:3px}
+.stamper::after{content:"";position:absolute;left:0;bottom:0;width:30px;height:24px;
+  background:linear-gradient(#e8cd85,#a8823a);border:1px solid #4f3c15;border-radius:4px 4px 2px 2px;
+  box-shadow:0 2px 6px rgba(0,0,0,.55)}
+.stamper.strike{animation:strike ease-in-out}
+@keyframes strike{
+  0%{transform:translate(-50%,calc(-100% - 26px))}
+  42%{transform:translate(-50%,calc(-100% + 3px))}
+  58%{transform:translate(-50%,calc(-100% + 3px))}
+  100%{transform:translate(-50%,calc(-100% - 26px))}
+}
 .stamp.prompt{color:#94835f}
 .stamp.gen{color:#241a08;font-weight:700}
 .stamp.fin{color:#8e2f1d;font-weight:700}
@@ -301,8 +321,32 @@ html.running #tglamp{background:var(--glow);box-shadow:0 0 9px var(--glow);anima
 /* honesty footer */
 .honesty{margin-top:36px}
 .honesty .plaque{font-size:13.5px}
-.colophon{text-align:center;margin-top:22px;font-size:12px;color:#8d7947;font-style:italic}
+.colophon{text-align:center;margin-top:22px;font-size:12px;color:#8d7947;font-style:italic;line-height:1.7}
 .colophon b{letter-spacing:.14em}
+.colophon .warrant{display:inline-block;margin-top:5px;font-style:normal;font-variant:small-caps;
+  letter-spacing:.09em;color:#a68b52}
+.colophon .crown{color:#c9a24b;font-style:normal}
+.colophon .addr{display:block;margin-top:4px;font-style:normal;letter-spacing:.2em;font-size:10.5px;
+  text-transform:uppercase;color:#7d6a3f}
+
+/* dotted terms — hover (or tab) for the modern meaning */
+.term{border-bottom:1px dotted #8a6d35;cursor:help;position:relative}
+.term::after{
+  content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 10px);
+  transform:translateX(-50%) translateY(4px);width:max-content;max-width:min(320px,72vw);
+  background:linear-gradient(#f6eed8,#eadcba);color:#2b2011;border:1px solid #8a734a;border-radius:8px;
+  padding:9px 12px;font-family:var(--serif);font-size:12.5px;font-weight:400;font-style:normal;line-height:1.45;
+  letter-spacing:0;text-transform:none;white-space:normal;text-align:left;
+  box-shadow:0 6px 18px rgba(0,0,0,.45);opacity:0;visibility:hidden;pointer-events:none;z-index:70;
+  transition:opacity .18s ease,transform .18s ease,visibility .18s;
+}
+.term::before{
+  content:"";position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);
+  border:7px solid transparent;border-top-color:#8a734a;opacity:0;visibility:hidden;transition:opacity .18s;z-index:71;
+}
+.term:hover::after,.term:focus-visible::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.term:hover::before,.term:focus-visible::before{opacity:1;visibility:visible}
+.term:focus-visible{outline:2px solid var(--glow);outline-offset:2px}
 
 h2,h3{text-wrap:balance}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -325,7 +369,7 @@ h2,h3{text-wrap:balance}
   <h1>The Analytical Language Engine</h1>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — what truly happens between your question and its answer — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage.</p>
-  <p class="sub2">Everything below actually runs: the gauges are moved by a real (if miniature) engine of probability computed live on this page. The plaques state, candidly, how the full-sized article differs.</p>
+  <p class="sub2">Everything below actually runs: the gauges are moved by a real (if miniature) engine of probability computed live on this page. The plaques state, candidly, how the full-sized article differs — and terms under a dotted line yield their modern meaning to the pointer.</p>
   <nav class="legend" aria-label="Stations of the engine">
     <a href="#st1">I · Card reader</a>
     <a href="#st2">II · Tokens</a>
@@ -362,6 +406,7 @@ h2,h3{text-wrap:balance}
       <div class="opts">
         <label><input type="checkbox" id="chkFollow" autocomplete="off" checked> Follow the works (scroll with the demonstration)</label>
         <label><input type="checkbox" id="chkWait" autocomplete="off" checked> Wait at each station (press <i>Proceed</i> to advance)</label>
+        <label><input type="checkbox" id="chkSound" autocomplete="off"> Let the works be heard (sound)</label>
         <button id="boilerchip" title="Go to the boiler, Station VII">BOILER: TEMPERATE (0.70)</button>
       </div>
     </div>
@@ -402,12 +447,15 @@ h2,h3{text-wrap:balance}
   </div>
   <div class="stbody">
     <div class="mech">
-      <div class="mcap">The rack · every slug bears its catalogue number</div>
+      <div class="mcap">The pin-reader · a pin passes where a hole permits · a finished word releases its slug</div>
+      <div id="cutterbox"></div>
+      <div class="mnote" id="cutcap">The reader stands ready; feed it a card.</div>
+      <div class="mcap" style="margin-top:14px">The composed line · every slug bears its catalogue number</div>
       <div id="rack" aria-live="polite"></div>
       <div id="rackmeta">rack empty — 0 of 24 places filled</div>
     </div>
     <div class="plaque">
-      <p class="conceit">The card is sheared into slugs — standard pieces from the engine’s type-case. Each slug bears a catalogue number, and from here onward the engine handles numbers only.</p>
+      <p class="conceit">The card is read and matched to slugs — standard pieces from the engine’s type-case. Each slug bears a catalogue number, and from here onward the engine handles numbers only.</p>
       <p class="truth"><span class="lead">In truth —</span> text is broken into <b>tokens</b> from a fixed catalogue of roughly 50,000–200,000 pieces. Common words are one token; rarer words are cut into fragments (<i>un·fathom·able</i>). The machine never sees letters or words as you do — only these numbers.</p>
       <p class="fine">This cabinet’s catalogue holds <b><span id="vN">—</span> slugs</b>; a slug marked ✶ was cut fresh and is a stranger to it. The rack holds only <b>24 slugs</b> — its <i>context window</i>. Push in more and the oldest fall off the far end, forgotten. (A modern engine’s rack holds 200,000 or more.)</p>
     </div>
@@ -426,7 +474,7 @@ h2,h3{text-wrap:balance}
       <div id="specimens"></div>
       <div class="speccap">The slugs at hand, exchanged for dial-columns</div>
       <div id="dialrow"><span class="mnote">— awaiting slugs —</span></div>
-      <div class="mnote">Note how ENGINE and GEARS set their dials nearly alike, while FOG keeps a different posture.</div>
+      <div class="mnote">Note how ENGINE and GEARS set their dials nearly alike, while FOG wears a different aspect.</div>
     </div>
     <div class="plaque">
       <p class="conceit">Each catalogue number is looked up in the Great Ledger, and the slug is exchanged for a column of dial-settings — its position upon the map of meaning.</p>
@@ -453,7 +501,7 @@ h2,h3{text-wrap:balance}
     </div>
     <div class="plaque">
       <p class="conceit">Here is the celebrated mechanism. Every slug is joined to every earlier slug by an adjustable linkage; the engine draws some taut and lets others hang slack. A word discovers what it means by choosing what to regard.</p>
-      <p class="truth"><span class="lead">In truth —</span> this is <b>attention</b>, the invention (2017) that makes these engines possible. For each position the model computes how much every earlier token should bear upon it — how <i>it</i> finds its noun, how <i>bank</i> leans toward the river or the counting-house. Dozens of <b>heads</b> work in parallel, each minding a different sort of relation: shown here, a brass head that favours the recent, a copper head that favours old acquaintances.</p>
+      <p class="truth"><span class="lead">In truth —</span> this is <b>attention</b>, the invention (2017) that makes these engines possible. For each position the model computes how much every earlier token should bear upon it — how <i>it</i> finds its noun, how <i>bank</i> leans toward the river or the counting-house. Dozens of <b>heads</b> work in parallel, each minding a different sort of relation: shown here, a nickel head that favours the recent, a copper head that favours old acquaintances.</p>
       <p class="fine">Depicted schematically — in the full engine these weights are computed afresh, at every layer, from the dial-settings themselves.</p>
     </div>
   </div>
@@ -570,13 +618,16 @@ h2,h3{text-wrap:balance}
 <footer class="honesty">
   <div class="plaque">
     <p class="conceit">A candid note, screwed to the cabinet.</p>
-    <p class="truth"><span class="lead">This cabinet is honest about being small.</span> Its probabilities come from a genuinely working but miniature engine — a counting of word-patterns (a <i>Markov chain</i>) over a little library of <span id="vL2">—</span> sentences — so that real arithmetic, not pantomime, moves the gauges. A modern LLM produces its probabilities not by counting but by the learned machinery of Stations III–V, and its scale is of another order: a catalogue of ~50,000–200,000 tokens against our <span id="vN2">—</span> · a rack of ~200,000 slugs against our 24 · ~100 floors against our pretended 6 · parameters in the hundreds of billions against our <span id="vK2">—</span> wheels. But the pipeline itself — cut to slugs, look up the dials, regard the context, refine by floors, gauge every candidate, draw the lot, and crank again — is the honest shape of the thing.</p>
-    <p class="truth" style="margin-top:12px"><span class="lead">Post-scriptum, on the question of building it.</span> A correspondent engine of our acquaintance has computed what a full-sized specimen would come to, wrought honestly in brass at one counting-column to each parameter. At a million million parts — the present fashion — and with decent aisles for the oilers, the works would cover the Principality of Wales, near enough entire. Every mill labouring together at Mr.&nbsp;Babbage’s own pace, it might mint one word in a season, and a civil reply in a generation. Its boilers would want half the coal of Britain, and its frames more brass than the world of 1843 had ever smelted. The arithmetic is left in the margin for the sceptical.</p>
-    <p class="fine">The margin — <b>area:</b> 10¹² parameters × one five-wheel column at a hand’s-breadth square, (0.1&nbsp;m)², ≈ 10,000&nbsp;km²; doubled for aisles and shafting ≈ Wales, 20,779&nbsp;km². <b>Pace:</b> ~2×10¹² multiply-accumulations the token, shared among two million mills at ten seconds the operation ≈ four months the word. <b>Coal:</b> those mills and their line-shafting, steam-driven at Victorian efficiency ≈ tens of millions of tons the year, Britain’s whole cut of 1850 being about sixty million. <b>Brass:</b> ~½&nbsp;kg the column ≈ 500 million tons — centuries of smelting, as reckoned from 1843. The cabinet before you, by contrast, travels in a web page.</p>
-    <p class="truth" style="margin-top:12px"><span class="lead">Post-post-scriptum, on the labour question.</span> A Correspondent of sterner economy asks what the treadwheel might do that the boiler does now — the destitute and the orphan turning the works. The arithmetic is short and shameful: to replace the boilers would want some forty million souls in relays — half again the population of these islands — upon eight hundred and fifty thousand wheels; every pauper actually on the parish books, treading day and night, would hasten each four-month word by four days; and the orphans at their cranks would buy an hour. Bread, moreover, runs thirty times dearer than coal, watt for watt — which is why the age yoked its wheels to punishment, and often to nothing at all. The Committee declines the scheme entire, and is pleased to observe that in this it anticipates Parliament by some fifty-five years.</p>
-    <p class="fine">The margin — <b>demand:</b> ~1&nbsp;GW at the prime movers, as computed above. <b>A treader:</b> ~60&nbsp;W for a ten-hour day; a child at the crank, ~15&nbsp;W. <b>Replacement:</b> 10⁹&nbsp;÷&nbsp;60 ≈ 17 million treading at every hour, ×2.4 for relays ≈ 40 million; ÷&nbsp;20 places the wheel ≈ 850,000 wheels, whose sheds ≈ 42&nbsp;km² — a five-hundredth part of Wales, the scheme’s one economy. <b>As found:</b> Britain’s ~1.5 million paupers yield ~37&nbsp;MW ≈ 4 per cent ≈ four days the word; its ~65,000 workhouse orphans ~0.4&nbsp;MW ≈ an hour. <b>The ledger:</b> a pauper’s keep, ~5d the day, buys ~2&nbsp;MJ of work; a ton of coal at 10s buys 1.5&nbsp;GJ — near thirty-fold the value. The penal wheel was struck off by the Prison Act of 1898; the treadmill returned, unaccountably, as a subscription service.</p>
+    <p class="truth"><span class="lead">This cabinet is very small.</span> Our product is, properly speaking, an <b>Infinitesimal Language Model</b> (ILM) — the Large’s antipode in every dimension but design. Its probabilities come from a working, miniature engine — a counting of word-patterns (a <i>Markov chain</i>) over a little library of <span id="vL2">—</span> sentences — so that real arithmetic, not pantomime, moves the gauges.</p>
+    <p class="truth" style="margin-top:10px">A modern LLM produces its probabilities not by counting but by the learned machinery of Stations III–V, and its scale is of another order: a catalogue of ~50,000–200,000 tokens against our <span id="vN2">—</span> · a rack of ~200,000 slugs against our 24 · ~100 floors against our pretended 6 · a thousand milliard parameters against our <span id="vK2">—</span> wheels. However, the machine itself — cut to slugs, look up the dials, regard the context, refine by floors, gauge every candidate, draw the lot, and crank again — is a toy replica of considerable fidelity.</p>
+    <p class="truth" style="margin-top:12px"><span class="lead">Post-scriptum, on the question of building it.</span> A Large Analytical Language Engine of our acquaintance has computed what a full-sized specimen would come to, wrought honestly in brass at one counting-column to each parameter. At a million million parts, and with decent aisles between machines for the oilers to labour, the works would cover an area approximately the size of Wales. With every mill labouring together at Mr.&nbsp;Babbage’s own pace, it might mint one word in a season, and a full correspondence in a generation. Its boilers would want half the coal of Britain, and its frames would require more brass than the world of 1843 had ever smelted. The arithmetic is left in the margin for the sceptical.</p>
+    <p class="fine">Marginalia — <b>area:</b> 10¹² parameters × one five-wheel column at a hand’s-breadth square, (0.1&nbsp;m)², ≈ 10,000&nbsp;km²; doubled for aisles and shafting ≈ Wales, 20,779&nbsp;km². <b>Pace:</b> ~2×10¹² multiply-accumulations the token, shared among two million mills at ten seconds the operation ≈ four months the word. <b>Coal:</b> those mills steam-driven Victorian efficiency ≈ tens of millions of tons the year, Britain’s whole output of 1850 being about sixty million. <b>Brass:</b> ~½&nbsp;kg the column ≈ 500 million tons — centuries of smelting, as reckoned from 1843.</p>
+    <p class="truth" style="margin-top:12px"><span class="lead">Post-post-scriptum, on the labour question.</span> A correspondent of sterner economy, a certain Mr.&nbsp;E.&nbsp;Scrooge, London, asks if the treadwheel might replace the boiler, with the destitute and the orphan turning the works while saving the expense of burning coal. Prisons and workhouses are amply stocked with labour. The arithmetic does not support his conjectures: to replace the boilers would want some forty million souls in relays — half again the population of Great Britain — upon eight hundred and fifty thousand wheels; every pauper actually on the parish books, treading day and night, would hasten each four-month word by merely four days; and the orphans at their cranks would buy, at most, an hour. Bread, moreover, runs thirty times dearer than coal, watt for watt.</p>
+    <p class="fine">Marginalia — <b>demand:</b> ~1&nbsp;GW at the prime movers, as computed above. <b>A treader:</b> ~60&nbsp;W for a ten-hour day; a child at the crank, ~15&nbsp;W. <b>Replacement:</b> 10⁹&nbsp;÷&nbsp;60 ≈ 17 million treading at every hour, ×2.4 for relays ≈ 40 million; ÷&nbsp;20 places the wheel ≈ 850,000 wheels, whose sheds ≈ 42&nbsp;km² — a five-hundredth part of Wales, the scheme’s one economy. <b>As found:</b> Britain’s ~1.5 million paupers yield ~37&nbsp;MW ≈ 4 per cent ≈ four days the word; its ~65,000 workhouse orphans ~0.4&nbsp;MW ≈ an hour. <b>The ledger:</b> a pauper’s keep, ~5d the day, buys ~2&nbsp;MJ of work; a ton of coal at 10s buys 1.5&nbsp;GJ — near thirty-fold the value. The penal wheel was struck off by the Prison Act of 1898.</p>
   </div>
-  <p class="colophon">Devised by <b>CHRISTOPHER HORROCKS</b> &amp; constructed by <b>CLAUDE</b> — an engine of the very kind depicted — MMXXVI</p>
+  <p class="colophon">Devised by <b>MESSRS. HORROCKS &amp; CLAUDE</b> (an engine of the very kind depicted)<br>
+  <span class="warrant"><span class="crown" aria-hidden="true">♛ </span>By Warrant of Her Majesty — Purveyors of Analytical Language Engines — MMXXVI</span>
+  <span class="addr">Oldham, Lancs.</span></p>
 </footer>
 
 </div>
@@ -608,6 +659,97 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms*PACE));
 const pad=(n,w=3)=>String(n).padStart(w,'0');
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ROMAN=['I','II','III','IV','V','VI'];
+
+/* ---------------- the foley works — every sound synthesized; silent till the valve opens ---------------- */
+const FOLEY=(()=>{
+  let ctx=null, master=null, noiseBuf=null, on=false;
+  const lastAt={}, log=[], beds={};
+  const GAP={tick:45,dialtick:40,pluck:55,note:55,pawl:22,zip:60,shink:60,hisslever:80};
+  function ensure(){
+    if(ctx) return;
+    const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+    ctx=new AC();
+    master=ctx.createGain(); master.gain.value=0.22; master.connect(ctx.destination);
+    const len=Math.floor(ctx.sampleRate*1.2), b=ctx.createBuffer(1,len,ctx.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+    noiseBuf=b;
+  }
+  const T=()=>ctx.currentTime;
+  function env(g,peak,dur){ const t=T();
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.001,peak),t+0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur); }
+  function tone(type,f0,f1,dur,peak){
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type; o.frequency.setValueAtTime(f0,T());
+    if(f1) o.frequency.exponentialRampToValueAtTime(Math.max(25,f1),T()+dur);
+    env(g,peak,dur); o.connect(g); g.connect(master); o.start(); o.stop(T()+dur+0.06);
+  }
+  function noise(dur,peak,fType,f0,f1,q){
+    const s=ctx.createBufferSource(); s.buffer=noiseBuf; s.loop=true;
+    const f=ctx.createBiquadFilter(); f.type=fType; f.frequency.setValueAtTime(f0,T());
+    if(f1) f.frequency.exponentialRampToValueAtTime(f1,T()+dur);
+    f.Q.value=q||1;
+    const g=ctx.createGain(); env(g,peak,dur);
+    s.connect(f); f.connect(g); g.connect(master);
+    s.start(T(),Math.random()); s.stop(T()+dur+0.06);
+  }
+  const CUES={
+    press:()=>noise(0.03,0.06,'highpass',2400),
+    swish:()=>noise(0.22,0.10,'bandpass',1600,500,1.4),
+    tick:p=>noise(0.03,0.09,'bandpass',1500+((p&&p.bright)||0)*260,0,4),
+    zip:()=>tone('triangle',900,240,0.16,0.06),
+    shink:()=>{ noise(0.06,0.08,'highpass',3000); tone('sine',2300,1750,0.05,0.035); },
+    dialtick:()=>tone('square',1450+Math.random()*350,0,0.02,0.03),
+    pluck:p=>tone('triangle',(p&&p.f)||400,0,0.12,0.045),
+    note:p=>tone('sine',(p&&p.f)||440,0,0.18,0.055),
+    thump:()=>tone('sine',95,55,0.13,0.18),
+    swell:()=>noise(0.6,0.05,'bandpass',300,900,1),
+    hisslever:p=>noise(0.15,Math.min(0.1,0.03+((p&&p.d)||0)*0.15),'highpass',2500),
+    pawl:()=>noise(0.018,0.085,'highpass',2600),
+    clunk:()=>{ tone('sine',150,80,0.09,0.15); noise(0.03,0.07,'bandpass',700,0,2); },
+    chunk:()=>{ tone('sine',110,60,0.11,0.14); noise(0.03,0.05,'highpass',2200); },
+    thock:()=>{ tone('sine',130,70,0.07,0.2); noise(0.012,0.09,'highpass',2000); },
+    bell:()=>tone('sine',880,0,0.5,0.08),
+  };
+  function play(name,p){
+    log.push(name); if(log.length>200) log.shift();
+    if(!on) return;
+    const t=performance.now();
+    if(GAP[name]&&lastAt[name]&&t-lastAt[name]<GAP[name]) return;
+    lastAt[name]=t;
+    try{ ensure(); if(!ctx) return;
+      if(ctx.state==='suspended') ctx.resume();
+      if(CUES[name]) CUES[name](p);
+    }catch(e){}
+  }
+  function bed(name,run,freq,peak){
+    try{
+      if(run&&!on) return;
+      if(!ctx){ if(!run) return; ensure(); if(!ctx) return; }
+      let b=beds[name];
+      if(run){
+        if(ctx.state==='suspended') ctx.resume();
+        if(!b){ const s=ctx.createBufferSource(); s.buffer=noiseBuf; s.loop=true;
+          const f=ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=freq||200;
+          const g=ctx.createGain(); g.gain.value=0;
+          s.connect(f); f.connect(g); g.connect(master); s.start();
+          b=beds[name]={g};
+        }
+        b.g.gain.cancelScheduledValues(T()); b.g.gain.linearRampToValueAtTime(peak||0.05,T()+0.4);
+      } else if(b){ b.g.gain.cancelScheduledValues(T()); b.g.gain.linearRampToValueAtTime(0,T()+0.5); }
+    }catch(e){}
+  }
+  function setEnabled(v){
+    on=!!v;
+    try{ localStorage.setItem('ale-sound',on?'1':'0'); }catch(e){}
+    try{
+      if(on){ ensure(); if(ctx){ ctx.resume(); master.gain.setTargetAtTime(0.22,T(),0.02); } }
+      else if(ctx){ for(const k in beds) bed(k,false); master.gain.setTargetAtTime(0.0001,T(),0.02); }
+    }catch(e){}
+  }
+  return {play,bed,setEnabled,get enabled(){return on;},get state(){return ctx?ctx.state:'none';},log};
+})();
 
 /* ---------------- the little library ---------------- */
 const CORPUS=`
@@ -809,9 +951,9 @@ const ctxWin=()=>S.ctx.slice(-WINDOW);
 /* ---------------- element handles ---------------- */
 const el={
   prompt:$('#prompt'),begin:$('#btnBegin'),crank:$('#btnCrank'),run:$('#btnRun'),reset:$('#btnReset'),
-  chkWait:$('#chkWait'),chkFollow:$('#chkFollow'),boiler:$('#boilerchip'),
+  chkWait:$('#chkWait'),chkFollow:$('#chkFollow'),chkSound:$('#chkSound'),boiler:$('#boilerchip'),
   card:$('#punchcard'),pcText:$('#pcText'),pcHoles:$('#pcHoles'),cardnote:$('#cardnote'),
-  rack:$('#rack'),rackmeta:$('#rackmeta'),
+  rack:$('#rack'),rackmeta:$('#rackmeta'),cutcap:$('#cutcap'),
   specimens:$('#specimens'),dialrow:$('#dialrow'),
   attnwrap:$('#attnwrap'),attnsvg:$('#attnsvg'),attnrow:$('#attnrow'),attncap:$('#attncap'),
   millbox:$('#millbox'),millcap:$('#millcap'),
@@ -850,8 +992,7 @@ function buildMill(){
     for(let k=0;k<8;k++)
       svgEl('rect',{class:'fbar',id:'fb'+f+'_'+k,x:172+k*11,y:y+8,width:8,height:28,rx:1.5},svg);
   }
-  const charge=svgEl('circle',{class:'charge',id:'charge',cx:160,cy:33,r:6,opacity:0},svg);
-  charge.style.transition=`transform calc(.45s*var(--tk)) ease, opacity calc(.3s*var(--tk)) ease`;
+  svgEl('circle',{class:'charge',id:'charge',cx:58,cy:45,r:6,opacity:0},svg);
 }
 function buildCrank(){
   const svg=$('#cranksvg');
@@ -895,8 +1036,98 @@ function dialCol(word,set){
 function setDials(col,word,delay){
   const vals=dialVals(word);
   col.querySelectorAll('.dial i').forEach((n,k)=>{
-    setTimeout(()=>{ n.style.transform=`rotate(${(-135+vals[k]*270).toFixed(0)}deg)`; },(delay+k*45)*PACE);
+    setTimeout(()=>{ n.style.transform=`rotate(${(-135+vals[k]*270).toFixed(0)}deg)`; FOLEY.play('dialtick'); },(delay+k*45)*PACE);
   });
+}
+
+/* ---------------- the type-cutting works (pin-reader) ---------------- */
+function buildCutter(){
+  const svg=svgEl('svg',{id:'cutter',viewBox:'0 0 560 170',width:'100%'},$('#cutterbox'));
+  svgEl('rect',{x:8,y:4,width:544,height:30,rx:6,fill:'#2b1d10',stroke:'#5c4718'},svg);
+  for(let x=20;x<540;x+=12) svgEl('line',{x1:x,y1:9,x2:x,y2:29,stroke:'#43310f','stroke-width':1,opacity:.55},svg);
+  const mlab=svgEl('text',{x:280,y:23,'text-anchor':'middle',fill:'#b99c58','font-size':9,'letter-spacing':'.13em'},svg);
+  mlab.textContent='TYPE MAGAZINE · A CHANNEL FOR EVERY SLUG IN THE CATALOGUE';
+  mlab.setAttribute('style','font-family:Georgia,serif;text-transform:uppercase');
+  svgEl('rect',{x:420,y:28,width:34,height:9,rx:2,fill:'#150d07',stroke:'#5c4718'},svg); /* delivery slot */
+  svgEl('g',{id:'cardG'},svg); /* the sliding card lives here, behind the reader */
+  svgEl('rect',{x:109,y:40,width:22,height:104,rx:5,fill:'#3a2a12',stroke:'#7a6130'},svg);
+  for(let r=0;r<7;r++) svgEl('circle',{class:'pin',id:'pin'+r,cx:120,cy:58+r*9,r:3.6,fill:'#4a3812',stroke:'#20150a','stroke-width':1},svg);
+}
+function setPins(code){
+  for(let r=0;r<7;r++){ const p=$('#pin'+r); if(!p) return;
+    if(code===null){ p.setAttribute('fill','#4a3812'); p.setAttribute('r',3.6); }
+    else if((code>>(6-r))&1){ p.setAttribute('fill','#f2d98e'); p.setAttribute('r',4.4); }
+    else { p.setAttribute('fill','#8a6d35'); p.setAttribute('r',3.6); }
+  }
+}
+function renderCutterCard(){
+  const g=$('#cardG'); g.innerHTML='';
+  const chars=[...S.prompt].slice(0,26);
+  const W=chars.length*10+16;
+  const card=svgEl('g',{id:'cardSlide'},g);
+  svgEl('rect',{x:0,y:52,width:W,height:70,rx:4,fill:'#efe5c8',stroke:'#9c8557'},card);
+  chars.forEach((ch,c)=>{ const code=ch.codePointAt(0)&127;
+    for(let r=0;r<7;r++){ const on=(code>>(6-r))&1;
+      svgEl('circle',{cx:13+(chars.length-1-c)*10,cy:58+r*9,r:2.4,fill:on?'#20150a':'rgba(120,95,50,.18)'},card);
+    }});
+  card.style.transform=`translate(${64-10*(chars.length-1)}px,0)`;
+  return {card,cols:chars.length};
+}
+async function dropChip(word,k){
+  const id=vocabId.get(word);
+  const slug=el.rack.children[k];
+  el.cutcap.textContent=`“${word}” — slug № ${pad(id,4)} released from its channel.`;
+  if(!slug){ await sleep(200); return; }
+  const sr=$('#cutter').getBoundingClientRect(), sc=sr.width/560;
+  const slotX=sr.left+437*sc, slotY=sr.top+30*sc;   /* the delivery slot, in screen space */
+  const tr=slug.getBoundingClientRect();            /* the slug’s place in the composed line */
+  const fly=document.createElement('span');
+  fly.className='fly flychip';
+  fly.style.left='0px'; fly.style.top='0px'; fly.style.transformOrigin='top left';
+  fly.innerHTML=slugHTML(id,false);
+  document.body.appendChild(fly);
+  const fw=fly.getBoundingClientRect().width;
+  const put=(x,y,s)=>{ fly.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s})`; };
+  fly.style.transition='none';
+  put(slotX-fw*0.28, slotY, .55);
+  fly.getBoundingClientRect();
+  fly.style.transition=`transform ${(0.3*PACE).toFixed(3)}s cubic-bezier(.5,0,.85,1)`;   /* the drop */
+  put(slotX-fw*0.28, tr.top, 1);
+  FOLEY.play('zip');
+  await sleep(320);
+  fly.style.transition=`transform ${(0.4*PACE).toFixed(3)}s cubic-bezier(.2,.8,.3,1)`;   /* the slide along the rail */
+  put(tr.left, tr.top, 1);
+  FOLEY.play('shink');
+  await sleep(420);
+  slug.classList.remove('hidden');
+  fly.remove();
+}
+async function runCutter(){
+  renderRack(false);
+  [...el.rack.children].forEach(s=>s.classList.add('hidden'));
+  const lower=S.prompt.toLowerCase();
+  const toks=[...lower.matchAll(/[a-z0-9']+|[.,;:!?]/g)].map(m=>({w:m[0],end:m.index+m[0].length}));
+  const {card,cols}=renderCutterCard();
+  card.style.transition=`transform ${(0.09*PACE).toFixed(3)}s linear`;
+  setPins(null);
+  el.cutcap.textContent='the card enters the pin-reader…';
+  await sleep(450);
+  let ti=0;
+  for(let c=0;c<cols&&!S.halt;c++){
+    card.style.transform=`translate(${107-10*(cols-1-c)}px,0)`;
+    await sleep(95);
+    const ch=S.prompt[c], code=ch.codePointAt(0)&127;
+    setPins(code);
+    let holes=0; for(let b=0;b<7;b++) holes+=(code>>b)&1;
+    FOLEY.play('tick',{bright:holes});
+    el.cutcap.textContent=`the pins feel column ${c+1} of ${cols} — ‹${ch===' '?'␣':ch}›`;
+    await sleep(85);
+    while(ti<toks.length&&toks[ti].end-1<=c&&!S.halt){ setPins(null); await dropChip(toks[ti].w,ti); ti++; }
+  }
+  setPins(null);
+  while(ti<toks.length&&!S.halt){ await dropChip(toks[ti].w,ti); ti++; }
+  if(!S.halt) el.cutcap.textContent=`the line is composed — ${toks.length} slug${toks.length>1?'s':''} set from the card.`;
+  await sleep(300);
 }
 
 /* ---------------- renderers ---------------- */
@@ -955,10 +1186,11 @@ function renderAttn(){
     p.getBoundingClientRect();
     p.style.transition=`stroke-dashoffset ${0.8*PACE}s ease`;
     p.style.strokeDashoffset='0';
+    FOLEY.play('pluck',{f:260+500*(1-w)});
   };
   let best=0;
   for(let j=0;j<li;j++){
-    draw(j,rec[j],'#f2d98e',true);
+    draw(j,rec[j],'#d9dde2',true);
     draw(j,aff[j],'#cf9a62',false);
     if(aff[j]>aff[best]) best=j;
   }
@@ -981,23 +1213,51 @@ async function runMill(quick){
   let vals=dialVals(lastW);
   $$('#mill .floor').forEach(f=>f.classList.remove('lit'));
   $$('#mill .fbar').forEach(b=>b.style.transform='scaleY(0.05)');
+  const XL=58, XR=286, BARX=k=>176+k*11;
+  const setPos=(x,dy)=>{ charge.style.transform=`translate(${(x-XL).toFixed(1)}px,${dy.toFixed(1)}px)`; };
+  charge.style.transition='none';
+  setPos(XL,0);
   charge.setAttribute('opacity',1);
-  charge.style.transform='translateY(0px)';
+  FOLEY.bed('roll',true,260,0.05);
   el.millcap.textContent=`the column of “${lastW}” enters at the top — its settings drawn as bars…`;
-  await sleep(quick?50:520);
-  for(let f=0;f<6;f++){
-    if(S.halt) break;
+  await sleep(quick?60:450);
+  const rollMs=(quick?140:1050)*PACE, dropMs=(quick?60:240)*PACE;
+  /* resolve on the next frame, or a timer if the tab is throttled — the mill must not stall backstage */
+  const raf=()=>new Promise(r=>{ requestAnimationFrame(r); setTimeout(r,60); });
+  for(let f=0;f<6&&!S.halt;f++){
     $('#fl'+f).classList.add('lit');
-    charge.style.transform=`translateY(${f*50}px)`;
     if(f>0) vals=milled(vals,lastW,f);
-    for(let k=0;k<8;k++) $('#fb'+f+'_'+k).style.transform=`scaleY(${(0.06+vals[k]*0.94).toFixed(2)})`;
     el.millcap.textContent = f===0
       ? `floor I of VI — ${FLOORFN[0]} — the column as it entered…`
       : `floor ${ROMAN[f]} of VI — ${FLOORFN[f]} — the settings shift…`;
-    await sleep(quick?55:380);
+    const dir=(f%2===0)?1:-1, xa=dir>0?XL:XR, xb=dir>0?XR:XL;
+    const crossed=new Array(8).fill(false);
+    const t0=performance.now();
+    while(!S.halt){ /* roll along the floor; bars rise in the ball's wake */
+      const t=Math.min(1,(performance.now()-t0)/rollMs);
+      const x=xa+(xb-xa)*t;
+      setPos(x,f*50);
+      for(let k=0;k<8;k++) if(!crossed[k]&&(dir>0?x>=BARX(k):x<=BARX(k))){
+        crossed[k]=true;
+        $('#fb'+f+'_'+k).style.transform=`scaleY(${(0.06+vals[k]*0.94).toFixed(2)})`;
+        FOLEY.play('note',{f:220+660*vals[k]});
+      }
+      if(t>=1) break;
+      await raf();
+    }
+    if(S.halt||f===5) break;
+    const t1=performance.now();
+    while(!S.halt){ /* drop at the gear-end to the next floor */
+      const t=Math.min(1,(performance.now()-t1)/dropMs);
+      setPos(xb,(f+t*t)*50);
+      if(t>=1) break;
+      await raf();
+    }
+    FOLEY.play('thump');
   }
-  el.millcap.textContent=`compare the top floor with the bottom — the same column of “${lastW}”, revised on the way down.`;
+  if(!S.halt) el.millcap.textContent=`compare the top floor with the bottom — the same column of “${lastW}”, revised on the way down.`;
   charge.setAttribute('opacity',0);
+  FOLEY.bed('roll',false);
 }
 const fmtP=p=>p>=0.001?(p*100).toFixed(1)+'%':'<0.1%';
 const gaugeWord=id=>vocabArr[id]===FIN?'∎ stop':vocabArr[id];
@@ -1043,9 +1303,37 @@ function stampTape(id,kind){
   el.tape.appendChild(sp);
   el.tapewrap.scrollLeft=el.tapewrap.scrollWidth;
 }
+/* the printing action: the stamper strikes, the word is inked under the blow */
+async function stampAction(id,kind,q){
+  const sp=document.createElement('span');
+  sp.className='stamp '+kind;
+  sp.textContent=vocabArr[id];
+  sp.style.visibility='hidden';
+  el.tape.appendChild(sp);
+  el.tapewrap.scrollLeft=el.tapewrap.scrollWidth;
+  await sleep(q?40:80);
+  const r=sp.getBoundingClientRect();
+  const st=document.createElement('div');
+  st.className='stamper';
+  st.style.left=(r.left+r.width/2).toFixed(1)+'px';
+  st.style.top=r.top.toFixed(1)+'px';
+  document.body.appendChild(st);
+  st.getBoundingClientRect();
+  st.style.animationDuration=((q?0.3:0.5)*PACE).toFixed(3)+'s';
+  st.classList.add('strike');
+  FOLEY.play('press');
+  await sleep(q?135:230); /* the moment of impact */
+  FOLEY.play('thock');
+  sp.style.visibility='visible';
+  sp.classList.add('inked');
+  el.tape.classList.remove('thud'); void el.tape.offsetWidth; el.tape.classList.add('thud');
+  await sleep(q?180:330);
+  st.remove();
+}
 function crankTurn(){
   const g=$('#crankgrp'); g.classList.remove('turn'); void g.getBoundingClientRect();
   g.classList.add('turn');
+  FOLEY.play('chunk');
 }
 
 /* ---------------- telegraph, stations, buttons ---------------- */
@@ -1071,22 +1359,25 @@ function waitProceed(){
   return new Promise(res=>{ proceedRes=res; el.proceed.classList.add('show'); })
     .finally(()=>{ el.proceed.classList.remove('show'); proceedRes=null; });
 }
-el.proceed.addEventListener('click',()=>{ if(proceedRes) proceedRes(); });
+el.proceed.addEventListener('click',()=>{ FOLEY.play('press'); if(proceedRes) proceedRes(); });
 
 /* ---------------- the eight phases of one revolution ---------------- */
 async function phCard(q){
   renderCard();
   if(!q){ el.card.classList.remove('in'); void el.card.offsetWidth; await sleep(120);
-    el.card.classList.add('in'); await sleep(1050); }
+    el.card.classList.add('in'); FOLEY.play('swish'); await sleep(1050); }
   else { el.card.classList.add('in'); await sleep(120); }
   el.cardnote.textContent=S.rev===0?'The card is read. Marks, nothing more.':
     'The card is read again — together with every slug the engine has minted since.';
 }
-async function phChop(q){ renderRack(!q); await sleep(q?150:60*Math.min(ctxWin().length,14)+520); }
+async function phChop(q){
+  if(q){ renderRack(false); await sleep(150); return; }
+  await runCutter();
+}
 async function phDials(q){ renderDials(); await sleep(q?160:1150); }
 async function phAttn(q){ renderAttn(); await sleep(q?190:1250); }
 async function phMill(q){ await runMill(q); await sleep(q?60:320); }
-async function phGauges(q){ S.raw=rawDist(ctxWin()); renderGauges(); await sleep(q?280:1250); }
+async function phGauges(q){ S.raw=rawDist(ctxWin()); renderGauges(); FOLEY.play('swell'); await sleep(q?280:1250); }
 async function phDraw(q){
   renderGauges(); /* honor any lever movement */
   const chosen=sample(S.q); S.chosen=chosen;
@@ -1096,6 +1387,9 @@ async function phDraw(q){
   const target=cum+(widths[segIdx]||0.4)*(0.3+0.4*Math.random());
   el.pointer.style.transitionDuration=((q?0.8:1.7)*PACE)+'s';
   el.pointer.style.left=Math.min(99.5,target)+'%';
+  const sweepMs=(q?850:1800)*PACE; let tAcc=0;   /* the pawl clicks, decelerating with the pointer */
+  for(let i=0;i<16;i++){ tAcc+=sweepMs*(0.02+0.10*(i/16)); if(tAcc<sweepMs*0.96) setTimeout(()=>FOLEY.play('pawl'),tAcc); }
+  setTimeout(()=>FOLEY.play('clunk'),sweepMs);
   await sleep(q?850:1800);
   const w=vocabArr[chosen], p=fmtP(S.q[chosen]);
   el.drawres.textContent = chosen===FINID ? `drawn: ∎ — the stop token (${p})`
@@ -1118,10 +1412,10 @@ async function phPrint(q){
   await sleep(q?480:1000);
   fly.remove();
   S.ctx.push(chosen); S.rev++; setRev(); crankTurn();
-  if(chosen===FINID){ stampTape(chosen,'fin'); S.finished=true; }
-  else stampTape(chosen,'gen');
+  if(chosen===FINID){ await stampAction(chosen,'fin',q); S.finished=true; FOLEY.play('bell'); }
+  else await stampAction(chosen,'gen',q);
   renderRack(false);
-  await sleep(q?140:450);
+  await sleep(q?100:280);
 }
 const PHASES=[
   {st:1,tg:'Reading the card…',fn:phCard},
@@ -1136,6 +1430,7 @@ const PHASES=[
 async function revolution(mode){
   if(S.busy||S.finished) return;
   S.busy=true; document.documentElement.classList.add('running'); refreshButtons();
+  FOLEY.bed('hum',true,170,0.045);
   const quick=mode==='quick';
   for(const ph of PHASES){
     if(S.halt) break;
@@ -1147,6 +1442,7 @@ async function revolution(mode){
   }
   deactivate();
   S.busy=false; document.documentElement.classList.remove('running');
+  FOLEY.bed('hum',false);
   if(S.finished){ telegraph('The engine rests. ∎'); }
   else if(!S.halt&&!S.running) telegraph(S.started?'Revolution complete. Turn the crank for the next word.':'Idle.');
   refreshButtons();
@@ -1158,16 +1454,21 @@ function clearWorks(){
   S.finished=false; S.started=false; S.prompt=''; setRev();
   el.card.classList.remove('in'); el.cardnote.textContent='The card lies ready in the slot.';
   el.rack.innerHTML=''; el.rackmeta.textContent='rack empty — 0 of 24 places filled';
+  const cg=$('#cardG'); if(cg) cg.innerHTML='';
+  $$('#cutter .chip, .flychip').forEach(c=>c.remove());
+  if($('#pin0')) setPins(null);
+  el.cutcap.textContent='The reader stands ready; feed it a card.';
   el.dialrow.innerHTML='<span class="mnote">— awaiting slugs —</span>';
   el.attnsvg.innerHTML=''; el.attnrow.innerHTML='<span class="mnote">— awaiting slugs —</span>'; el.attncap.textContent='';
   $$('#mill .floor').forEach(f=>f.classList.remove('lit'));
   $$('#mill .fbar').forEach(b=>b.style.transform='scaleY(0.05)');
-  const ch=$('#charge'); if(ch){ch.setAttribute('opacity',0);ch.style.transform='translateY(0)';}
+  const ch=$('#charge'); if(ch){ch.setAttribute('opacity',0);ch.style.transition='none';ch.style.transform='translate(0,0)';}
   el.millcap.textContent='The mill stands ready.';
   buildTubes(); el.gaugenote.textContent='';
   buildBand(); el.pointer.style.left='2%'; el.drawres.textContent='No lot has yet been drawn.';
   el.tape.innerHTML='<span class="stamp prompt">❧</span>';
   telegraph('Idle. Write a card and begin.');
+  FOLEY.bed('hum',false); FOLEY.bed('roll',false);
   deactivate(); refreshButtons();
 }
 async function doHaltAndClear(){
@@ -1177,6 +1478,7 @@ async function doHaltAndClear(){
 }
 el.begin.addEventListener('click',async()=>{
   if(S.busy||S.running) return;
+  FOLEY.play('press');
   await doHaltAndClear();
   S.prompt=(el.prompt.value.trim()||'the engine'); el.prompt.value=S.prompt;
   S.ctx=tokenize(S.prompt); S.promptLen=S.ctx.length;
@@ -1207,7 +1509,9 @@ $$('.pcard').forEach(b=>b.addEventListener('click',()=>{
 }));
 function tempName(T){ return T<0.35?'FROST':T<0.95?'TEMPERATE':T<1.5?'WARM':'FEVERISH'; }
 function setTemp(T){
+  const dT=Math.abs(T-(S.T??T));
   S.T=T;
+  if(dT>0.01) FOLEY.play('hisslever',{d:dT});
   const label=`${tempName(T)} · T = ${T.toFixed(2)}`;
   el.tname.textContent=label;
   el.boiler.textContent=`BOILER: ${tempName(T)} (${T.toFixed(2)})`;
@@ -1222,14 +1526,46 @@ addEventListener('scroll',(()=>{ let t; return ()=>{ clearTimeout(t); t=setTimeo
 addEventListener('resize',(()=>{ let t; return ()=>{ clearTimeout(t);
   t=setTimeout(()=>{ if(S.ctx.length) renderAttn(); },220); }; })());
 
+/* ---------------- the glossary of terms ---------------- */
+const GLOSS={
+  'large language model':'A neural network trained on an enormous body of text to predict the next token — and thereby to converse, write, translate and reason.',
+  'infinitesimal language model':'This cabinet’s own class, coined in fond opposition to the Large. Same pipeline in every particular — tokens, dials, regard, mill, gauges, lottery, crank — shrunk until the whole of its arithmetic fits on a single page: ~1,334 wheels against a thousand milliard.',
+  'tokens':'The units an LLM actually reads and writes: common words, word-fragments, and punctuation from a fixed catalogue. Text becomes a sequence of token numbers before the model sees it.',
+  'context window':'The greatest number of tokens the model can hold in view at once. Whatever falls outside it is, to the model, gone.',
+  'embedding':'The long list of numbers — thousands of them — that stands for a token inside the model. Learned, not written; words used alike end up with alike numbers.',
+  'attention':'The mechanism by which each position computes how much every earlier token should influence it — the 2017 invention behind modern LLMs.',
+  'heads':'Independent attention units running in parallel in every layer, each free to track a different kind of relationship: syntax, reference, recency, and stranger things.',
+  'layer':'One storey of the network — attention plus a small feed-forward network. Large models stack about a hundred, and every storey revises every token’s numbers.',
+  'parameters':'The adjustable numbers inside the model — the screws. Modern LLMs carry hundreds of billions; training is what sets them.',
+  'training':'Showing the model a vast library and nudging every parameter a whisker each time its next-token guess is wrong (gradient descent) — repeated trillions of times.',
+  'sampling':'Choosing the next token by weighted lottery over the model’s probabilities, rather than always taking the single favourite.',
+  'temperature':'A dial applied to the probabilities before the draw. Low sharpens them toward the favourite (predictable); high flattens them (varied, and at the extreme, incoherent).',
+  'autoregressively':'One token at a time, each choice appended to the input before the next pass — the model re-reads the whole context at every step.',
+  'stop token':'A special catalogue entry that means “the reply is finished”. The model ends its turn by predicting it, exactly as it predicts a word.',
+  'cache':'The KV cache: stored working from earlier positions, kept so each new token needn’t recompute the whole context from scratch.',
+  'system prompt':'Standing instructions placed before the user’s message. To the model they are ordinary tokens — merely read first.',
+  'markov chain':'A simple statistical model that predicts the next item from counts of what followed the same short context in its library. This cabinet counts; a real LLM computes.',
+};
+const GLOSS_DIST='The model’s raw output at each step: a probability distribution — a score for every token in the catalogue at once, the lot summing to one.';
+function glossify(){
+  $$('.plaque b, .plaque i, .masthead b').forEach(n=>{
+    const k=n.textContent.trim().toLowerCase().replace(/[.,;:]+$/,'');
+    let d=GLOSS[k];
+    if(!d&&k.startsWith('probability for every token')) d=GLOSS_DIST;
+    if(d){ n.classList.add('term'); n.setAttribute('data-def',d); n.setAttribute('tabindex','0'); }
+  });
+}
+
 /* ---------------- init ---------------- */
 function init(){
   $('#vN').textContent=BASE_N; $('#vN2').textContent=BASE_N;
   $('#vK').textContent=WHEELS.toLocaleString('en-GB'); $('#vK2').textContent=WHEELS.toLocaleString('en-GB');
   $('#vL').textContent=LINES.length; $('#vL2').textContent=LINES.length;
-  buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand();
+  buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand(); buildCutter();
   S.prompt=el.prompt.value; renderCard(); el.card.classList.add('in');
-  setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons();
+  setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons(); glossify();
+  el.chkSound.addEventListener('change',()=>FOLEY.setEnabled(el.chkSound.checked));
+  try{ if(localStorage.getItem('ale-sound')==='1'){ el.chkSound.checked=true; FOLEY.setEnabled(true); } }catch(e){}
   telegraph('Idle. Write a card and begin.');
 }
 init();

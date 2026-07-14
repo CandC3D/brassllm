@@ -10,7 +10,7 @@ Double-click `analytical-language-engine.html`. It is fully self-contained — n
 
 Hosted copies:
 
-- GitHub Pages: https://candc3d.github.io/analytical-language-engine/
+- GitHub Pages: https://candc3d.github.io/brassllm/
 - Claude artifact: https://claude.ai/code/artifact/f0c03be7-7e4f-49c5-ba5d-83f67ae0eae2
 
 ## The eight stations
@@ -34,6 +34,8 @@ Hosted copies:
 4. Move the boiler lever (Station VII) mid-run — the gauges reshape instantly. FROST ≈ greedy decoding; FEVERISH ≈ chaos.
 5. Append `?fast=1` to the URL for quick-cycling animations (rehearsals, impatient audiences).
 6. When a revolution ends, the telegraph chip (bottom-right) grows contextual buttons: **↻ Crank** mints the next word from wherever you stand, and **⇧ To the desk** returns to the top (it appears whenever you've scrolled down and the works are idle).
+7. Hover (or tab to) any term under a dotted line — tokens, attention, temperature, and the rest — for its plain modern definition.
+8. Tick **Let the works be heard** for sound — every cue synthesized live (no audio files): pin-reader ticks, slug zips, dial ticks, linkage plucks, the mill *playing* each column's settings as notes, the lottery's decelerating pawl clicks, the crank's chunk, the stamper's thock, and one soft bell when the engine rests. Off by default; your choice is remembered.
 
 ## What is real, what is theatre
 
