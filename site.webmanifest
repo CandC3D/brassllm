@@ -1,0 +1,16 @@
+{
+  "name": "The Analytical Language Engine",
+  "short_name": "Brass LLM",
+  "description": "How an LLM works, illustrated as a working Victorian brass machine.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#140c07",
+  "theme_color": "#1a100a",
+  "icons": [
+    { "src": "favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "apple-touch-icon.png", "type": "image/png", "sizes": "180x180", "purpose": "any" }
+  ]
+}
