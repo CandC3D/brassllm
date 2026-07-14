@@ -4,8 +4,6 @@
 
 The Analytical Language Engine is a **working model, not a mock-up**. When its
 gauges rise, they are driven by real arithmetic performed live in your browser.
-This page sets out exactly what that arithmetic is — and, just as honestly, where
-the brass conceit stands in for machinery too large to fit on a page.
 
 ---
 
@@ -16,17 +14,16 @@ hundreds of billions of learned parameters. This cabinet does something far humb
 that nonetheless has the **same shape**: it is an **n-gram Markov model** — it
 predicts the next word by counting how often words followed one another in a small
 library of **79 sentences**. We call it, fondly, an *Infinitesimal Language Model*.
-
-The claim is not that counting equals cognition. The claim is that the **pipeline** —
-read the text, turn it into numbers, weigh every candidate, and draw one by weighted
-chance — is faithfully the same, and can therefore teach the shape of the real thing.
+The mechanism — read the text, turn it into numbers, weigh every candidate, and draw
+one by weighted chance — is faithfully the same, and can therefore teach the shape of
+the real thing.
 
 ## 2. From text to numbers (tokenisation)
 
-The prompt is cut by a regular expression into **tokens** — words and individual
-marks of punctuation — and each distinct token is assigned an integer from a fixed
-catalogue (here, ~231 entries; a real model holds 50,000–200,000). Everything
-downstream is arithmetic on these integers. This is genuine and identical in kind to
+The prompt is divided by a regular expression into **tokens**: words and individual
+marks of punctuation. Each distinct token is assigned an integer from a fixed
+catalogue (here, ~231 entries; a real model holds 50,000–200,000). Everything that
+happens in the model is arithmetic on these integers. This is identical in kind to
 what an LLM does.
 
 ## 3. The heart: an interpolated n-gram model
@@ -46,7 +43,7 @@ P(w | context) ∝ λ₃·P₃(w | a,b) + λ₂·P₂(w | b) + λ₁·P₁(w)
 ```
 
 with weights **λ₃ = 0.72, λ₂ = 0.21, λ₁ = 0.07**. When the higher-order context has
-never been seen, its term drops out and the weights renormalise — so the model
+never been seen, its term drops out and the weights renormalise. The model
 gracefully **backs off** from trigram to bigram to unigram evidence. Rarer contexts
 lean on the general word frequencies; familiar ones are sharply predicted. This
 back-off is the counting-model ancestor of what a neural network learns to do
@@ -78,7 +75,7 @@ underlying `P(w)` differs.
 ## 5. Sampling: drawing the lot
 
 One token is chosen by a **weighted lottery** (inverse-CDF sampling): draw a uniform
-random number *r* ∈ [0, 1), walk the candidates accumulating their probabilities, and
+random number *r* ∈ [0, 1), evaluate the candidates accumulating their probabilities, and
 take the one in whose interval *r* falls. High-probability tokens own wider intervals
 and are drawn more often — but not always. This is why the same prompt, asked twice,
 can answer differently. The Lottery Drum (Station VII) is literally this draw.
@@ -110,7 +107,7 @@ The pipeline is the same; the scale and the source of the probabilities are not.
 A frontier model replaces *counting* with a hundred layers of learned attention and
 arithmetic over a **thousand milliard (10¹²) parameters**, against this cabinet's
 ~1,334 counting-wheels. It is the difference between a music box and an orchestra —
-but a music box is still, honestly, playing the tune.
+both can play the same tune, just at different scales.
 
 *Every formula above is implemented in the single HTML file; there is nothing to
 install and nothing hidden. Read the source, and you have read the whole engine.*
