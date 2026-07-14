@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="The mathematics behind the Analytical Language Engine — an honest account of the n-gram interpolation, temperature, and sampling that move its gauges."><meta name="theme-color" content="#1a100a"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"><meta property="og:type" content="article"><meta property="og:title" content="The Mathematics Behind the Engine"><meta property="og:description" content="An honest account of the real arithmetic — n-gram interpolation, temperature, sampling — that drives the Analytical Language Engine."><meta property="og:url" content="https://candc3d.github.io/brassllm/about.html"><meta property="og:image" content="https://candc3d.github.io/brassllm/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://candc3d.github.io/brassllm/og-image.png"></head><body>
+<title>The Mathematics Behind the Engine</title>
+<style>
+:root{
+  --wood:#191009; --brass:#c9a24b; --brass-hi:#f2d98e; --brass-lo:#6b5320; --brass-deep:#453310;
+  --paper:#efe5c8; --paper2:#e3d4af; --paper3:#dcca9f; --ink:#2b2011; --ink-soft:#5c4c33;
+  --engrave:#43310f; --spirit:#8e2f1d; --verd:#3f6e58;
+  --serif:Georgia,'Iowan Old Style','Times New Roman',serif; --mono:'Courier New',Courier,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--wood)}
+body{
+  font-family:var(--serif);line-height:1.62;color:var(--ink);
+  background:
+    radial-gradient(1000px 500px at 50% -6%, #3a2717 0%, rgba(58,39,23,0) 60%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.13) 0 2px, rgba(0,0,0,0) 2px 7px),
+    linear-gradient(#221610,#140c07);
+  min-height:100vh;padding:28px 16px 60px;
+}
+.wrap{max-width:770px;margin:0 auto}
+.masthead{
+  border:1px solid #55411a;border-radius:13px;padding:20px 22px;text-align:center;margin-bottom:20px;
+  background:linear-gradient(168deg,#d9b563,#b08b3e 40%,#8a6a2a 78%,#a8823a);
+  box-shadow:inset 0 1px 0 rgba(255,240,200,.5), 0 8px 20px rgba(0,0,0,.5);color:var(--engrave);
+}
+.masthead .kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.85}
+.masthead h1{font-size:clamp(23px,4.4vw,34px);letter-spacing:.06em;margin:6px 0 3px;text-wrap:balance}
+.masthead .sub{font-style:italic;font-size:14.5px}
+.sheet{
+  background:linear-gradient(178deg,var(--paper),var(--paper2));
+  border:1px solid #ac9366;border-radius:11px;padding:34px clamp(20px,5vw,46px) 30px;
+  box-shadow:inset 0 0 40px rgba(120,90,40,.14), 0 6px 20px rgba(0,0,0,.45);
+}
+.lede{font-size:16px;font-style:italic;color:#4a3510;border-bottom:1px dotted #b39a6b;padding-bottom:16px;margin-bottom:18px}
+.sheet h2{
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--engrave);
+  margin:26px 0 9px;padding-bottom:5px;border-bottom:2px solid rgba(107,83,32,.4);
+}
+.sheet h2 .n{color:var(--brass-lo);margin-right:9px}
+.sheet p{margin:0 0 12px;font-size:15.3px}
+.sheet p+p{margin-top:0}
+.sheet strong{color:#3a2b0f}
+.sheet ul{margin:0 0 12px 4px;padding-left:20px}
+.sheet li{margin-bottom:6px;font-size:15px}
+.sheet code{font-family:var(--mono);background:rgba(120,90,40,.14);padding:1px 4px;border-radius:3px;font-size:.92em}
+.formula{
+  font-family:var(--mono);font-size:14.5px;color:#33260e;background:linear-gradient(#e6d8b4,#d8c79c);
+  border-left:4px solid var(--brass-lo);border-radius:4px;padding:13px 16px;margin:6px 0 14px;
+  overflow-x:auto;white-space:pre;box-shadow:inset 0 1px 4px rgba(120,90,40,.2);
+}
+.tbl{width:100%;border-collapse:collapse;margin:6px 0 16px;font-size:14px}
+.tbl th,.tbl td{border:1px solid #b39a6b;padding:8px 11px;text-align:left;vertical-align:top}
+.tbl th{background:rgba(160,130,60,.22);font-variant:small-caps;letter-spacing:.04em}
+.tbl .g{color:var(--verd);font-weight:700}
+.tbl .i{color:#8a5a20;font-weight:700}
+.callout{background:rgba(160,130,60,.14);border:1px solid #c3ac7c;border-radius:8px;padding:14px 16px;margin:16px 0;font-style:italic;color:#453310}
+.rule{height:2px;background:linear-gradient(90deg,rgba(67,49,15,0),#8a734a,rgba(67,49,15,0));margin:22px 0}
+.foot{text-align:center;margin-top:22px}
+.foot a{
+  display:inline-block;text-decoration:none;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#3c2d10;
+  background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 20px;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.6), 0 3px 7px rgba(0,0,0,.4);
+}
+.foot a:hover{filter:brightness(1.06)}
+.colophon{text-align:center;margin-top:16px;font-size:12px;color:#8d7947;font-style:italic}
+h2,h1{text-wrap:balance}
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="kicker">The Analytical Language Engine</div>
+    <h1>The Mathematics Behind the Engine</h1>
+    <div class="sub">what actually computes the numbers you see move</div>
+  </header>
+
+  <article class="sheet">
+    <p class="lede">The Analytical Language Engine is a working model, not a mock-up. When its gauges rise, they are driven by real arithmetic performed live in your browser. This is exactly what that arithmetic is — and, just as honestly, where the brass conceit stands in for machinery too large to fit on a page.</p>
+
+    <h2><span class="n">1</span>What kind of engine it is</h2>
+    <p>A modern Large Language Model predicts the next token with a neural network of hundreds of billions of learned parameters. This cabinet does something far humbler that nonetheless has the <strong>same shape</strong>: it is an <strong>n-gram Markov model</strong> — it predicts the next word by counting how often words followed one another in a small library of <strong>79 sentences</strong>. We call it, fondly, an <em>Infinitesimal Language Model</em>.</p>
+    <p>The claim is not that counting equals cognition. The claim is that the <strong>pipeline</strong> — read the text, turn it into numbers, weigh every candidate, and draw one by weighted chance — is faithfully the same, and can therefore teach the shape of the real thing.</p>
+
+    <h2><span class="n">2</span>From text to numbers · tokenisation</h2>
+    <p>The prompt is cut by a regular expression into <strong>tokens</strong> — words and individual marks of punctuation — and each distinct token is assigned an integer from a fixed catalogue (here, ~231 entries; a real model holds 50,000–200,000). Everything downstream is arithmetic on these integers. This is genuine, and identical in kind to what an LLM does.</p>
+
+    <h2><span class="n">3</span>The heart · an interpolated n-gram model</h2>
+    <p>During training — a single, fast pass over the 79 sentences — the engine tallies three frequency tables:</p>
+    <ul>
+      <li><strong>Unigrams</strong> — how often each token appears, <code>P₁(w)</code>.</li>
+      <li><strong>Bigrams</strong> — how often token <em>w</em> follows token <em>a</em>, <code>P₂(w | a)</code>.</li>
+      <li><strong>Trigrams</strong> — how often <em>w</em> follows the pair <em>(a, b)</em>, <code>P₃(w | a, b)</code>.</li>
+    </ul>
+    <p>To score every possible next token, it blends all three by <strong>linear interpolation with back-off</strong>:</p>
+    <div class="formula">P(w | context)  ∝  λ₃·P₃(w | a,b)  +  λ₂·P₂(w | b)  +  λ₁·P₁(w)
+
+with   λ₃ = 0.72,   λ₂ = 0.21,   λ₁ = 0.07</div>
+    <p>When the higher-order context has never been seen, its term drops out and the weights renormalise — so the model gracefully <strong>backs off</strong> from trigram to bigram to unigram evidence. Rarer contexts lean on general word frequencies; familiar ones are sharply predicted. This back-off is the counting-model ancestor of what a neural network learns to do smoothly and implicitly.</p>
+    <p>The result is a genuine <strong>probability distribution over the entire catalogue</strong> — one number per token, all summing to 1. Those numbers are precisely what the Manometer Wall (Station VI) displays.</p>
+
+    <h2><span class="n">4</span>Temperature · reshaping the odds</h2>
+    <p>Before a word is drawn, the distribution is reshaped by a single dial — <strong>temperature, T</strong> — using exactly the exponentiation a real sampler uses:</p>
+    <div class="formula">q(w)  ∝  P(w) ^ (1 / T)         then renormalised so Σ q = 1</div>
+    <ul>
+      <li><strong>T → 0 (frost):</strong> the favourite's share approaches 1 — nearly deterministic, and repetitive.</li>
+      <li><strong>T = 1:</strong> the distribution is used as-is.</li>
+      <li><strong>T large (fever):</strong> every candidate flattens toward equal chance — inventive, and eventually incoherent.</li>
+    </ul>
+    <p>Move the boiler lever and the gauges re-compute this in real time. This is the same mathematics as <em>softmax temperature</em> in a production model; only the source of the underlying <code>P(w)</code> differs.</p>
+
+    <h2><span class="n">5</span>Sampling · drawing the lot</h2>
+    <p>One token is chosen by a <strong>weighted lottery</strong> (inverse-CDF sampling): draw a uniform random number <em>r</em> ∈ [0, 1), walk the candidates accumulating their probabilities, and take the one in whose interval <em>r</em> falls. High-probability tokens own wider intervals and are drawn more often — but not always. This is why the same prompt, asked twice, can answer differently. The Lottery Drum (Station VII) is literally this draw.</p>
+
+    <h2><span class="n">6</span>The loop, and stopping</h2>
+    <p>The drawn token is appended to the context and the whole computation runs again for the next word — the model is <strong>autoregressive</strong>. A special <strong>stop token</strong> sits in the catalogue like any other; when the lottery draws it, the engine rests. There is no finished sentence waiting inside — each word is minted the instant before you read it.</p>
+
+    <div class="rule"></div>
+
+    <h2>What is genuine, and what is illustrative</h2>
+    <p>In the spirit of the cabinet's candour:</p>
+    <table class="tbl">
+      <tr><th>Element</th><th>Status</th></tr>
+      <tr><td>Tokenisation, n-gram counts, interpolation, temperature, sampling, stop token</td><td><span class="g">Genuine</span> — real arithmetic, computed live</td></tr>
+      <tr><td>The probability gauges (Station VI)</td><td><span class="g">Genuine</span> — the true distribution for the present context</td></tr>
+      <tr><td>Embeddings / dial-columns (Station III)</td><td><span class="i">Illustrative</span> — hashed pseudo-vectors nudged toward hand-drawn “meaning” clusters, to show that <em>meaning becomes position</em>; a real model learns these</td></tr>
+      <tr><td>Attention linkages (Station IV)</td><td><span class="i">Illustrative</span> — a recency curve and a co-occurrence affinity, to show <em>a word attending to context</em>; a real model computes these from the vectors at every layer</td></tr>
+      <tr><td>The Grand Mill's floors (Station V)</td><td><span class="i">Illustrative</span> — one token's numbers refined layer by layer, shown as shifting bars; the count-based engine has no such interior</td></tr>
+    </table>
+
+    <h2>The honest gap to a real LLM</h2>
+    <p>The pipeline is the same; the scale and the source of the probabilities are not. A frontier model replaces <em>counting</em> with a hundred layers of learned attention and arithmetic over a <strong>thousand milliard (10¹²) parameters</strong>, against this cabinet's ~1,334 counting-wheels. It is the difference between a music box and an orchestra — but a music box is still, honestly, playing the tune.</p>
+
+    <div class="callout">Every formula above is implemented in the single HTML file; there is nothing to install and nothing hidden. Read the source, and you have read the whole engine.</div>
+  </article>
+
+  <div class="foot"><a href="analytical-language-engine.html">⟵ Return to the Engine</a></div>
+  <p class="colophon">Devised by Messrs. Horrocks &amp; Claude · Oldham, Lancs. · © MMXXVI</p>
+</div>
+</body></html>
