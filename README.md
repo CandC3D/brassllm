@@ -13,6 +13,12 @@ Hosted copies:
 - GitHub Pages: https://candc3d.github.io/brassllm/
 - Claude artifact: https://claude.ai/code/artifact/f0c03be7-7e4f-49c5-ba5d-83f67ae0eae2
 
+Shared links show a brass social-preview card (`og-image.png`, 1200×630) and a
+gear favicon (SVG + `.ico` + PNGs + Apple touch icon + `site.webmanifest`).
+Regenerate all of them with `python gen_assets.py` (needs Pillow + Georgia fonts;
+the script lives with the project). `index.html` is the share landing carrying the
+Open Graph / Twitter meta and redirecting into the engine.
+
 ## The eight stations
 
 | Station | Mechanism | Real concept |
