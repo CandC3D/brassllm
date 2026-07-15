@@ -313,20 +313,23 @@ html.running .gspin{animation-play-state:running}
 /* station VIII — tape & crank */
 .tapegrid{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:14px;align-items:center}
 @media (max-width:640px){.tapegrid{grid-template-columns:1fr}}
-#tapewrap{overflow-x:auto;padding:6px 0}
+#tapewrap{padding:6px 0;line-height:60px}
 #tape{
-  display:inline-flex;align-items:center;flex-wrap:nowrap;min-width:100%;position:relative;
-  background:linear-gradient(#f4ecd6,#e8dcbb);border-radius:3px;padding:16px 24px;
-  box-shadow:0 4px 10px rgba(0,0,0,.5);
+  display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  border-radius:3px;padding:13px 22px;
+  background-image:
+    radial-gradient(circle at 7px 3px,#a59062 0 1.7px,rgba(0,0,0,0) 2.6px),
+    radial-gradient(circle at 7px 3px,#a59062 0 1.7px,rgba(0,0,0,0) 2.6px),
+    linear-gradient(#f4ecd6,#e8dcbb);
+  background-size:16px 6px,16px 6px,auto;
+  background-position:left 8px top 4px,left 8px bottom 4px,0 0;
+  background-repeat:repeat-x,repeat-x,repeat;
+  box-shadow:0 3px 8px rgba(0,0,0,.45);
 }
-#tape::before,#tape::after{content:"";position:absolute;left:0;right:0;height:6px;
-  background-image:radial-gradient(circle at 7px 3px,#a59062 0 1.7px,rgba(0,0,0,0) 2.6px);background-size:16px 6px}
-#tape::before{top:3px}
-#tape::after{bottom:3px}
 .stamp{font-family:var(--mono);font-size:15.5px;letter-spacing:.04em;padding:1px 4px;white-space:nowrap;display:inline-block}
 .stamp.inked{animation:inkpress calc(.32s*var(--tk)) ease-out}
 @keyframes inkpress{0%{transform:scale(1.3);opacity:.35}55%{transform:scale(.93);opacity:1}100%{transform:scale(1)}}
-#tape.thud{animation:thud calc(.3s*var(--tk)) ease-out}
+#tapewrap.thud{animation:thud calc(.3s*var(--tk)) ease-out}
 @keyframes thud{30%{transform:translateY(2px)}}
 .stamper{position:fixed;z-index:98;pointer-events:none;width:30px;height:52px;
   transform:translate(-50%,calc(-100% - 26px))}
@@ -1372,7 +1375,6 @@ function stampTape(id,kind){
   sp.className='stamp '+kind+(kind!=='prompt'?' justnow':'');
   sp.textContent=vocabArr[id];
   el.tape.appendChild(sp);
-  el.tapewrap.scrollLeft=el.tapewrap.scrollWidth;
 }
 /* the printing action: the stamper strikes, the word is inked under the blow */
 async function stampAction(id,kind,q){
@@ -1381,7 +1383,6 @@ async function stampAction(id,kind,q){
   sp.textContent=vocabArr[id];
   sp.style.visibility='hidden';
   el.tape.appendChild(sp);
-  el.tapewrap.scrollLeft=el.tapewrap.scrollWidth;
   await sleep(q?40:80);
   const r=sp.getBoundingClientRect();
   const st=document.createElement('div');
@@ -1397,7 +1398,7 @@ async function stampAction(id,kind,q){
   FOLEY.play('thock');
   sp.style.visibility='visible';
   sp.classList.add('inked');
-  el.tape.classList.remove('thud'); void el.tape.offsetWidth; el.tape.classList.add('thud');
+  el.tapewrap.classList.remove('thud'); void el.tapewrap.offsetWidth; el.tapewrap.classList.add('thud');
   await sleep(q?180:330);
   st.remove();
 }
