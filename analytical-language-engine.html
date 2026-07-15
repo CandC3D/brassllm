@@ -364,6 +364,13 @@ html.running .gspin{animation-play-state:running}
   position:fixed;right:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:11px;
   background:linear-gradient(#241811,#170e07);border:2px solid #7a6130;border-radius:11px;padding:10px 15px;
   box-shadow:0 8px 22px rgba(0,0,0,.65);font-size:13px;color:#ecdfba;max-width:min(430px,92vw);flex-wrap:wrap;
+  transform:translateX(0);transition:transform calc(.4s*var(--tk)) ease;
+}
+#telegraph.waiting{transform:translateX(calc(-50vw + 50% + 14px));font-size:14px;border-color:#c9a24b;
+  animation:waitglow 1.8s ease-in-out infinite}
+@keyframes waitglow{
+  0%,100%{box-shadow:0 8px 22px rgba(0,0,0,.65)}
+  50%{box-shadow:0 8px 22px rgba(0,0,0,.65),0 0 18px 3px rgba(255,217,138,.35)}
 }
 #tglamp{width:10px;height:10px;border-radius:50%;background:#4a3812;flex:none}
 html.running #tglamp{background:var(--glow);box-shadow:0 0 9px var(--glow);animation:lampblink 1.1s ease-in-out infinite}
@@ -371,6 +378,7 @@ html.running #tglamp{background:var(--glow);box-shadow:0 0 9px var(--glow);anima
 #btnProceed,#tgCrank,#tgTop{display:none}
 #btnProceed.show,#tgCrank.show,#tgTop.show{display:inline-block}
 .btn.tgbtn{padding:6px 11px;font-size:11px;border-radius:7px}
+#btnProceed.show{display:block;flex-basis:100%;margin:7px auto 0;font-size:12.5px;padding:8px 24px}
 
 /* honesty footer */
 .honesty{margin-top:36px}
@@ -413,6 +421,7 @@ h2,h3{text-wrap:balance}
   html{scroll-behavior:auto}
   .gspin,#crankgrp.turn{animation:none!important}
   html.running #tglamp{animation:none}
+  #telegraph.waiting{animation:none}
 }
 </style>
 
@@ -1429,9 +1438,15 @@ function refreshButtons(){
 }
 let proceedRes=null;
 function waitProceed(){
+  const tg=$('#telegraph'); tg.classList.add('waiting');
   return new Promise(res=>{ proceedRes=res; el.proceed.classList.add('show'); })
-    .finally(()=>{ el.proceed.classList.remove('show'); proceedRes=null; });
+    .finally(()=>{ el.proceed.classList.remove('show'); tg.classList.remove('waiting'); proceedRes=null; });
 }
+addEventListener('keydown',e=>{ /* Enter advances a waiting demonstration */
+  if(proceedRes&&e.key==='Enter'&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)){
+    e.preventDefault(); FOLEY.play('press'); proceedRes();
+  }
+});
 el.proceed.addEventListener('click',()=>{ FOLEY.play('press'); if(proceedRes) proceedRes(); });
 
 /* ---------------- the eight phases of one revolution ---------------- */

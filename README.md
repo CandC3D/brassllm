@@ -35,7 +35,7 @@ Open Graph / Twitter meta and redirecting into the engine.
 ## Presenting
 
 1. Type a few opening words (this small engine continues them — Station I's plaque explains how real chat engines handle whole questions via the transcript trick) or take a ready-punched card, then **Begin the Demonstration**.
-2. The tour pauses at every station by default — press *Proceed* (bottom-right chip) to advance at your own pace. Untick **Wait at each station** for a self-running tour.
+2. The tour pauses at every station by default — the telegraph chip slides to bottom-center and glows; press *Proceed* (or the Enter key) to advance at your own pace. Untick **Wait at each station** for a self-running tour.
 3. Thereafter **Turn the Crank** for one word at a time, or **Run the Engine** until it draws the stop token ∎.
 4. Move the boiler lever (Station VII) mid-run — the gauges reshape instantly. FROST ≈ greedy decoding; FEVERISH ≈ chaos.
 5. Append `?fast=1` to the URL for quick-cycling animations (rehearsals, impatient audiences).
