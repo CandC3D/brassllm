@@ -101,7 +101,7 @@ In the spirit of the cabinet's candour:
 | Attention linkages (Station IV) | **Illustrative** — a recency curve and a co-occurrence "affinity", to show *a word attending to context*; a real model computes these from the vectors at every layer |
 | The Grand Mill's floors (Station V) | **Illustrative** — the refinement of one token's numbers layer by layer, shown as shifting bars; the count-based engine has no such interior |
 
-## The honest gap to a real LLM
+## Model and Reality
 
 The pipeline is the same; the scale and the source of the probabilities are not.
 A frontier model replaces *counting* with a hundred layers of learned attention and

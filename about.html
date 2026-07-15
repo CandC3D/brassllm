@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="The mathematics behind the Analytical Language Engine — an honest account of the n-gram interpolation, temperature, and sampling that move its gauges."><meta name="theme-color" content="#1a100a"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"><meta property="og:type" content="article"><meta property="og:title" content="The Mathematics Behind the Engine"><meta property="og:description" content="An honest account of the real arithmetic — n-gram interpolation, temperature, sampling — that drives the Analytical Language Engine."><meta property="og:url" content="https://candc3d.github.io/brassllm/about.html"><meta property="og:image" content="https://candc3d.github.io/brassllm/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://candc3d.github.io/brassllm/og-image.png"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://candc3d.github.io/brassllm/about.html"><!-- Google Analytics: replace G-XXXXXXXXXX with the real GA4 Measurement ID --><script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script><meta name="description" content="The mathematics behind the Analytical Language Engine — an honest account of the n-gram interpolation, temperature, and sampling that move its gauges."><meta name="theme-color" content="#1a100a"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"><meta property="og:type" content="article"><meta property="og:title" content="The Mathematics Behind the Engine"><meta property="og:description" content="An honest account of the real arithmetic — n-gram interpolation, temperature, sampling — that drives the Analytical Language Engine."><meta property="og:url" content="https://candc3d.github.io/brassllm/about.html"><meta property="og:image" content="https://candc3d.github.io/brassllm/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://candc3d.github.io/brassllm/og-image.png"></head><body>
 <title>The Mathematics Behind the Engine</title>
 <style>
 :root{
@@ -64,6 +64,12 @@ body{
 .foot a:hover{filter:brightness(1.06)}
 .colophon{text-align:center;margin-top:16px;font-size:12px;color:#8d7947;font-style:italic}
 h2,h1{text-wrap:balance}
+.term{border-bottom:1px dotted #8a6d35;cursor:help;position:relative}
+.term::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) translateY(4px);width:max-content;max-width:min(300px,72vw);background:linear-gradient(#241811,#170e07);color:#ecdfba;border:1px solid #8a734a;border-radius:8px;padding:9px 12px;font-family:Georgia,serif;font-size:12.5px;font-weight:400;font-style:normal;line-height:1.45;letter-spacing:0;text-align:left;box-shadow:0 6px 18px rgba(0,0,0,.45);opacity:0;visibility:hidden;pointer-events:none;z-index:20;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.term::before{content:"";position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);border:7px solid transparent;border-top-color:#8a734a;opacity:0;visibility:hidden;transition:opacity .18s;z-index:21}
+.term:hover::after,.term:focus-visible::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.term:hover::before,.term:focus-visible::before{opacity:1;visibility:visible}
+.term:focus-visible{outline:2px solid var(--brass-hi);outline-offset:2px}
 </style>
 
 <div class="wrap">
@@ -77,19 +83,19 @@ h2,h1{text-wrap:balance}
     <p class="lede">The Analytical Language Engine is a working model, not a mock-up. When its gauges rise, they are driven by real arithmetic performed live in your browser.</p>
 
     <h2><span class="n">1</span>What kind of engine it is</h2>
-    <p>A modern Large Language Model predicts the next token with a neural network of hundreds of billions of learned parameters. This cabinet does something far humbler that nonetheless has the <strong>same shape</strong>: it is an <strong>n-gram Markov model</strong> — it predicts the next word by counting how often words followed one another in a small library of <strong>79 sentences</strong>. We call it, fondly, an <em>Infinitesimal Language Model</em>. The mechanism — read the text, turn it into numbers, weigh every candidate, and draw one by weighted chance — is faithfully the same, and can therefore teach the shape of the real thing.</p>
+    <p>A modern Large Language Model predicts the next token with a neural network of hundreds of billions of learned parameters. This cabinet does something far humbler that nonetheless has the <strong>same shape</strong>: it is an <strong><span class="term" tabindex="0" data-def="A model that predicts the next item from counts of what followed the same short run of preceding items (an “n-gram”) in a body of text. “Markov” names the assumption that only the recent context matters, not everything before it.">n-gram Markov model</span></strong> — it predicts the next word by counting how often words followed one another in a small library of <strong>79 sentences</strong>. We call it, fondly, an <em>Infinitesimal Language Model</em>. The mechanism — read the text, turn it into numbers, weigh every candidate, and draw one by weighted chance — is faithfully the same, and can therefore teach the shape of the real thing.</p>
 
     <h2><span class="n">2</span>From text to numbers · tokenisation</h2>
-    <p>The prompt is divided by a regular expression into <strong>tokens</strong>: words and individual marks of punctuation. Each distinct token is assigned an integer from a fixed catalogue (here, ~231 entries; a real model holds 50,000–200,000). Everything that happens in the model is arithmetic on these integers. This is identical in kind to what an LLM does.</p>
+    <p>The prompt is divided by a regular expression into <strong><span class="term" tabindex="0" data-def="The units an LLM actually reads and writes: common words, word-fragments, and punctuation from a fixed catalogue. Text becomes a sequence of token numbers before the model sees it.">tokens</span></strong>: words and individual marks of punctuation. Each distinct token is assigned an integer from a fixed catalogue (here, ~231 entries; a real model holds 50,000–200,000). Everything that happens in the model is arithmetic on these integers. This is identical in kind to what an LLM does.</p>
 
     <h2><span class="n">3</span>The heart · an interpolated n-gram model</h2>
     <p>During training — a single, fast pass over the 79 sentences — the engine tallies three frequency tables:</p>
     <ul>
-      <li><strong>Unigrams</strong> — how often each token appears, <code>P₁(w)</code>.</li>
-      <li><strong>Bigrams</strong> — how often token <em>w</em> follows token <em>a</em>, <code>P₂(w | a)</code>.</li>
-      <li><strong>Trigrams</strong> — how often <em>w</em> follows the pair <em>(a, b)</em>, <code>P₃(w | a, b)</code>.</li>
+      <li><strong><span class="term" tabindex="0" data-def="Counts of single tokens on their own — how often each word appears, regardless of what surrounds it.">Unigrams</span></strong> — how often each token appears, <code>P₁(w)</code>.</li>
+      <li><strong><span class="term" tabindex="0" data-def="Counts of token pairs — how often one specific token immediately follows another.">Bigrams</span></strong> — how often token <em>w</em> follows token <em>a</em>, <code>P₂(w | a)</code>.</li>
+      <li><strong><span class="term" tabindex="0" data-def="Counts of token triples — how often a token follows one specific pair of tokens immediately before it.">Trigrams</span></strong> — how often <em>w</em> follows the pair <em>(a, b)</em>, <code>P₃(w | a, b)</code>.</li>
     </ul>
-    <p>To score every possible next token, it blends all three by <strong>linear interpolation with back-off</strong>:</p>
+    <p>To score every possible next token, it blends all three by <strong><span class="term" tabindex="0" data-def="Blending predictions from several context lengths into one weighted average — leaning more on the longer context (trigram) when it has enough evidence, and “backing off” to a shorter, more reliable context (bigram, then unigram) when it doesn’t.">linear interpolation with back-off</span></strong>:</p>
     <div class="formula">P(w | context)  ∝  λ₃·P₃(w | a,b)  +  λ₂·P₂(w | b)  +  λ₁·P₁(w)
 
 with   λ₃ = 0.72,   λ₂ = 0.21,   λ₁ = 0.07</div>
@@ -97,20 +103,20 @@ with   λ₃ = 0.72,   λ₂ = 0.21,   λ₁ = 0.07</div>
     <p>The result is a genuine <strong>probability distribution over the entire catalogue</strong> — one number per token, all summing to 1. Those numbers are precisely what the Manometer Wall (Station VI) displays.</p>
 
     <h2><span class="n">4</span>Temperature · reshaping the odds</h2>
-    <p>Before a word is drawn, the distribution is reshaped by a single dial — <strong>temperature, T</strong> — using exactly the exponentiation a real sampler uses:</p>
+    <p>Before a word is drawn, the distribution is reshaped by a single dial — <strong><span class="term" tabindex="0" data-def="A dial applied to the probabilities before the draw. Low sharpens them toward the favourite (predictable); high flattens them (varied, and at the extreme, incoherent).">temperature, T</span></strong> — using exactly the exponentiation a real sampler uses:</p>
     <div class="formula">q(w)  ∝  P(w) ^ (1 / T)         then renormalised so Σ q = 1</div>
     <ul>
       <li><strong>T → 0 (frost):</strong> the favourite's share approaches 1 — nearly deterministic, and repetitive.</li>
       <li><strong>T = 1:</strong> the distribution is used as-is.</li>
       <li><strong>T large (fever):</strong> every candidate flattens toward equal chance — inventive, and eventually incoherent.</li>
     </ul>
-    <p>Move the boiler lever and the gauges re-compute this in real time. This is the same mathematics as <em>softmax temperature</em> in a production model; only the source of the underlying <code>P(w)</code> differs.</p>
+    <p>Move the boiler lever and the gauges re-compute this in real time. This is the same mathematics as <em><span class="term" tabindex="0" data-def="The standard name, in real neural networks, for exactly this reshaping of a probability distribution before sampling — the same formula this cabinet uses.">softmax temperature</span></em> in a production model; only the source of the underlying <code>P(w)</code> differs.</p>
 
     <h2><span class="n">5</span>Sampling · drawing the lot</h2>
-    <p>One token is chosen by a <strong>weighted lottery</strong> (inverse-CDF sampling): draw a uniform random number <em>r</em> ∈ [0, 1), evaluate the candidates accumulating their probabilities, and take the one in whose interval <em>r</em> falls. High-probability tokens own wider intervals and are drawn more often — but not always. This is why the same prompt, asked twice, can answer differently. The Lottery Drum (Station VII) is literally this draw.</p>
+    <p>One token is chosen by a <strong><span class="term" tabindex="0" data-def="Picking one outcome at random, but with better odds for higher-probability candidates — like a raffle where popular tickets fill more of the drum. “Inverse-CDF” names the specific bookkeeping: accumulate probabilities into running intervals and see which one a random draw lands in.">weighted lottery</span></strong> (inverse-CDF sampling): draw a uniform random number <em>r</em> ∈ [0, 1), evaluate the candidates accumulating their probabilities, and take the one in whose interval <em>r</em> falls. High-probability tokens own wider intervals and are drawn more often — but not always. This is why the same prompt, asked twice, can answer differently. The Lottery Drum (Station VII) is literally this draw.</p>
 
     <h2><span class="n">6</span>The loop, and stopping</h2>
-    <p>The drawn token is appended to the context and the whole computation runs again for the next word — the model is <strong>autoregressive</strong>. A special <strong>stop token</strong> sits in the catalogue like any other; when the lottery draws it, the engine rests. There is no finished sentence waiting inside — each word is minted the instant before you read it.</p>
+    <p>The drawn token is appended to the context and the whole computation runs again for the next word — the model is <strong><span class="term" tabindex="0" data-def="One token at a time: each choice is appended to the input before the model computes the next, so the whole context is re-read at every step.">autoregressive</span></strong>. A special <strong><span class="term" tabindex="0" data-def="A special catalogue entry that means “the reply is finished”. The model ends its turn by predicting it, exactly as it predicts a word.">stop token</span></strong> sits in the catalogue like any other; when the lottery draws it, the engine rests. There is no finished sentence waiting inside — each word is minted the instant before you read it.</p>
 
     <div class="rule"></div>
 
@@ -120,13 +126,13 @@ with   λ₃ = 0.72,   λ₂ = 0.21,   λ₁ = 0.07</div>
       <tr><th>Element</th><th>Status</th></tr>
       <tr><td>Tokenisation, n-gram counts, interpolation, temperature, sampling, stop token</td><td><span class="g">Genuine</span> — real arithmetic, computed live</td></tr>
       <tr><td>The probability gauges (Station VI)</td><td><span class="g">Genuine</span> — the true distribution for the present context</td></tr>
-      <tr><td>Embeddings / dial-columns (Station III)</td><td><span class="i">Illustrative</span> — hashed pseudo-vectors nudged toward hand-drawn “meaning” clusters, to show that <em>meaning becomes position</em>; a real model learns these</td></tr>
-      <tr><td>Attention linkages (Station IV)</td><td><span class="i">Illustrative</span> — a recency curve and a co-occurrence affinity, to show <em>a word attending to context</em>; a real model computes these from the vectors at every layer</td></tr>
+      <tr><td><span class="term" tabindex="0" data-def="The long list of numbers — thousands of them — that stands for a token inside the model. Learned, not written; words used alike end up with alike numbers.">Embeddings</span> / dial-columns (Station III)</td><td><span class="i">Illustrative</span> — hashed pseudo-vectors nudged toward hand-drawn “meaning” clusters, to show that <em>meaning becomes position</em>; a real model learns these</td></tr>
+      <tr><td><span class="term" tabindex="0" data-def="The mechanism by which each position computes how much every earlier token should influence it — the 2017 invention behind modern LLMs.">Attention</span> linkages (Station IV)</td><td><span class="i">Illustrative</span> — a recency curve and a co-occurrence affinity, to show <em>a word attending to context</em>; a real model computes these from the vectors at every layer</td></tr>
       <tr><td>The Grand Mill's floors (Station V)</td><td><span class="i">Illustrative</span> — one token's numbers refined layer by layer, shown as shifting bars; the count-based engine has no such interior</td></tr>
     </table>
 
-    <h2>The honest gap to a real LLM</h2>
-    <p>The pipeline is the same; the scale and the source of the probabilities are not. A frontier model replaces <em>counting</em> with a hundred layers of learned attention and arithmetic over a <strong>thousand milliard (10¹²) parameters</strong>, against this cabinet's ~1,334 counting-wheels. It is the difference between a music box and an orchestra — both can play the same tune, just at different scales.</p>
+    <h2>Model and Reality</h2>
+    <p>The pipeline is the same; the scale and the source of the probabilities are not. A frontier model replaces <em>counting</em> with a hundred layers of learned attention and arithmetic over a <strong>thousand milliard (10¹²) <span class="term" tabindex="0" data-def="The adjustable numbers inside the model — the screws. Modern LLMs carry hundreds of billions; training is what sets them.">parameters</span></strong>, against this cabinet's ~1,334 counting-wheels. It is the difference between a music box and an orchestra — both can play the same tune, just at different scales.</p>
 
     <div class="callout">Every formula above is implemented in the single HTML file; there is nothing to install and nothing hidden. Read the source, and you have read the whole engine.</div>
   </article>
