@@ -1396,6 +1396,7 @@ async function stampAction(id,kind,q){
   FOLEY.play('press');
   await sleep(q?135:230); /* the moment of impact */
   FOLEY.play('thock');
+  if(kind==='fin') FOLEY.play('bell');
   sp.style.visibility='visible';
   sp.classList.add('inked');
   el.tapewrap.classList.remove('thud'); void el.tapewrap.offsetWidth; el.tapewrap.classList.add('thud');
@@ -1484,7 +1485,7 @@ async function phPrint(q){
   await sleep(q?480:1000);
   fly.remove();
   S.ctx.push(chosen); S.rev++; setRev(); crankTurn();
-  if(chosen===FINID){ await stampAction(chosen,'fin',q); S.finished=true; FOLEY.play('bell'); }
+  if(chosen===FINID){ await stampAction(chosen,'fin',q); S.finished=true; }
   else await stampAction(chosen,'gen',q);
   renderRack(false);
   await sleep(q?100:280);
