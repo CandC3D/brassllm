@@ -169,6 +169,60 @@ body{
 .slug.hidden{opacity:0}
 #rackmeta{margin-top:11px;font-family:var(--mono);font-size:12px;color:#c9b787}
 
+/* the type drawer */
+.drawerbar{display:flex;justify-content:center;padding:0 14px 13px}
+#drawerpull{
+  font-family:var(--serif);letter-spacing:.12em;text-transform:uppercase;font-size:11.5px;color:#3c2d10;
+  text-shadow:0 1px 0 rgba(255,240,190,.5);cursor:pointer;
+  background:linear-gradient(#e8cd85,#b08b3e 62%,#96742e);border:1px solid #4f3c15;border-radius:0 0 13px 13px;
+  padding:7px 18px 9px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6), inset 0 -3px 5px rgba(70,50,15,.5), 0 3px 7px rgba(0,0,0,.45);
+}
+#drawerpull:hover{filter:brightness(1.06)}
+#drawerpull:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
+#typedrawer{overflow:hidden;max-height:0;transition:max-height calc(.65s*var(--tk)) cubic-bezier(.3,.8,.3,1);margin:0 14px}
+#typedrawer.open{max-height:780px;margin-bottom:14px}
+.drawerinner{
+  background:linear-gradient(#2a1c10,#1c1109);border:1px solid #513e18;border-radius:10px;padding:12px;
+  box-shadow:inset 0 3px 14px rgba(0,0,0,.6);
+}
+.drawertools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.dsort{
+  font-family:var(--serif);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#3c2d10;cursor:pointer;
+  background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:14px;padding:4px 11px;
+}
+.dsort.on{background:linear-gradient(#cf9a62,#a86a35);box-shadow:inset 0 1px 3px rgba(60,30,10,.5)}
+.dsort:focus-visible{outline:2px solid var(--glow)}
+#drawerfind{
+  font-family:var(--mono);font-size:12px;color:var(--ink);background:linear-gradient(#f0e6cb,#e2d3ae);
+  border:1px solid #8a734a;border-radius:6px;padding:5px 9px;width:150px;
+}
+#drawerfind:focus-visible{outline:2px solid var(--glow)}
+#drawercount{font-family:var(--mono);font-size:11px;color:#c9b787;margin-left:auto}
+#drawercase{
+  display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;align-items:flex-end;
+  max-height:340px;overflow-y:auto;padding:10px;border-radius:8px;border:1px solid #46340f;
+  background:repeating-linear-gradient(90deg, rgba(0,0,0,.12) 0 2px, rgba(0,0,0,0) 2px 9px), linear-gradient(#241811,#180e07);
+}
+.bayhead{width:100%;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#b99c58;margin:8px 2px 2px;border-bottom:1px dotted #5c4718;padding-bottom:3px;font-family:var(--serif)}
+.sort{
+  display:inline-flex;flex-direction:column;align-items:center;gap:0;padding:3px 7px 2px;border-radius:5px;cursor:pointer;
+  background:linear-gradient(#e8cd85,#b08b3e 65%,#96742e);border:1px solid #4f3c15;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.55), 0 1px 3px rgba(0,0,0,.4);
+}
+.sort .w{font-family:var(--mono);font-weight:700;font-size:11.5px;color:#33260e;line-height:1.2}
+.sort .n{font-family:var(--mono);font-size:7.5px;letter-spacing:.05em;color:#5f4a1d}
+.sort.punc .w{color:#6d5622}
+.sort.inuse{outline:2px solid var(--glow);box-shadow:0 0 9px rgba(255,217,138,.45)}
+.sort.sel{background:linear-gradient(#cf9a62,#a86a35)}
+.sort:focus-visible{outline:2px solid var(--glow)}
+#sortcard{
+  margin-top:10px;background:linear-gradient(175deg,#f2e8cf,#e4d5b3);border:1px solid #ac9366;border-radius:8px;
+  padding:10px 14px;color:var(--ink);font-size:13px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;min-height:44px;
+}
+#sortcard .scmain{flex:1;min-width:220px;line-height:1.5}
+#sortcard .scword{font-family:var(--mono);font-weight:700;font-size:16px}
+.drawerplaque{margin-top:10px;font-size:12.5px;color:#c9b787;font-style:italic}
+
 /* station III — dials */
 .dcol{
   background:linear-gradient(#f0e6cb,#e0d1ac);border:1px solid #9c8557;border-radius:8px;padding:9px 8px;
@@ -442,7 +496,7 @@ h2,h3{text-wrap:balance}
 <section class="station plate screws" id="st2" aria-labelledby="h-st2">
   <div class="sthead">
     <span class="stno">Station II</span>
-    <h2 class="stname" id="h-st2">The Type-Cutting Works</h2>
+    <h2 class="stname" id="h-st2">The Type-Sorting Works</h2>
     <span class="stfig">Fig. 2 — tokenisation <span class="stlamp"></span></span>
   </div>
   <div class="stbody">
@@ -458,6 +512,24 @@ h2,h3{text-wrap:balance}
       <p class="conceit">The card is read and matched to slugs — standard pieces from the engine’s type-case. Each slug bears a catalogue number, and from here onward the engine handles numbers only.</p>
       <p class="truth"><span class="lead">In truth —</span> text is broken into <b>tokens</b> from a fixed catalogue of roughly 50,000–200,000 pieces. Common words are one token; rarer words are cut into fragments (<i>un·fathom·able</i>). The machine never sees letters or words as you do — only these numbers.</p>
       <p class="fine">This cabinet’s catalogue holds <b><span id="vN">—</span> slugs</b>; a slug marked ✶ was cut fresh and is a stranger to it. The rack holds only <b>24 slugs</b> — its <i>context window</i>. Push in more and the oldest fall off the far end, forgotten. (A modern engine’s rack holds 200,000 or more.)</p>
+    </div>
+  </div>
+  <div class="drawerbar">
+    <button id="drawerpull" aria-expanded="false" aria-controls="typedrawer">⟓ The Type Drawer · every sort in the house</button>
+  </div>
+  <div id="typedrawer">
+    <div class="drawerinner">
+      <div class="drawertools" role="group" aria-label="Arrange the drawer">
+        <button class="dsort on" data-mode="no">By №</button>
+        <button class="dsort" data-mode="az">A–Z</button>
+        <button class="dsort" data-mode="freq">By casting</button>
+        <button class="dsort" data-mode="cluster">By district</button>
+        <input id="drawerfind" type="text" placeholder="find a sort…" autocomplete="off" aria-label="Find a sort">
+        <span id="drawercount"></span>
+      </div>
+      <div id="drawercase"></div>
+      <div id="sortcard"><span class="mnote">Pick up a sort to read its particulars.</span></div>
+      <p class="drawerplaque">In truth — this drawer is the model’s entire vocabulary. Every reply it will ever compose is set from these sorts and no others; a word absent from the drawer cannot be said. A real engine’s case holds 50,000–200,000 sorts — larger, but every bit as closed. Sorts marked ✶ were cut fresh this session; sorts aglow are out at the composing line.</p>
     </div>
   </div>
 </section>
@@ -712,6 +784,7 @@ const FOLEY=(()=>{
     chunk:()=>{ tone('sine',110,60,0.11,0.14); noise(0.03,0.05,'highpass',2200); },
     thock:()=>{ tone('sine',130,70,0.07,0.2); noise(0.012,0.09,'highpass',2000); },
     bell:()=>tone('sine',880,0,0.5,0.08),
+    drawerroll:()=>noise(0.4,0.07,'lowpass',300,140,1),
   };
   function play(name,p){
     log.push(name); if(log.length>200) log.shift();
@@ -1420,7 +1493,7 @@ async function phPrint(q){
 }
 const PHASES=[
   {st:1,tg:'Reading the card…',fn:phCard},
-  {st:2,tg:'Cutting the slugs…',fn:phChop},
+  {st:2,tg:'Sorting the slugs…',fn:phChop},
   {st:3,tg:'Setting the dials…',fn:phDials},
   {st:4,tg:'Tightening the linkages…',fn:phAttn},
   {st:5,tg:'The mill turns…',fn:phMill},
@@ -1527,6 +1600,74 @@ addEventListener('scroll',(()=>{ let t; return ()=>{ clearTimeout(t); t=setTimeo
 addEventListener('resize',(()=>{ let t; return ()=>{ clearTimeout(t);
   t=setTimeout(()=>{ if(S.ctx.length) renderAttn(); },220); }; })());
 
+/* ---------------- the type drawer ---------------- */
+const DRAWER={mode:'no',open:false};
+const BAYS=[['machina','Machina — the engine’s own words'],['urbs','Urbs — the city'],
+            ['natura','Natura — weather & the heavens'],['fabula','Fabula — story & sentiment'],
+            [null,'Mortar & points — the small words that bind']];
+function topNext(id,k){
+  const e=bi.get(id); if(!e) return [];
+  return [...e.m.entries()].sort((a,b)=>b[1]-a[1]).slice(0,k).map(([i])=>vocabArr[i]);
+}
+function renderDrawer(){
+  const caseEl=$('#drawercase'); if(!caseEl) return;
+  const q=($('#drawerfind').value||'').trim().toLowerCase();
+  const inuse=new Set(ctxWin());
+  let items=vocabArr.map((w,id)=>({w,id,count:uniC[id]||0,cluster:clusterOf(w)||null,punc:PUNCT.has(w)||w===FIN}));
+  if(q) items=items.filter(it=>it.w.includes(q));
+  const maxC=Math.max(1,...items.map(i=>i.count));
+  const az=(a,b)=>a.w<b.w?-1:a.w>b.w?1:0;
+  if(DRAWER.mode==='az') items.sort(az);
+  else if(DRAWER.mode==='freq') items.sort((a,b)=>b.count-a.count||az(a,b));
+  else if(DRAWER.mode==='no') items.sort((a,b)=>a.id-b.id);
+  caseEl.innerHTML='';
+  const addSort=it=>{
+    const b=document.createElement('button');
+    b.className='sort'+(it.punc?' punc':'')+(inuse.has(it.id)?' inuse':'');
+    b.dataset.id=it.id;
+    const fs=DRAWER.mode==='freq'?` style="font-size:${(9+8*Math.sqrt(it.count/maxC)).toFixed(1)}px"`:'';
+    b.innerHTML=`<span class="w"${fs}>${esc(it.w)}</span><span class="n">№ ${pad(it.id,4)}${it.id>=BASE_N?' ✶':''}</span>`;
+    b.addEventListener('click',()=>selectSort(it.id,b));
+    caseEl.appendChild(b);
+  };
+  if(DRAWER.mode==='cluster'){
+    for(const[key,label] of BAYS){
+      const bay=items.filter(it=>it.cluster===key).sort(az);
+      if(!bay.length) continue;
+      const h=document.createElement('div'); h.className='bayhead'; h.textContent=label; caseEl.appendChild(h);
+      bay.forEach(addSort);
+    }
+  } else items.forEach(addSort);
+  $('#drawercount').textContent=`${items.length} of ${vocabArr.length} sorts`;
+}
+function selectSort(id,btn){
+  $$('#drawercase .sort.sel').forEach(x=>x.classList.remove('sel'));
+  if(btn) btn.classList.add('sel');
+  FOLEY.play('tick',{bright:3});
+  const w=vocabArr[id], count=uniC[id]||0, cl=clusterOf(w), nexts=topNext(id,3);
+  const card=$('#sortcard'); card.innerHTML='';
+  const main=document.createElement('div'); main.className='scmain';
+  const bits=[`<span class="scword">${esc(w===FIN?'∎ (the stop sort)':w)}</span> — slug № ${pad(id,4)}`];
+  bits.push(id>=BASE_N?'cut fresh this session — a stranger to the library':`cast ${count} time${count===1?'':'s'} in the library`);
+  if(cl) bits.push(`of the <i>${cl}</i> district`);
+  if(nexts.length) bits.push(`most often followed by ${nexts.map(n=>`“${esc(n)}”`).join(', ')}`);
+  main.innerHTML=bits.join(' · ');
+  card.appendChild(main);
+  const dr=document.createElement('div'); dr.style.cssText='display:flex;gap:4px;align-items:center;flex:none';
+  dialVals(w).forEach(v=>{ const d=document.createElement('div'); d.className='dial';
+    const i=document.createElement('i'); i.style.transform=`rotate(${(-135+v*270).toFixed(0)}deg)`;
+    d.appendChild(i); dr.appendChild(d); });
+  card.appendChild(dr);
+}
+function toggleDrawer(force){
+  const d=$('#typedrawer'), pull=$('#drawerpull');
+  DRAWER.open=force!==undefined?force:!DRAWER.open;
+  d.classList.toggle('open',DRAWER.open);
+  pull.setAttribute('aria-expanded',String(DRAWER.open));
+  FOLEY.play('drawerroll');
+  if(DRAWER.open) renderDrawer();
+}
+
 /* ---------------- the glossary of terms ---------------- */
 const GLOSS={
   'large language model':'A neural network trained on an enormous body of text to predict the next token — and thereby to converse, write, translate and reason.',
@@ -1567,6 +1708,13 @@ function init(){
   setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons(); glossify();
   el.chkSound.addEventListener('change',()=>FOLEY.setEnabled(el.chkSound.checked));
   try{ if(localStorage.getItem('ale-sound')==='1'){ el.chkSound.checked=true; FOLEY.setEnabled(true); } }catch(e){}
+  $('#drawerpull').addEventListener('click',()=>toggleDrawer());
+  $('#drawerfind').addEventListener('input',renderDrawer);
+  $$('.dsort').forEach(b=>b.addEventListener('click',()=>{
+    $$('.dsort').forEach(x=>x.classList.toggle('on',x===b));
+    DRAWER.mode=b.dataset.mode; renderDrawer();
+  }));
+  $('#drawercount').textContent=vocabArr.length+' sorts';
   telegraph('Idle. Write a card and begin.');
 }
 init();

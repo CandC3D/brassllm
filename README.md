@@ -24,7 +24,7 @@ Open Graph / Twitter meta and redirecting into the engine.
 | Station | Mechanism | Real concept |
 |---|---|---|
 | I | The Card Reader | the prompt (text in, nothing else) |
-| II | The Type-Cutting Works | tokenization + context window |
+| II | The Type-Sorting Works | tokenization + context window |
 | III | The Ledger of Meanings | embeddings |
 | IV | The Linkage of Regards | attention (two heads shown) |
 | V | The Grand Mill | layers, parameters, training |

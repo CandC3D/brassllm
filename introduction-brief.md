@@ -38,9 +38,11 @@ sampling) versus honestly illustrative (the embeddings, attention, and layer
 
 - **I · The Card Reader** — the prompt arrives as a punched card. The machine
   receives marks, not meaning.
-- **II · The Type-Cutting Works** — *tokenisation*. A Linotype-style pin-reader reads
+- **II · The Type-Sorting Works** — *tokenisation*. A Linotype-style pin-reader reads
   the card and releases numbered brass "slugs" into a composed line; the 24-slot rack
-  is the *context window*.
+  is the *context window*. A pull-out "Type Drawer" beneath the station displays the
+  model's entire closed vocabulary, sortable by number, alphabet, frequency, or
+  meaning-district.
 - **III · The Ledger of Meanings** — *embeddings*. Each token becomes a vertical
   column of eight dials; position is meaning (ENGINE and GEARS set alike; FOG differs).
 - **IV · The Linkage of Regards** — *attention*. Two "heads" shown as linkages: a
