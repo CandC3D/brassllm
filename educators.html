@@ -34,7 +34,8 @@ body{font-family:var(--serif);line-height:1.62;color:var(--ink);
 .notebox{background:rgba(160,130,60,.14);border:1px solid #c3ac7c;border-radius:8px;padding:13px 16px;margin:14px 0;font-size:13.5px}
 .notebox b{font-variant:small-caps;letter-spacing:.05em}
 .fine{font-size:12.5px;color:var(--ink-soft);border-top:1px dotted #b39a6b;padding-top:8px;margin-top:14px}
-.gradecards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:22px}
+.gradecards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:22px}
+@media (max-width:560px){.gradecards{grid-template-columns:1fr}}
 .gcard{background:linear-gradient(178deg,var(--paper),var(--paper2));border:1px solid #ac9366;border-radius:11px;
   padding:18px 18px 16px;box-shadow:inset 0 0 30px rgba(120,90,40,.12), 0 5px 16px rgba(0,0,0,.4);
   display:flex;flex-direction:column;gap:8px}

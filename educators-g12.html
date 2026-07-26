@@ -72,7 +72,11 @@ h1,h2,h3{text-wrap:balance}
 
   <section class="sheet">
     <h2 class="bandtitle"><span class="bandchip">Thread 1</span> The Machine</h2>
-    <p>Two ladders to climb. <strong>Upward to real LLMs:</strong> map each station to its production counterpart — subword tokenisation; embeddings as learned vectors; attention (the 2017 invention the cabinet can only pantomime); dozens of stacked layers; a softmax over the whole vocabulary; temperature sampling; autoregression with a KV-cache. Training is optimisation: predict, measure error, nudge billions of parameters by gradient descent, repeat at vast scale — code written by no one. <strong>Downward to theory:</strong> the cabinet is a finite lookup table, computationally shallow; Babbage's <em>Analytical Engine design</em>, with branching and loops, was general-purpose — in principle Turing-complete a century early. The delicious inversion: the Victorian paper machine is computationally <em>stronger</em> than our working brass one.</p>
+    <p>Two paths to take:</p>
+    <ul>
+      <li><strong>Toward real LLMs:</strong> map each station to its production counterpart — subword tokenisation; embeddings as learned vectors; attention (the 2017 invention the cabinet can only pantomime); dozens of stacked layers; a softmax over the whole vocabulary; temperature sampling; autoregression with a KV-cache. Training is optimisation: predict, measure error, nudge billions of parameters by gradient descent, repeat at vast scale — code written by no one.</li>
+      <li><strong>Toward theory:</strong> the cabinet is a finite lookup table, computationally shallow; Babbage's <em>Analytical Engine design</em>, with branching and loops, was general-purpose — in principle Turing-complete a century early. The inversion: the Victorian paper machine is computationally <em>stronger</em> than our working brass one.</li>
+    </ul>
 
     <h2 class="bandtitle"><span class="bandchip">Thread 2</span> The Mathematics</h2>
     <p>Give the full formulas (the <a href="about.html">About page</a> derives them): interpolated estimation <code>P(w|a,b) ∝ λ₃P₃ + λ₂P₂ + λ₁P₁</code> with λ = 0.72 / 0.21 / 0.07; temperature <code>q ∝ P^(1/T)</code>; inverse-CDF sampling. Two extensions worthy of seniors:</p>
