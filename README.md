@@ -13,6 +13,10 @@ Hosted copies:
 - GitHub Pages: https://candc3d.github.io/brassllm/
 - Claude artifact: https://claude.ai/code/artifact/f0c03be7-7e4f-49c5-ba5d-83f67ae0eae2
 
+An **educators' guide** (spiral curriculum for US grades 3, 6, 9, and 12 — computer
+science, probability, Babbage & Lovelace history, and the philosophy of machine
+minds) lives at `/educators.html`, with a self-contained page per grade band.
+
 Shared links show a brass social-preview card (`og-image.png`, 1200×630) and a
 gear favicon (SVG + `.ico` + PNGs + Apple touch icon + `site.webmanifest`).
 Regenerate all of them with `python gen_assets.py` (needs Pillow + Georgia fonts;

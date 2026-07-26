@@ -1,0 +1,109 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://candc3d.github.io/brassllm/educators-g9.html"><!-- Google Analytics (GA4) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-G7GXZPF2YR"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G7GXZPF2YR');</script><meta name="description" content="Teaching the Analytical Language Engine in Grade 9: n-gram Markov models, conditional probability and temperature with worked examples, the engineering history of Babbage's engines, and Turing's reply to Lovelace."><meta name="theme-color" content="#1a100a"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"><meta property="og:type" content="article"><meta property="og:title" content="Grade 9 — Probability, Programs &amp; Originality"><meta property="og:description" content="Teaching the Analytical Language Engine at ages 14–15: conditional probability, temperature by formula, the Analytical Engine's architecture, and Lovelace vs Turing."><meta property="og:url" content="https://candc3d.github.io/brassllm/educators-g9.html"><meta property="og:image" content="https://candc3d.github.io/brassllm/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://candc3d.github.io/brassllm/og-image.png"></head><body>
+<title>Grade 9 — Probability, Programs &amp; Originality · For Educators</title>
+<style>
+:root{
+  --wood:#191009; --brass:#c9a24b; --brass-hi:#f2d98e; --brass-lo:#6b5320; --brass-deep:#453310;
+  --paper:#efe5c8; --paper2:#e3d4af; --ink:#2b2011; --ink-soft:#5c4c33;
+  --engrave:#43310f; --serif:Georgia,'Iowan Old Style','Times New Roman',serif; --mono:'Courier New',Courier,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--wood);scroll-behavior:smooth}
+body{font-family:var(--serif);line-height:1.62;color:var(--ink);
+  background:radial-gradient(1000px 500px at 50% -6%, #3a2717 0%, rgba(58,39,23,0) 60%),
+  repeating-linear-gradient(90deg, rgba(0,0,0,.13) 0 2px, rgba(0,0,0,0) 2px 7px),
+  linear-gradient(#221610,#140c07);min-height:100vh;padding:28px 16px 60px}
+.wrap{max-width:820px;margin:0 auto}
+.masthead{border:1px solid #55411a;border-radius:13px;padding:22px 24px;text-align:center;margin-bottom:16px;
+  background:linear-gradient(168deg,#d9b563,#b08b3e 40%,#8a6a2a 78%,#a8823a);
+  box-shadow:inset 0 1px 0 rgba(255,240,200,.5), 0 8px 20px rgba(0,0,0,.5);color:var(--engrave)}
+.masthead .kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.85}
+.masthead h1{font-size:clamp(22px,4.2vw,32px);letter-spacing:.06em;margin:6px 0 4px;text-wrap:balance}
+.masthead .sub{font-style:italic;font-size:14.5px}
+.gradenav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 20px}
+.gradenav a{text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#3c2d10;
+  background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:20px;padding:6px 14px;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.6), 0 2px 4px rgba(0,0,0,.35);white-space:nowrap}
+.gradenav a:hover{filter:brightness(1.07)}
+.gradenav a.on{background:linear-gradient(#cf9a62,#a86a35)}
+.sheet{background:linear-gradient(178deg,var(--paper),var(--paper2));border:1px solid #ac9366;border-radius:11px;
+  padding:28px clamp(20px,4.5vw,42px) 26px;box-shadow:inset 0 0 40px rgba(120,90,40,.14), 0 6px 20px rgba(0,0,0,.45);margin-bottom:22px}
+.sheet h2.bandtitle{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:clamp(17px,2.6vw,22px);
+  letter-spacing:.05em;color:var(--engrave);border-bottom:2px solid rgba(107,83,32,.4);padding-bottom:8px;margin-bottom:6px}
+.bandchip{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#3c2d10;flex:none;
+  background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:16px;padding:3px 12px}
+.sheet p{margin:0 0 11px;font-size:15px}
+.sheet ul,.sheet ol{margin:0 0 12px 4px;padding-left:22px}
+.sheet li{margin-bottom:7px;font-size:14.5px}
+.sheet strong{color:#3a2b0f}
+.sheet a{color:#6e4a12}
+.sheet em{color:#4a3510}
+.qsource{font-style:italic;color:#453310;background:rgba(160,130,60,.13);border-left:4px solid var(--brass-lo);
+  border-radius:4px;padding:11px 15px;margin:8px 0 13px;font-size:14.5px}
+.qsource .attr{display:block;font-style:normal;font-size:12px;color:var(--ink-soft);margin-top:5px;letter-spacing:.05em}
+.formula{font-family:var(--mono);font-size:13.5px;color:#33260e;background:linear-gradient(#e6d8b4,#d8c79c);
+  border-left:4px solid var(--brass-lo);border-radius:4px;padding:11px 15px;margin:6px 0 13px;overflow-x:auto;white-space:pre}
+.act{list-style:none;padding-left:2px}
+.act li{padding-left:24px;position:relative}
+.act li::before{content:"✦";position:absolute;left:0;color:var(--brass-lo)}
+.foot{text-align:center;margin-top:6px}
+.foot a{display:inline-block;text-decoration:none;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#3c2d10;
+  background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 20px;margin:0 6px 8px;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.6), 0 3px 7px rgba(0,0,0,.4)}
+.foot a:hover{filter:brightness(1.06)}
+.colophon{text-align:center;margin-top:14px;font-size:12px;color:#8d7947;font-style:italic}
+h1,h2,h3{text-wrap:balance}
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="kicker">For Educators · The Analytical Language Engine</div>
+    <h1>Probability, Programs &amp; Originality</h1>
+    <div class="sub">Grade 9 · ages 14–15</div>
+  </header>
+
+  <nav class="gradenav" aria-label="Educator guides">
+    <a href="educators.html">Overview</a>
+    <a href="educators-g3.html">Grade 3</a>
+    <a href="educators-g6.html">Grade 6</a>
+    <a class="on" href="educators-g9.html" aria-current="page">Grade 9</a>
+    <a href="educators-g12.html">Grade 12</a>
+  </nav>
+
+  <section class="sheet">
+    <h2 class="bandtitle"><span class="bandchip">Thread 1</span> The Machine</h2>
+    <p>Name the object precisely: an <strong>n-gram Markov model</strong> — next-word prediction from frequency tables of one, two, and three-word contexts, built in a single pass over the 79-sentence library. Map the cabinet onto computing vocabulary: tokenisation, lookup tables, a feedback loop (<em>autoregression</em>). Then draw the honest boundary: a real LLM shares this <em>pipeline</em> but replaces counting with a trained neural network — the engine's own <a href="about.html">About page</a> has a genuine-versus-illustrative table worth projecting. Key distinction for this band: in this machine the "program" was written by counting; in a modern model the parameters are <em>learned</em>, and no human wrote them.</p>
+
+    <h2 class="bandtitle"><span class="bandchip">Thread 2</span> The Mathematics</h2>
+    <p>This is <strong>conditional probability</strong> in the wild: P(next word | previous words), estimated by relative frequency. The engine blends three estimates with fixed weights — a <strong>weighted average</strong> where the weights sum to 1 — and backs off to shorter contexts when the longer one was never seen. Temperature becomes a real function:</p>
+    <div class="formula">q(w) ∝ P(w)^(1/T)
+
+worked example, two candidates at P = 0.8 and 0.2:
+  T = 0.5  →  0.8² : 0.2²  =  0.64 : 0.04  →  94% : 6%   (sharpened)
+  T = 2.0  →  √0.8 : √0.2  ≈  0.89 : 0.45  →  67% : 33%  (flattened)</div>
+    <p>Sampling is inverse-CDF: divide the interval [0, 1) into segments sized by probability, draw a uniform random number, take the segment it lands in — which is literally what the lottery drum's pointer does. Students can verify the machine's arithmetic <em>by hand</em>: pick a two-word context, count its continuations in the library (view the page source — the corpus is right there), and compare with the gauges.</p>
+
+    <h2 class="bandtitle"><span class="bandchip">Thread 3</span> The True History</h2>
+    <p>Add the engineering and the economics. Babbage — Lucasian Professor of Mathematics at Cambridge, Newton's old chair — consumed roughly £17,000 of government money on the Difference Engine, at a time when a locomotive cost under a tenth of that, and delivered no finished machine; the modern Science Museum build vindicated the <em>design</em>, so the failure was one of manufacturing economics, project management, and Babbage's own restless redesigning. The <strong>Analytical Engine</strong> deserves its architectural due: separate Mill and Store, punched-card programs, conditional branching, loops — a general-purpose computer on paper a century before electronics. Lovelace's 1843 Notes (signed only "A.A.L.") stand as the first substantial writing <em>about</em> computing, including her leap past arithmetic: an engine acting on any symbols with rules — even musical ones — "might compose elaborate and scientific pieces of music." That sentence is the conceptual birth of the computer as more than a calculator.</p>
+
+    <h2 class="bandtitle"><span class="bandchip">Thread 4</span> Can a Machine Think?</h2>
+    <div class="qsource">"The Analytical Engine has no pretensions whatever to originate anything. It can do whatever we know how to order it to perform. It can follow analysis; but it has no power of anticipating any analytical relations or truths."<span class="attr">— Ada Lovelace, Note G (1843)</span></div>
+    <p>Read the objection in full, then meet its most famous reply. In 1950, <strong>Alan Turing</strong> — treating "Lady Lovelace's Objection" by name in <em>Computing Machinery and Intelligence</em> — answered on two fronts: machines surprise their own makers constantly; and a <em>learning</em> machine's behaviour grows from training the way a pupil's grows from teaching, so "it only does what we order" blurs once the orders are learned from data rather than written by hand. Now aim both arguments at the cabinet: our trigram engine is <em>exactly</em> the machine Ada described — it does precisely what the counted data orders. A trillion-parameter model learns its own parameters. <strong>Structured debate:</strong> <em>Resolved — the difference between the cabinet and a modern LLM is one of degree, not of kind.</em></p>
+
+    <h2 class="bandtitle"><span class="bandchip">Thread 5</span> At the Cabinet</h2>
+    <ul class="act">
+      <li><strong>Audit the gauges.</strong> Hand-count a chosen context's continuations in the corpus; predict the distribution; compare with Station VI. Discrepancies lead straight to the interpolation weights — real detective work.</li>
+      <li><strong>Temperature lab, quantitative.</strong> Twenty runs each at T ≈ 0.2, 0.7, 2.0: record distinct outputs, mean length, and any mid-sentence stops (they genuinely occur when hot — ask why the stop token can fire early). Graph all three series.</li>
+      <li><strong>Build the rival.</strong> A spreadsheet bigram model of a song lyric: tally matrix, cumulative sums, RAND() draws. One period, a working ILM.</li>
+      <li><strong>Primary source.</strong> Read Note G's objection paragraph and two pages of Turing's 1950 reply; write a one-page position before the debate.</li>
+    </ul>
+  </section>
+
+  <div class="foot">
+    <a href="educators-g6.html">⟵ Grade 6</a>
+    <a href="educators.html">Overview</a>
+    <a href="analytical-language-engine.html">The Engine</a>
+    <a href="educators-g12.html">Grade 12 ⟶</a>
+  </div>
+  <p class="colophon">Devised by Messrs. Horrocks &amp; Claude · Oldham, Lancs. · © MMXXVI</p>
+</div>
+</body></html>
