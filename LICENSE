@@ -1,0 +1,93 @@
+The software in this repository — the HTML, CSS, and JavaScript of the engine and
+its pages, together with the Python asset generator — is licensed under the MIT
+License, reproduced in full below. The written content — the station plaques and
+all prose, the mathematics page, and the educators' curriculum, together with the
+brass illustrations and social-preview artwork — is licensed under the Creative
+Commons Attribution 4.0 International licence (CC BY 4.0), whose terms are at
+https://creativecommons.org/licenses/by/4.0/.
+
+Copyright (c) 2026 Christopher Horrocks
+
+
+================================================================================
+MIT LICENSE — for the code
+================================================================================
+
+Copyright (c) 2026 Christopher Horrocks
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+================================================================================
+CC BY 4.0 — for the text and illustrations
+================================================================================
+
+Copyright (c) 2026 Christopher Horrocks
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. You are free to share (copy and redistribute in any medium or format)
+and to adapt (remix, transform, and build upon the material) for any purpose,
+including commercially, provided you give appropriate credit, provide a link to
+the licence, and indicate if changes were made.
+
+Full licence text:  https://creativecommons.org/licenses/by/4.0/legalcode
+Plain-language deed: https://creativecommons.org/licenses/by/4.0/
+
+Suggested attribution:
+
+    "The Analytical Language Engine" by Christopher Horrocks, CC BY 4.0
+    https://candc3d.github.io/brassllm/
+
+Teachers may copy, print, translate, and adapt the educators' curriculum and
+the mathematics page for classroom use without asking. Attribution is the only
+condition.
+
+
+================================================================================
+WHICH LICENCE APPLIES TO WHAT
+================================================================================
+
+MIT (code)
+    analytical-language-engine.html   the engine's markup, styles, and scripts
+    index.html, about.html, educators*.html   markup, styles, and scripts
+    gen_assets.py                     the icon and social-card generator
+    site.webmanifest, robots.txt, sitemap.xml
+
+CC BY 4.0 (content)
+    All prose on every page: the station plaques and their "In truth —"
+    explanations, the operator's instructions, the honesty note and its
+    Wales and labour-question postscripts, the glossary definitions
+    about.html            The Mathematics Behind the Engine
+    educators*.html       the educators' guide, all grade bands
+    about-the-mathematics.md, introduction-brief.md, sound-effects-plan.md
+    og-image.png, favicon.svg, and the derived icon set
+    The 79-sentence corpus embedded in the engine
+
+Where the two are inseparable — prose written inside an HTML file — the code
+licence covers the markup and the content licence covers the words.
+
+
+================================================================================
+A NOTE ON AUTHORSHIP
+================================================================================
+
+The cabinet's colophon credits "Messrs. Horrocks & Claude." That is a
+pleasantry, not a claim of joint copyright: the work was devised and directed
+by Christopher Horrocks and built with Claude (Anthropic) as an instrument.
+Rights are held by the human author named above.

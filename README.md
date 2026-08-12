@@ -52,6 +52,18 @@ Open Graph / Twitter meta and redirecting into the engine.
 - **Real:** the probabilities. A miniature counting engine (interpolated trigram/bigram/unigram Markov model over the built-in ~80-sentence library) computes every distribution live. Temperature (p^(1/T), renormalised), the weighted-lottery draw, novel-word handling (✶), and the ∎ stop token are all genuine.
 - **Theatre, labelled as such:** the attention arcs (recency + co-occurrence affinity, schematic), the six mill floors (whose bars trace the final token's column being revised floor by floor — floor I is the entering pattern from Station III, floor VI the much-revised result), the dial values. The plaques state candidly how the full-sized article differs, and the footer post-scriptum records the famous estimate: built in brass at one counting-column per parameter, a trillion-parameter engine would cover Wales, mint about one word per season, and burn half of 1850 Britain's coal. A post-post-scriptum computes the labour question — pauper treadwheels would buy four days per word at thirty times the price of coal — and declines the scheme, anticipating the Prison Act of 1898 by fifty-five years.
 
+## Licence
+
+Dual-licensed. The **code** — the HTML, CSS, and JavaScript of the engine and its
+pages, plus `gen_assets.py` — is under the [MIT License](LICENSE). The **written
+content** — the station plaques and all prose, the mathematics page, the educators'
+curriculum, and the brass artwork — is under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Teachers may copy, print, translate, and adapt the curriculum for classroom use
+without asking; attribution is the only condition. See [LICENSE](LICENSE) for the
+full terms and a file-by-file breakdown.
+
 ## Editing notes
 
 - Everything is in the one HTML file: CSS, markup, corpus, and JS.
