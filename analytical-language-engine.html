@@ -278,8 +278,7 @@ html.running .gspin{animation-play-state:running}
 .tube-unit.others .tlabel{color:#a9c7b4;font-style:italic}
 
 /* station VII — governor & lottery */
-.govgrid{display:grid;grid-template-columns:220px minmax(0,1fr);gap:18px;align-items:start}
-@media (max-width:760px){.govgrid{grid-template-columns:1fr}}
+.govgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}   /* always stacked: governor above the drum */
 .governor{display:flex;flex-direction:column;align-items:center;gap:8px}
 #tdial{overflow:visible}
 #tdial .arc{fill:none;stroke:#43310f;stroke-width:2}
@@ -311,8 +310,7 @@ html.running .gspin{animation-play-state:running}
 #drawres{margin-top:12px;font-family:var(--mono);font-size:13.5px;color:#e6d9b5;min-height:1.3em}
 
 /* station VIII — tape & crank */
-.tapegrid{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:14px;align-items:center}
-@media (max-width:640px){.tapegrid{grid-template-columns:1fr}}
+.tapegrid{display:grid;grid-template-columns:1fr;gap:14px}   /* always stacked: tape above the crank */
 #tapewrap{padding:6px 0;line-height:60px}
 #tape{
   display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;
