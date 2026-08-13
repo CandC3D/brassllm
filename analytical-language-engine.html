@@ -509,7 +509,7 @@ h2,h3{text-wrap:balance}
   </div>
   <div class="stbody">
     <div class="mech">
-      <div class="mcap">The punching clavier · one stroke cuts one column · seven places = 2⁷ = 128 characters</div>
+      <div class="mcap">The punching clavier</div>
       <div class="cardslot">
         <div id="clavier" aria-hidden="true">
           <div id="codecard">
@@ -1316,8 +1316,9 @@ async function runPunch(){
   el.pkeys.forEach(k=>k.classList.remove('dip'));
   if(S.halt) return;
   el.pcText.textContent=S.prompt;
-  if([...S.prompt].length>26)
-    el.cardnote.textContent='the card holds but six-and-twenty columns — the rest is written small.';
+  el.cardnote.textContent=[...S.prompt].length>26?
+    'the card holds but six-and-twenty columns — the rest is written small.':
+    'The card lies ready in the slot.';
   carriagePark(); FOLEY.play('zip'); FOLEY.play('ding');
   await sleep(340);
 }
@@ -1554,8 +1555,7 @@ async function phCard(q){
   else if(!q){ renderCard(); el.card.classList.remove('in'); void el.card.offsetWidth; await sleep(120);
     el.card.classList.add('in'); FOLEY.play('swish'); await sleep(1050); }
   else { renderCard(); el.card.classList.add('in'); await sleep(120); }
-  el.cardnote.textContent=S.rev===0?'The card is read. Marks, nothing more.':
-    'The card is read again — together with every slug the engine has minted since.';
+  if(S.rev>0) el.cardnote.textContent='The card is read again — together with every slug the engine has minted since.';
 }
 async function phChop(q){
   if(q){ renderRack(false); await sleep(150); return; }
