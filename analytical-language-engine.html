@@ -136,15 +136,40 @@ body{
 .stbody{display:grid;grid-template-columns:minmax(0,1fr) 335px;gap:14px;padding:14px}
 @media (max-width:920px){.stbody{grid-template-columns:1fr}}
 
-/* station I — card reader */
-.cardslot{background:#150d07;border:1px solid #513e18;border-radius:8px;padding:14px;overflow:hidden}
+/* station I — card reader & punching clavier */
+.cardslot{background:#150d07;border:1px solid #513e18;border-radius:8px;padding:14px;overflow:hidden;position:relative}
+#clavier{position:relative;height:96px;margin-bottom:12px}
+#codecard{position:absolute;left:6px;top:0;width:150px;transform:rotate(-2deg);
+  background:linear-gradient(#f0e6cb,#dfd0a9);border:1px solid #9c8557;border-radius:3px;
+  padding:5px 8px 6px;box-shadow:0 3px 8px rgba(0,0,0,.5)}
+#codecard .cctitle{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#43310f;text-align:center;margin-bottom:2px}
+#codecard .ccrow{font-family:var(--mono);font-size:8px;line-height:1.55;white-space:pre;color:#5a4a28}
+#punchrail{position:absolute;left:0;right:0;top:64px;height:7px;border-radius:3px;
+  background:linear-gradient(#6e5a2e,#3a2c10);box-shadow:inset 0 1px 0 rgba(255,240,200,.25),0 2px 4px rgba(0,0,0,.5)}
+#carriage{position:absolute;left:0;top:0;width:118px;height:96px;z-index:5;transform:translateX(12px);
+  transition:transform calc(.14s*var(--tk)) ease}
+#carriage .cblock{position:absolute;left:0;top:56px;width:36px;height:16px;border-radius:3px;
+  background:linear-gradient(#e0c47c,#96742e);border:1px solid #43310f;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.5),0 2px 5px rgba(0,0,0,.5)}
+#punchbar{position:absolute;left:8px;top:70px;width:10px;height:124px;border-radius:0 0 3px 3px;
+  background:linear-gradient(90deg,#8a6a2a,#e8cd85 40%,#8a6a2a);border:1px solid #43310f;border-top:none;
+  transform:scaleY(.10);transform-origin:50% 0;transition:transform calc(.07s*var(--tk)) cubic-bezier(.5,0,.8,1)}
+#carriage.strike #punchbar{transform:scaleY(1)}
+.pkey{position:absolute;width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#5a4326,#241708 70%);
+  border:2px solid #8a6a2a;box-shadow:inset 0 1px 1px rgba(255,240,200,.25),0 2px 3px rgba(0,0,0,.55);
+  transition:transform calc(.06s*var(--tk)) ease,filter calc(.06s*var(--tk)) ease}
+.pkey.dip{transform:translateY(4px);filter:brightness(.75)}
+@media (max-width:620px){#codecard{display:none}}
 #punchcard{
   background:linear-gradient(#f2e8cf,#e2d3ae);border:1px solid #9c8557;border-radius:4px 14px 4px 4px;
   padding:12px 16px;max-width:560px;box-shadow:0 4px 10px rgba(0,0,0,.5);
   transform:translateX(-115%);transition:transform calc(.95s*var(--tk)) cubic-bezier(.2,.8,.25,1);
 }
 #punchcard.in{transform:translateX(0)}
-#pcText{font-style:italic;font-size:17px;color:var(--ink);margin-bottom:9px;overflow-wrap:anywhere}
+#punchcard.shudder{animation:cardshudder calc(.12s*var(--tk)) ease-out}
+@keyframes cardshudder{40%{transform:translateX(0) translateY(1.5px)}}
+#pcText{font-style:italic;font-size:17px;color:var(--ink);margin:9px 0 0;overflow-wrap:anywhere}
 #pcHoles{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,8px);gap:3px;justify-content:start}
 #pcHoles i{width:8px;height:8px;border-radius:50%;background:rgba(120,95,50,.18)}
 #pcHoles i.on{background:#20150a;box-shadow:inset 0 1px 1px rgba(0,0,0,.8)}
@@ -484,20 +509,37 @@ h2,h3{text-wrap:balance}
   </div>
   <div class="stbody">
     <div class="mech">
-      <div class="mcap">Feed slot · one card, seven holes the column</div>
+      <div class="mcap">The punching clavier · one stroke cuts one column · seven places = 2⁷ = 128 characters</div>
       <div class="cardslot">
+        <div id="clavier" aria-hidden="true">
+          <div id="codecard">
+            <div class="cctitle">A·L·E· Card Code — Seven Places</div>
+            <div class="ccrow">a ●●○○○○●   e ●●○○●○●
+t ●●●○●○○   s ●●●○○●●
+␣ ○●○○○○○   . ○●○●●●○</div>
+          </div>
+          <div id="punchrail"></div>
+          <div id="carriage">
+            <span class="pkey" style="left:46px;top:0"></span><span class="pkey" style="left:68px;top:0"></span>
+            <span class="pkey" style="left:35px;top:14px"></span><span class="pkey" style="left:57px;top:14px"></span><span class="pkey" style="left:79px;top:14px"></span>
+            <span class="pkey" style="left:24px;top:28px"></span><span class="pkey" style="left:46px;top:28px"></span><span class="pkey" style="left:68px;top:28px"></span><span class="pkey" style="left:90px;top:28px"></span>
+            <span class="pkey" style="left:35px;top:42px"></span><span class="pkey" style="left:57px;top:42px"></span><span class="pkey" style="left:79px;top:42px"></span>
+            <div class="cblock"></div>
+            <div id="punchbar"></div>
+          </div>
+        </div>
         <div id="punchcard">
-          <div id="pcText">the engine</div>
           <div id="pcHoles" aria-hidden="true"></div>
-          <div class="holecap">your words, as holes — seven bits the column</div>
+          <div id="pcText">the engine</div>
+          <div class="holecap">your words, as holes — seven bits the column, 2⁷ = 128 sorts</div>
         </div>
       </div>
       <div class="mnote" id="cardnote">The card lies ready in the slot.</div>
     </div>
     <div class="plaque">
-      <p class="conceit">Your words are punched upon a card and fed to the reader. The engine does not hear you — it receives marks.</p>
+      <p class="conceit">Your words are punched upon a card at the clavier — a stroke to the column — and fed to the reader. The engine does not hear you — it receives marks.</p>
       <p class="truth"><span class="lead">In truth —</span> a language model receives nothing but text: no voice, no view of the world, no notion of who is asking beyond what the words themselves carry. Everything that follows is determined by these characters and by the settings of the machine’s parts.</p>
-      <p class="fine">A note on the manner of address. To a chat engine you write whole questions; this cabinet asks instead for a few opening words to continue. There is no contradiction — a chat engine is a continuation engine too: the clerks lay the conversation out as a transcript (<i>Operator: … Engine: —</i>) and the machine simply continues the document, which lands, every time, precisely upon the engine’s reply. The instructions that govern its manners — the <i>system prompt</i> — are more cards still, read before yours.</p>
+      <p class="fine">A note on the manner of address. To a chat engine you write whole questions; this cabinet asks instead for a few opening words to continue. There is no contradiction — a chat engine is a continuation engine too: the clerks lay the conversation out as a transcript (<i>Operator: … Engine: —</i>) and the machine simply continues the document, which lands, every time, precisely upon the engine’s reply. The instructions that govern its manners — the <i>system prompt</i> — are more cards still, read before yours. The clavier above the slot is no fancy, either: real cards were cut at just such a hand-punch, a stroke to the column — somebody must first turn words into holes.</p>
     </div>
   </div>
 </section>
@@ -747,7 +789,7 @@ const ROMAN=['I','II','III','IV','V','VI'];
 const FOLEY=(()=>{
   let ctx=null, master=null, noiseBuf=null, on=false;
   const lastAt={}, log=[], beds={};
-  const GAP={tick:45,dialtick:40,pluck:55,note:55,pawl:22,zip:60,shink:60,hisslever:80};
+  const GAP={tick:45,dialtick:40,pluck:55,note:55,pawl:22,zip:60,shink:60,hisslever:80,keydip:40,kachunk:50};
   function ensure(){
     if(ctx) return;
     const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
@@ -795,6 +837,9 @@ const FOLEY=(()=>{
     thock:()=>{ tone('sine',130,70,0.07,0.2); noise(0.012,0.09,'highpass',2000); },
     bell:()=>tone('sine',880,0,0.5,0.08),
     drawerroll:()=>noise(0.4,0.07,'lowpass',300,140,1),
+    keydip:()=>{ tone('sine',210,140,0.05,0.05); noise(0.02,0.03,'lowpass',900); },
+    kachunk:()=>{ tone('sine',150,75,0.08,0.16); noise(0.02,0.08,'highpass',1800); },
+    ding:()=>tone('sine',1320,0,0.35,0.045),
   };
   function play(name,p){
     log.push(name); if(log.length>200) log.shift();
@@ -1037,6 +1082,7 @@ const el={
   prompt:$('#prompt'),begin:$('#btnBegin'),crank:$('#btnCrank'),run:$('#btnRun'),reset:$('#btnReset'),
   chkWait:$('#chkWait'),chkFollow:$('#chkFollow'),chkSound:$('#chkSound'),boiler:$('#boilerchip'),
   card:$('#punchcard'),pcText:$('#pcText'),pcHoles:$('#pcHoles'),cardnote:$('#cardnote'),
+  clavier:$('#clavier'),carriage:$('#carriage'),pkeys:[...document.querySelectorAll('.pkey')],
   rack:$('#rack'),rackmeta:$('#rackmeta'),cutcap:$('#cutcap'),
   specimens:$('#specimens'),dialrow:$('#dialrow'),
   attnwrap:$('#attnwrap'),attnsvg:$('#attnsvg'),attnrow:$('#attnrow'),attncap:$('#attncap'),
@@ -1215,18 +1261,65 @@ async function runCutter(){
 }
 
 /* ---------------- renderers ---------------- */
-function renderCard(){
-  el.pcText.textContent=S.prompt;
+function renderCard(punched){
+  if(punched===undefined) punched=true;
+  el.pcText.textContent=punched?S.prompt:' ';
   el.pcHoles.innerHTML='';
   const chars=[...S.prompt.slice(0,26)];
   for(const ch of chars){
     const code=ch.codePointAt(0)&127;
     for(let b=6;b>=0;b--){
       const i=document.createElement('i');
-      if((code>>b)&1) i.className='on';
+      if(punched&&(code>>b)&1) i.className='on';
       el.pcHoles.appendChild(i);
     }
   }
+}
+/* the clavier — carriage geometry & the punching ceremony */
+function carriageJump(px){
+  el.carriage.style.transition='none';
+  el.carriage.style.transform=`translateX(${px}px)`;
+  void el.carriage.offsetWidth;
+  el.carriage.style.transition='';
+}
+function carriagePark(instant){
+  const w=el.clavier.getBoundingClientRect().width||400;
+  const px=Math.max(0,w-124);   // resting bay at the right end of the rail
+  if(instant) carriageJump(px); else el.carriage.style.transform=`translateX(${px}px)`;
+}
+async function runPunch(){
+  const chars=[...S.prompt.slice(0,26)], n=chars.length;
+  if(!n){ carriagePark(); return; }
+  const hr=el.pcHoles.getBoundingClientRect(), cr=el.clavier.getBoundingClientRect();
+  const tx=i=>(hr.left-cr.left)+i*11+4-13;   // die centre over column i
+  carriageJump(tx(0));
+  await sleep(240);
+  let shown='';
+  for(let i=0;i<n&&!S.halt;i++){
+    const code=chars[i].codePointAt(0)&127;
+    const key=el.pkeys[code%el.pkeys.length];
+    key.classList.add('dip'); FOLEY.play('keydip');
+    await sleep(70);
+    el.carriage.classList.add('strike');
+    await sleep(80);
+    for(let b=6;b>=0;b--) if((code>>b)&1) el.pcHoles.children[i*7+(6-b)].classList.add('on');
+    shown+=chars[i]; el.pcText.textContent=shown;
+    el.card.classList.remove('shudder'); void el.card.offsetWidth; el.card.classList.add('shudder');
+    FOLEY.play('kachunk');
+    el.cardnote.textContent=`the clavier cuts column ${i+1} of ${n} …`;
+    await sleep(60);
+    el.carriage.classList.remove('strike'); key.classList.remove('dip');
+    if(i<n-1){ el.carriage.style.transform=`translateX(${tx(i+1)}px)`; FOLEY.play('tick'); }
+    await sleep(70);
+  }
+  el.carriage.classList.remove('strike'); el.card.classList.remove('shudder');
+  el.pkeys.forEach(k=>k.classList.remove('dip'));
+  if(S.halt) return;
+  el.pcText.textContent=S.prompt;
+  if([...S.prompt].length>26)
+    el.cardnote.textContent='the card holds but six-and-twenty columns — the rest is written small.';
+  carriagePark(); FOLEY.play('zip'); FOLEY.play('ding');
+  await sleep(340);
 }
 function slugHTML(id,fresh){
   const w=vocabArr[id], novel=id>=BASE_N, punc=PUNCT.has(w)||w===FIN;
@@ -1452,10 +1545,15 @@ el.proceed.addEventListener('click',()=>{ FOLEY.play('press'); if(proceedRes) pr
 
 /* ---------------- the eight phases of one revolution ---------------- */
 async function phCard(q){
-  renderCard();
-  if(!q){ el.card.classList.remove('in'); void el.card.offsetWidth; await sleep(120);
+  if(!q&&S.rev===0){ // the punching ceremony: eject the old card, feed a blank, cut the words
+    el.card.classList.remove('in'); void el.card.offsetWidth;
+    renderCard(false); await sleep(160);
+    el.card.classList.add('in'); FOLEY.play('swish'); await sleep(800);
+    await runPunch();
+    renderCard(); }
+  else if(!q){ renderCard(); el.card.classList.remove('in'); void el.card.offsetWidth; await sleep(120);
     el.card.classList.add('in'); FOLEY.play('swish'); await sleep(1050); }
-  else { el.card.classList.add('in'); await sleep(120); }
+  else { renderCard(); el.card.classList.add('in'); await sleep(120); }
   el.cardnote.textContent=S.rev===0?'The card is read. Marks, nothing more.':
     'The card is read again — together with every slug the engine has minted since.';
 }
@@ -1542,6 +1640,7 @@ function clearWorks(){
   S.ctx=[]; S.rev=0; S.raw=null; S.q=null; S.top=[]; S.others=0;
   S.finished=false; S.started=false; S.prompt=''; setRev();
   el.card.classList.remove('in'); el.cardnote.textContent='The card lies ready in the slot.';
+  el.carriage.classList.remove('strike'); el.pkeys.forEach(k=>k.classList.remove('dip')); carriagePark();
   el.rack.innerHTML=''; el.rackmeta.textContent='rack empty — 0 of 24 places filled';
   const cg=$('#cardG'); if(cg) cg.innerHTML='';
   $$('#cutter .chip, .flychip').forEach(c=>c.remove());
@@ -1720,6 +1819,7 @@ function init(){
   $('#vL').textContent=LINES.length; $('#vL2').textContent=LINES.length;
   buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand(); buildCutter();
   S.prompt=el.prompt.value; renderCard(); el.card.classList.add('in');
+  carriagePark(true);
   setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons(); glossify();
   el.chkSound.addEventListener('change',()=>FOLEY.setEnabled(el.chkSound.checked));
   try{ if(localStorage.getItem('ale-sound')==='1'){ el.chkSound.checked=true; FOLEY.setEnabled(true); } }catch(e){}
