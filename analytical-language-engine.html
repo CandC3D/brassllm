@@ -58,6 +58,21 @@ body{
 }
 .mech .mcap{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#b99c58;margin-bottom:12px}
 .mech .mnote{font-size:12.5px;color:#c9b787;font-style:italic;margin-top:12px;min-height:1.2em}
+/* mahogany plinth — every dark works-cabinet sits on moulded wood */
+.mech::after{content:"";position:absolute;left:-7px;right:-7px;bottom:-11px;height:11px;
+  border-radius:2px 2px 5px 5px;border:1px solid #1a0d06;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 3px,rgba(0,0,0,0) 3px 9px),
+             linear-gradient(#5f3922,#3a2114 55%,#20100a);
+  box-shadow:inset 0 1px 0 rgba(255,215,170,.22),0 4px 8px rgba(0,0,0,.55)}
+/* turned brass pillars flanking each works-cabinet */
+.tpillar{position:absolute;top:-6px;bottom:-6px;width:9px;z-index:2;border-radius:4px;
+  background:linear-gradient(90deg,#57431c,#e8cd85 45%,#6b5320);
+  box-shadow:0 2px 5px rgba(0,0,0,.5)}
+.tpillar.l{left:-8px}.tpillar.r{right:-8px}
+.tpillar::before,.tpillar::after{content:"";position:absolute;left:-3px;right:-3px;height:7px;
+  border-radius:4px;border:1px solid #43310f;
+  background:linear-gradient(90deg,#6b5320,#f2d98e 45%,#57431c)}
+.tpillar::before{top:-2px}.tpillar::after{bottom:-2px}
 
 /* ---------- masthead ---------- */
 .masthead{padding:26px 26px 20px;text-align:center;margin-bottom:22px}
@@ -79,7 +94,12 @@ body{
 .legend a:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 
 /* ---------- operator's desk ---------- */
-.desk{padding:20px 22px;margin-bottom:30px}
+.desk{padding:20px 22px;margin-bottom:30px;position:relative}
+.desk::after{content:"";position:absolute;left:8px;right:8px;bottom:-10px;height:10px;
+  border-radius:0 0 6px 6px;border:1px solid #1a0d06;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 3px,rgba(0,0,0,0) 3px 9px),
+             linear-gradient(#5f3922,#3a2114 55%,#20100a);
+  box-shadow:inset 0 1px 0 rgba(255,215,170,.22),0 4px 8px rgba(0,0,0,.55)}
 .desk h2{font-size:16px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
 .ophelp{font-size:13.5px;color:#4a3811;max-width:900px;margin-bottom:14px}
 .deskgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px}
@@ -155,6 +175,11 @@ body{
 #codecard .ccrow{font-family:var(--mono);font-size:8px;line-height:1.55;white-space:pre;color:#5a4a28}
 #punchrail{position:absolute;left:0;right:0;top:64px;height:7px;border-radius:3px;
   background:linear-gradient(#6e5a2e,#3a2c10);box-shadow:inset 0 1px 0 rgba(255,240,200,.25),0 2px 4px rgba(0,0,0,.5)}
+#punchrail::before,#punchrail::after{content:"";position:absolute;top:-3px;width:9px;height:13px;
+  border-radius:2px;border:1px solid #43310f;
+  background:repeating-linear-gradient(90deg,#e8cd85 0 2px,#6b5320 2px 4px)}
+#punchrail::before{left:-3px}
+#punchrail::after{right:-3px}
 #carriage{position:absolute;left:0;top:0;width:118px;height:96px;z-index:5;transform:translateX(12px);
   transition:transform calc(.14s*var(--tk)) ease}
 #carriage .cblock{position:absolute;left:0;top:56px;width:36px;height:16px;border-radius:3px;
@@ -168,6 +193,8 @@ body{
   background:radial-gradient(circle at 35% 28%,#5a4326,#241708 70%);
   border:2px solid #8a6a2a;box-shadow:inset 0 1px 1px rgba(255,240,200,.25),0 2px 3px rgba(0,0,0,.55);
   transition:transform calc(.06s*var(--tk)) ease,filter calc(.06s*var(--tk)) ease}
+.pkey::after{content:"";position:absolute;left:calc(50% - 1.5px);width:3px;bottom:-10px;height:12px;z-index:-1;
+  background:linear-gradient(90deg,#7f858c,#d6dae0 45%,#63686e)}
 .pkey.dip{transform:translateY(4px);filter:brightness(.75)}
 @media (max-width:620px){#codecard{display:none}}
 #punchcard{
@@ -262,8 +289,10 @@ body{
 .dcol .dw{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink);
   writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.06em;max-height:204px;overflow:hidden}
 .dials{display:flex;flex-direction:column;gap:4px}
-.dial{width:22px;height:22px;border-radius:50%;position:relative;border:2px solid #6b5320;
-  background:radial-gradient(circle at 35% 30%, #fdf6e2, #d9c99e 62%, #b39a63);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.dial{width:22px;height:22px;border-radius:50%;position:relative;border:2px solid transparent;
+  background:radial-gradient(circle at 35% 30%, #fdf6e2, #d9c99e 62%, #b39a63) padding-box,
+             repeating-conic-gradient(#8a6a2a 0 10deg,#4a3812 10deg 20deg) border-box;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
 .dial i{position:absolute;left:calc(50% - 1px);bottom:50%;width:2px;height:8px;background:#5a1f14;border-radius:1px;
   transform-origin:50% 100%;transform:rotate(-135deg);transition:transform calc(.9s*var(--tk)) cubic-bezier(.3,1.35,.4,1)}
 .dial::after{content:"";position:absolute;left:calc(50% - 2px);top:calc(50% - 2px);width:4px;height:4px;border-radius:50%;background:#43310f}
@@ -764,6 +793,8 @@ t ●●●○●○○   s ●●●○○●●
           <div id="govcap">the governor — slack when cold, flung wide by heat</div>
           <svg id="tdial" width="180" height="104" viewBox="0 0 180 104" role="img" aria-label="Boiler temperature dial">
             <path class="arc" d="M 18 92 A 72 72 0 0 1 162 92"></path>
+            <line x1="90" y1="17" x2="90" y2="21" stroke="#43310f" stroke-width="1.5"></line>
+            <path d="M 90 9 q 3.5 3 0 8 q -3.5 -5 0 -8 Z" fill="#c9a24b" stroke="#43310f" stroke-width="0.7"></path>
             <line class="tick" x1="18" y1="92" x2="26" y2="92"></line>
             <line class="tick" x1="39" y1="41" x2="45" y2="47"></line>
             <line class="tick" x1="90" y1="20" x2="90" y2="28"></line>
@@ -1976,6 +2007,8 @@ function init(){
   $('#vK').textContent=WHEELS.toLocaleString('en-GB'); $('#vK2').textContent=WHEELS.toLocaleString('en-GB');
   $('#vL').textContent=LINES.length; $('#vL2').textContent=LINES.length;
   buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand(); buildCutter();
+  $$('.mech').forEach(m=>{ for(const side of ['l','r']){
+    const p=document.createElement('i'); p.className='tpillar '+side; m.appendChild(p); } });
   S.prompt=el.prompt.value; renderCard();   // the card stays out of view until the demonstration begins
   carriagePark(true);                       // the carriage idles at its right-hand bay, clear of the code card
   setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons(); glossify();
