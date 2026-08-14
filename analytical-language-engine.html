@@ -126,7 +126,16 @@ body{
 
 /* ---------- stations ---------- */
 .station{position:relative;z-index:1;margin:0 0 26px}
-.sthead{display:flex;align-items:baseline;gap:12px;padding:11px 18px;border-bottom:1px solid rgba(79,60,21,.65);flex-wrap:wrap}
+/* japanned header bands — black lacquer with gilt lining, in the Salter manner */
+.sthead{display:flex;align-items:baseline;gap:12px;padding:13px 20px;flex-wrap:wrap;position:relative;
+  background:linear-gradient(#22180f,#0f0a06);border-radius:13px 13px 0 0;border-bottom:1px solid #5a4517}
+.sthead::before{content:"";position:absolute;inset:4px;border:1px solid rgba(212,175,90,.5);
+  border-radius:10px 10px 3px 3px;pointer-events:none}
+.sthead::after{content:"";position:absolute;inset:7px;border:1px solid rgba(212,175,90,.22);
+  border-radius:8px 8px 2px 2px;pointer-events:none}
+.sthead .stno{color:#b5934c}
+.sthead .stname{color:#e6c87d;text-shadow:0 1px 2px rgba(0,0,0,.85)}
+.sthead .stfig{color:#a68b52}
 .stno{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--engrave)}
 .stname{font-size:clamp(16px,2.3vw,21px);letter-spacing:.13em;text-transform:uppercase}
 .stfig{margin-left:auto;font-size:11.5px;font-style:italic;color:#5b4517;display:flex;align-items:center;gap:9px}
@@ -305,6 +314,11 @@ html.running .gspin{animation-play-state:running}
 /* station VII — governor & lottery */
 .govgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}   /* always stacked: governor above the drum */
 .governor{display:flex;flex-direction:column;align-items:center;gap:8px}
+#govsvg{overflow:visible}
+#govspin{transform-box:view-box;transform-origin:75px 55px}
+html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
+@keyframes govwhirl{0%{transform:scaleX(1)}50%{transform:scaleX(-1)}100%{transform:scaleX(1)}}
+#govcap{font-size:11.5px;color:#c9b787;font-style:italic;margin-top:-2px}
 #tdial{overflow:visible}
 #tdial .arc{fill:none;stroke:#43310f;stroke-width:2}
 #tdial .tick{stroke:#8a734a;stroke-width:1.5}
@@ -389,6 +403,8 @@ html.running .gspin{animation-play-state:running}
   box-shadow:0 8px 22px rgba(0,0,0,.65);font-size:13px;color:#ecdfba;max-width:min(430px,92vw);flex-wrap:wrap;
   transform:translateX(0);transition:transform calc(.4s*var(--tk)) ease;
 }
+#telegraph::before{content:"";position:absolute;inset:3px;border:1px solid rgba(212,175,90,.4);
+  border-radius:7px;pointer-events:none}
 #telegraph.waiting{transform:translateX(calc(-50vw + 50% + 14px));font-size:14px;border-color:#c9a24b;
   animation:waitglow 1.8s ease-in-out infinite}
 @keyframes waitglow{
@@ -444,7 +460,7 @@ h2,h3{text-wrap:balance}
 @media (prefers-reduced-motion:reduce){
   :root{--tk:.02}
   html{scroll-behavior:auto}
-  .gspin,#crankgrp.turn{animation:none!important}
+  .gspin,#crankgrp.turn,#govspin{animation:none!important}
   html.running #tglamp{animation:none}
   #telegraph.waiting{animation:none}
 }
@@ -679,6 +695,33 @@ t ●●●○●○○   s ●●●○○●●
     <div class="mech">
       <div class="govgrid">
         <div class="governor">
+          <svg id="govsvg" width="150" height="112" viewBox="0 0 150 112" role="img"
+               aria-label="Fly-ball governor — the balls spread wider as the boiler temperature rises">
+            <title>The fly-ball governor: slack in the cold, flung wide in the heat</title>
+            <defs>
+              <radialGradient id="ggball" cx="35%" cy="30%" r="75%">
+                <stop offset="0" stop-color="#f2d98e"/><stop offset="0.55" stop-color="#c9a24b"/><stop offset="1" stop-color="#6b5320"/>
+              </radialGradient>
+              <linearGradient id="ggspindle" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#8a6a2a"/><stop offset="0.4" stop-color="#e8cd85"/><stop offset="1" stop-color="#8a6a2a"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="75" cy="106" rx="22" ry="4" fill="#2b1d10" stroke="#5c4718" stroke-width="1"/>
+            <rect x="66" y="98" width="18" height="7" rx="2" fill="#43310f" stroke="#2b1d10" stroke-width="1"/>
+            <g id="govspin">
+              <rect x="73" y="12" width="4" height="88" fill="url(#ggspindle)" stroke="#43310f" stroke-width="0.6"/>
+              <path d="M 75 4 q 3.5 3 0 8 q -3.5 -5 0 -8 Z" fill="#c9a24b" stroke="#43310f" stroke-width="0.7"/>
+              <circle cx="75" cy="18" r="4.5" fill="url(#ggspindle)" stroke="#43310f" stroke-width="0.8"/>
+              <line id="glinkL" x1="52" y1="53" x2="75" y2="86" stroke="#6b5320" stroke-width="2.5" stroke-linecap="round"/>
+              <line id="glinkR" x1="98" y1="53" x2="75" y2="86" stroke="#6b5320" stroke-width="2.5" stroke-linecap="round"/>
+              <line id="garmL" x1="75" y1="18" x2="52" y2="53" stroke="#8a6a2a" stroke-width="3.5" stroke-linecap="round"/>
+              <line id="garmR" x1="75" y1="18" x2="98" y2="53" stroke="#8a6a2a" stroke-width="3.5" stroke-linecap="round"/>
+              <circle id="gballL" cx="52" cy="53" r="8.5" fill="url(#ggball)" stroke="#43310f" stroke-width="1"/>
+              <circle id="gballR" cx="98" cy="53" r="8.5" fill="url(#ggball)" stroke="#43310f" stroke-width="1"/>
+              <rect id="gcollar" x="69" y="83" width="12" height="7" rx="2" fill="url(#ggspindle)" stroke="#43310f" stroke-width="0.8"/>
+            </g>
+          </svg>
+          <div id="govcap">the governor — slack when cold, flung wide by heat</div>
           <svg id="tdial" width="180" height="104" viewBox="0 0 180 104" role="img" aria-label="Boiler temperature dial">
             <path class="arc" d="M 18 92 A 72 72 0 0 1 162 92"></path>
             <line class="tick" x1="18" y1="92" x2="26" y2="92"></line>
@@ -1089,6 +1132,8 @@ const el={
   millbox:$('#millbox'),millcap:$('#millcap'),
   gauges:$('#gauges'),gaugenote:$('#gaugenote'),
   lever:$('#lever'),tname:$('#tname'),tneedle:$('#tneedle'),
+  garmL:$('#garmL'),garmR:$('#garmR'),gballL:$('#gballL'),gballR:$('#gballR'),
+  glinkL:$('#glinkL'),glinkR:$('#glinkR'),gcollar:$('#gcollar'),
   band:$('#band'),pointer:$('#pointer'),drawres:$('#drawres'),
   tape:$('#tape'),tapewrap:$('#tapewrap'),revno:$('#revno'),
   tgtext:$('#tgtext'),tgrev:$('#tgrev'),proceed:$('#btnProceed'),tgCrank:$('#tgCrank'),tgTop:$('#tgTop'),
@@ -1709,6 +1754,18 @@ $$('.pcard').forEach(b=>b.addEventListener('click',()=>{
   if(!S.busy) telegraph('Card taken up. Pull BEGIN THE DEMONSTRATION.');
 }));
 function tempName(T){ return T<0.35?'FROST':T<0.95?'TEMPERATE':T<1.5?'WARM':'FEVERISH'; }
+/* the fly-ball governor: spread angle follows the boiler — slack at FROST, flung wide at FEVERISH */
+function setGov(T){
+  const th=(10+(T-0.1)/2.4*45)*Math.PI/180;   // 10° cold … 55° feverish, from vertical
+  const HX=75, HY=18, L=44, K=40;              // hinge, arm length, link length
+  const dx=L*Math.sin(th), by=HY+L*Math.cos(th);
+  const cy=by+Math.sqrt(K*K-dx*dx);            // the sliding collar rises as the balls fly out
+  const set=(n,a)=>{ for(const k in a) n.setAttribute(k,a[k]); };
+  set(el.garmL,{x2:HX-dx,y2:by}); set(el.garmR,{x2:HX+dx,y2:by});
+  set(el.gballL,{cx:HX-dx,cy:by}); set(el.gballR,{cx:HX+dx,cy:by});
+  set(el.glinkL,{x1:HX-dx,y1:by,x2:HX,y2:cy}); set(el.glinkR,{x1:HX+dx,y1:by,x2:HX,y2:cy});
+  el.gcollar.setAttribute('y',cy-3.5);
+}
 function setTemp(T){
   const dT=Math.abs(T-(S.T??T));
   S.T=T;
@@ -1717,6 +1774,7 @@ function setTemp(T){
   el.tname.textContent=label;
   el.boiler.textContent=`BOILER: ${tempName(T)} (${T.toFixed(2)})`;
   el.tneedle.style.transform=`rotate(${(-72+(T-0.1)/2.4*144).toFixed(1)}deg)`;
+  setGov(T);
   if(S.raw) renderGauges();
 }
 el.lever.addEventListener('input',()=>setTemp(parseFloat(el.lever.value)));
