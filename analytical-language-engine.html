@@ -285,6 +285,12 @@ body{
 
 /* station V — the mill */
 #millbox{display:flex;justify-content:center}
+/* the column bank behind the floors — massed cam-stacks, after Difference Engine No. 2 */
+#mill .camstack{animation:camchurn .9s linear infinite;animation-play-state:paused}
+#mill .camstack.up{animation-name:camchurnup}
+html.running #mill .camstack{animation-play-state:running}
+@keyframes camchurn{to{stroke-dashoffset:-7}}
+@keyframes camchurnup{to{stroke-dashoffset:7}}
 #mill .floor{fill:#2b1d10;stroke:#5c4718;stroke-width:1}
 #mill .floor.lit{fill:#3d2a14;stroke:#c9a24b}
 #mill text{font-family:var(--serif);font-size:10px;letter-spacing:.12em;fill:#b99c58;text-transform:uppercase}
@@ -494,7 +500,7 @@ h2,h3{text-wrap:balance}
   :root{--tk:.02}
   html{scroll-behavior:auto}
   .gspin,#crankgrp.turn,#govspin,#pulleygrp.turn,#belt.turn .beltmove,
-  html.running .mtop,html.running .mbot{animation:none!important}
+  html.running .mtop,html.running .mbot,#mill .camstack{animation:none!important}
   html.running #tglamp{animation:none}
   #telegraph.waiting{animation:none}
 }
@@ -1196,6 +1202,17 @@ function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag);
 const FLOORFN=['spelling & shape','grammar','phrase & idiom','sense','intent','judgment'];
 function buildMill(){
   const svg=svgEl('svg',{id:'mill',viewBox:'0 0 340 318',width:'100%',style:'max-width:380px'},el.millbox);
+  /* the column bank — eight cam-stacks behind the floors, churning while the engine runs */
+  const bd=svgEl('g',{id:'millback'},svg);
+  for(let c=0;c<8;c++){
+    const x=20+c*43;
+    svgEl('rect',{x:x-6,y:8,width:12,height:302,rx:2,fill:'#190f07'},bd);
+    svgEl('line',{class:'camstack'+(c%2?' up':''),x1:x,y1:8,x2:x,y2:310,
+      stroke:'#3f2f14','stroke-width':9,'stroke-dasharray':'3 4'},bd);
+    svgEl('line',{x1:x-3.5,y1:8,x2:x-3.5,y2:310,stroke:'rgba(226,198,150,.10)','stroke-width':2},bd);
+  }
+  svgEl('rect',{x:12,y:2,width:316,height:7,rx:2,fill:'#2a1c0e',stroke:'#43310f','stroke-width':0.7},bd);
+  svgEl('rect',{x:12,y:309,width:316,height:7,rx:2,fill:'#2a1c0e',stroke:'#43310f','stroke-width':0.7},bd);
   for(let f=0;f<6;f++){
     const y=12+f*50;
     svgEl('rect',{class:'floor',id:'fl'+f,x:28,y:y,width:284,height:42,rx:6},svg);
