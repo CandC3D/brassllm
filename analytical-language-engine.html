@@ -350,7 +350,33 @@ html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
 
 /* station VIII — tape & crank */
 .tapegrid{display:grid;grid-template-columns:1fr;gap:14px}   /* always stacked: tape above the crank */
-#tapewrap{padding:6px 0;line-height:60px;position:relative}
+/* the mangle — the tape is drawn between two fluted brass rollers */
+.tapeworks{display:flex;align-items:flex-start;gap:11px}
+.mangle{flex:none;width:84px;margin-top:-8px}
+.mangle .mfin{width:9px;height:8px;margin:0 auto;border-radius:50% 50% 35% 35%;
+  background:linear-gradient(#f2d98e,#a8823a);border:1px solid #43310f;border-bottom:none}
+.mangle .mscrew{width:4px;height:7px;margin:0 auto;
+  background:repeating-linear-gradient(180deg,#e8cd85 0 1px,#6b5320 1px 2px)}
+.mangle .myoke{height:6px;border-radius:3px;border:1px solid #43310f;
+  background:linear-gradient(#d9b563,#8a6a2a);box-shadow:inset 0 1px 0 rgba(255,245,210,.5)}
+.mangle .mrollers{position:relative;padding:4px 8px;display:flex;flex-direction:column;gap:3px}
+.mangle .mrollers::before,.mangle .mrollers::after{content:"";position:absolute;top:0;bottom:0;width:8px;
+  border:1px solid #3a3d42;border-radius:2px;background:linear-gradient(90deg,#7f858c,#d6dae0 42%,#63686e)}
+.mangle .mrollers::before{left:0}
+.mangle .mrollers::after{right:0}
+.mroller{height:17px;border-radius:9px;border:1px solid #43310f;position:relative;z-index:1;
+  background-image:repeating-linear-gradient(180deg,rgba(67,49,15,.34) 0 1px,rgba(255,242,200,.10) 1px 4px),
+                   linear-gradient(180deg,#6b5320 0%,#f2d98e 34%,#c9a24b 60%,#5c4718 100%);
+  background-size:100% 8px,100% 100%;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.45),0 2px 5px rgba(0,0,0,.5)}
+html.running .mtop{animation:mrollA .55s linear infinite}
+html.running .mbot{animation:mrollB .55s linear infinite}
+@keyframes mrollA{to{background-position:0 8px,0 0}}
+@keyframes mrollB{to{background-position:0 -8px,0 0}}
+.mangle .mfoot{height:6px;margin:0 7px;border-radius:0 0 4px 4px;
+  border:1px solid #3a3d42;border-top:none;background:linear-gradient(#6c7178,#33373b)}
+@media (max-width:560px){.tapeworks{gap:7px}.mangle{width:56px}}
+#tapewrap{padding:6px 0;line-height:60px;position:relative;flex:1;min-width:0}
 #tape{
   display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;
   border-radius:3px;padding:13px 22px;
@@ -388,8 +414,15 @@ html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
 .stamp.justnow{animation:inkin calc(.55s*var(--tk)) ease-out}
 .crankbox{display:flex;flex-direction:column;align-items:center;gap:7px}
 #cranksvg .cwheel{fill:#c9a24b;stroke:#4f3c15;stroke-width:1.5}
-#crankgrp{transform-box:view-box;transform-origin:60px 60px}
+#crankgrp{transform-box:view-box;transform-origin:58px 64px}
 #crankgrp.turn{animation:crankturn calc(1s*var(--tk)) ease-in-out}
+/* the belt and its pulley — the crank drives the tape through the mangle */
+#pulleygrp{transform-box:view-box;transform-origin:166px 92px}
+#pulleygrp.turn{animation:crankturn calc(.4s*var(--tk)) linear 2.5}
+.beltband{stroke:#7d5c3a;stroke-width:3.6;stroke-linecap:butt}
+.beltmove{stroke:rgba(236,208,158,.6);stroke-width:3.6;stroke-dasharray:8 14}
+#belt.turn .beltmove{animation:belttravel calc(1s*var(--tk)) ease-in-out}
+@keyframes belttravel{to{stroke-dashoffset:-88}}
 #revno{font-family:var(--mono);font-size:11.5px;color:#e6d9b5;letter-spacing:.06em;font-variant-numeric:tabular-nums;white-space:nowrap}
 #tapelegend{margin-top:10px;font-size:12px;color:#c9b787;font-style:italic}
 
@@ -460,7 +493,8 @@ h2,h3{text-wrap:balance}
 @media (prefers-reduced-motion:reduce){
   :root{--tk:.02}
   html{scroll-behavior:auto}
-  .gspin,#crankgrp.turn,#govspin{animation:none!important}
+  .gspin,#crankgrp.turn,#govspin,#pulleygrp.turn,#belt.turn .beltmove,
+  html.running .mtop,html.running .mbot{animation:none!important}
   html.running #tglamp{animation:none}
   #telegraph.waiting{animation:none}
 }
@@ -765,9 +799,16 @@ t ●●●○●○○   s ●●●○○●●
     <div class="mech">
       <div class="mcap">The tape · and the crank that turns it all again</div>
       <div class="tapegrid">
-        <div id="tapewrap"><div id="tape"><span class="stamp prompt">❧</span></div></div>
+        <div class="tapeworks">
+          <div class="mangle" aria-hidden="true">
+            <div class="mfin"></div><div class="mscrew"></div><div class="myoke"></div>
+            <div class="mrollers"><div class="mroller mtop"></div><div class="mroller mbot"></div></div>
+            <div class="mfoot"></div>
+          </div>
+          <div id="tapewrap"><div id="tape"><span class="stamp prompt">❧</span></div></div>
+        </div>
         <div class="crankbox">
-          <svg id="cranksvg" width="120" height="120" viewBox="0 0 120 120" aria-hidden="true"></svg>
+          <svg id="cranksvg" width="210" height="130" viewBox="0 0 210 130" aria-hidden="true"></svg>
           <div id="revno">REVOLUTION № 000</div>
         </div>
       </div>
@@ -1171,13 +1212,40 @@ function buildMill(){
 }
 function buildCrank(){
   const svg=$('#cranksvg');
+  const W={x:58,y:64,r:40}, P={x:166,y:92,r:16};   // flywheel and its driven pulley
+  /* the belt: the two outer tangents, laid as leather with a travelling highlight */
+  const dx=P.x-W.x, dy=P.y-W.y, d=Math.hypot(dx,dy);
+  const al=Math.atan2(dy,dx), be=Math.acos((W.r-P.r)/d);
+  const belt=svgEl('g',{id:'belt'},svg);
+  for(const t of [al+be,al-be]){
+    const co=Math.cos(t), si=Math.sin(t);
+    const p={x1:W.x+W.r*co, y1:W.y+W.r*si, x2:P.x+P.r*co, y2:P.y+P.r*si};
+    svgEl('line',Object.assign({class:'beltband'},p),belt);
+    svgEl('line',Object.assign({class:'beltmove'},p),belt);
+  }
+  /* the driven pulley — 2.5 turns to each turn of the wheel */
+  const pg=svgEl('g',{id:'pulleygrp'},svg);
+  svgEl('circle',{cx:P.x,cy:P.y,r:P.r,fill:'none',stroke:'#c9a24b','stroke-width':5},pg);
+  svgEl('circle',{cx:P.x,cy:P.y,r:P.r-4.5,fill:'none',stroke:'#6b5320','stroke-width':1.2},pg);
+  for(let s=0;s<4;s++){ const a=s*Math.PI/2+0.4;
+    svgEl('line',{x1:P.x,y1:P.y,x2:P.x+Math.cos(a)*(P.r-3),y2:P.y+Math.sin(a)*(P.r-3),
+      stroke:'#a8823a','stroke-width':2.6},pg); }
+  svgEl('circle',{cx:P.x,cy:P.y,r:3.6,fill:'#c9a24b',stroke:'#4f3c15','stroke-width':1},pg);
+  /* the flywheel — weighted rim, five spokes, a turned wooden grip */
   const g=svgEl('g',{id:'crankgrp'},svg);
-  svgEl('circle',{class:'cwheel',cx:60,cy:60,r:40,fill:'none',stroke:'#c9a24b','stroke-width':9},g);
-  for(let s=0;s<4;s++){ const a=s*Math.PI/2;
-    svgEl('line',{x1:60,y1:60,x2:60+Math.cos(a)*38,y2:60+Math.sin(a)*38,stroke:'#a8823a','stroke-width':5},g); }
-  svgEl('circle',{cx:60,cy:60,r:9,fill:'#c9a24b',stroke:'#4f3c15','stroke-width':1.5},g);
-  svgEl('line',{x1:60,y1:60,x2:60,y2:12,stroke:'#e8cd85','stroke-width':6,'stroke-linecap':'round'},g);
-  svgEl('circle',{cx:60,cy:12,r:6,fill:'#b0713d',stroke:'#4f3c15','stroke-width':1.5},g);
+  svgEl('circle',{cx:W.x,cy:W.y,r:W.r,fill:'none',stroke:'#8a6a2a','stroke-width':11},g);
+  svgEl('circle',{cx:W.x,cy:W.y,r:W.r+2.5,fill:'none',stroke:'#f2d98e','stroke-width':1.4,opacity:.55},g);
+  svgEl('circle',{cx:W.x,cy:W.y,r:W.r,fill:'none',stroke:'#e8cd85','stroke-width':2.4,opacity:.5},g);
+  svgEl('circle',{cx:W.x,cy:W.y,r:W.r-5.5,fill:'none',stroke:'#4f3c15','stroke-width':1.2},g);
+  for(let s=0;s<5;s++){ const a=s*2*Math.PI/5-Math.PI/2;
+    svgEl('line',{x1:W.x+Math.cos(a)*8,y1:W.y+Math.sin(a)*8,
+      x2:W.x+Math.cos(a)*(W.r-5),y2:W.y+Math.sin(a)*(W.r-5),
+      stroke:'#a8823a','stroke-width':4.6,'stroke-linecap':'round'},g); }
+  svgEl('circle',{cx:W.x,cy:W.y,r:10,fill:'#c9a24b',stroke:'#4f3c15','stroke-width':1.5},g);
+  svgEl('circle',{cx:W.x,cy:W.y,r:4,fill:'#43310f'},g);
+  svgEl('line',{x1:W.x,y1:W.y-22,x2:W.x,y2:W.y-33,stroke:'#8a6a2a','stroke-width':5,'stroke-linecap':'round'},g);
+  svgEl('ellipse',{cx:W.x,cy:W.y-38,rx:5,ry:8,fill:'#3a2a18',stroke:'#1d1409','stroke-width':1.2},g);
+  svgEl('ellipse',{cx:W.x-1.4,cy:W.y-40,rx:1.6,ry:3,fill:'rgba(226,198,150,.30)'},g);
 }
 function buildTubes(){
   el.gauges.innerHTML='';
@@ -1565,8 +1633,10 @@ async function stampAction(id,kind,q){
   st.remove();
 }
 function crankTurn(){
-  const g=$('#crankgrp'); g.classList.remove('turn'); void g.getBoundingClientRect();
-  g.classList.add('turn');
+  for(const sel of ['#crankgrp','#pulleygrp','#belt']){
+    const n=$(sel); if(!n) continue;
+    n.classList.remove('turn'); void n.getBoundingClientRect(); n.classList.add('turn');
+  }
   FOLEY.play('chunk');
 }
 
