@@ -336,7 +336,7 @@ html.running .gspin{animation-play-state:running}
 
 /* station VIII — tape & crank */
 .tapegrid{display:grid;grid-template-columns:1fr;gap:14px}   /* always stacked: tape above the crank */
-#tapewrap{padding:6px 0;line-height:60px}
+#tapewrap{padding:6px 0;line-height:60px;position:relative}
 #tape{
   display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;
   border-radius:3px;padding:13px 22px;
@@ -354,7 +354,7 @@ html.running .gspin{animation-play-state:running}
 @keyframes inkpress{0%{transform:scale(1.3);opacity:.35}55%{transform:scale(.93);opacity:1}100%{transform:scale(1)}}
 #tapewrap.thud{animation:thud calc(.3s*var(--tk)) ease-out}
 @keyframes thud{30%{transform:translateY(2px)}}
-.stamper{position:fixed;z-index:98;pointer-events:none;width:30px;height:52px;
+.stamper{position:absolute;z-index:98;pointer-events:none;width:30px;height:52px;
   transform:translate(-50%,calc(-100% - 26px))}
 .stamper::before{content:"";position:absolute;left:calc(50% - 4px);top:0;width:8px;height:28px;
   background:linear-gradient(#8a6a2a,#5c4718);border-radius:3px}
@@ -1480,6 +1480,17 @@ function stampTape(id,kind){
   sp.textContent=vocabArr[id];
   el.tape.appendChild(sp);
 }
+/* the tour's smooth scroll can still be in flight when a stamp begins — hold until it settles */
+function scrollSettle(maxMs){
+  return new Promise(res=>{
+    let last=scrollY,still=0; const t0=performance.now();
+    const iv=setInterval(()=>{
+      if(Math.abs(scrollY-last)<0.5) still++; else still=0;
+      last=scrollY;
+      if(still>=3||performance.now()-t0>maxMs){ clearInterval(iv); res(); }
+    },45);
+  });
+}
 /* the printing action: the stamper strikes, the word is inked under the blow */
 async function stampAction(id,kind,q){
   const sp=document.createElement('span');
@@ -1488,12 +1499,13 @@ async function stampAction(id,kind,q){
   sp.style.visibility='hidden';
   el.tape.appendChild(sp);
   await sleep(q?40:80);
-  const r=sp.getBoundingClientRect();
+  if(!q) await scrollSettle(1100);
+  const r=sp.getBoundingClientRect(), wr=el.tapewrap.getBoundingClientRect();
   const st=document.createElement('div');
   st.className='stamper';
-  st.style.left=(r.left+r.width/2).toFixed(1)+'px';
-  st.style.top=r.top.toFixed(1)+'px';
-  document.body.appendChild(st);
+  st.style.left=(r.left-wr.left+r.width/2).toFixed(1)+'px';
+  st.style.top=(r.top-wr.top).toFixed(1)+'px';
+  el.tapewrap.appendChild(st);
   st.getBoundingClientRect();
   st.style.animationDuration=((q?0.3:0.5)*PACE).toFixed(3)+'s';
   st.classList.add('strike');
