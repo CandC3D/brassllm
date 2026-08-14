@@ -1698,7 +1698,7 @@ function clearWorks(){
   S.finished=false; S.started=false; S.prompt=''; setRev();
   el.card.classList.remove('in'); el.cardnote.textContent='The slot awaits your card.';
   el.carriage.classList.remove('strike'); el.pkeys.forEach(k=>k.classList.remove('dip'));
-  el.carriage.style.transform='translateX(12px)';
+  carriagePark();
   el.rack.innerHTML=''; el.rackmeta.textContent='rack empty — 0 of 24 places filled';
   const cg=$('#cardG'); if(cg) cg.innerHTML='';
   $$('#cutter .chip, .flychip').forEach(c=>c.remove());
@@ -1890,6 +1890,7 @@ function init(){
   $('#vL').textContent=LINES.length; $('#vL2').textContent=LINES.length;
   buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand(); buildCutter();
   S.prompt=el.prompt.value; renderCard();   // the card stays out of view until the demonstration begins
+  carriagePark(true);                       // the carriage idles at its right-hand bay, clear of the code card
   setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons(); glossify();
   el.chkSound.addEventListener('change',()=>FOLEY.setEnabled(el.chkSound.checked));
   try{ if(localStorage.getItem('ale-sound')==='1'){ el.chkSound.checked=true; FOLEY.setEnabled(true); } }catch(e){}
