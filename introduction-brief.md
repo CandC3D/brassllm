@@ -36,7 +36,7 @@ sampling) versus honestly illustrative (the embeddings, attention, and layer
 
 **The eight stations** (the LLM pipeline, made mechanical):
 
-- **I · The Card Reader** — the prompt arrives as a punched card. The machine
+- **I · The Card Writer** — the prompt arrives as a punched card. The machine
   receives marks, not meaning.
 - **II · The Type-Sorting Works** — *tokenisation*. A Linotype-style pin-reader reads
   the card and releases numbered brass "slugs" into a composed line; the 24-slot rack
