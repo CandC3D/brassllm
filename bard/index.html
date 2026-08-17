@@ -4927,7 +4927,7 @@ async function composeSonnet(){
     concordSheet();
     const tally=C.rhyme?(' The Rhyme Cam: <b>'+hits+'</b> true rhyme'+(hits===1?'':'s')+(eyes?', <b>'+eyes+'</b> by the Bard’s licence':'')+
       ', <b>'+misses+'</b> the engine could not supply'+(misses?' — no rule can conjure a word the wheels never read':'')+'.'):'';
-    const ctally=C.concord?(' The Concord Cam struck at <b>'+struck+'</b> of the draws'+(struck?' (some '+Math.round(100*strikeMass/Math.max(1,struck))+'% of the drum, at those turns)':'')+' — forbidding shapes, not supplying sense.'):'';
+    const ctally=C.concord?(' The Concord Cam struck <b>'+Math.round(100*strikeMass/Math.max(1,struck))+'%</b> of the drum, taken over the draws it touched — forbidding shapes, not supplying sense.'):'';
     el.pressnote.innerHTML='the sheet is full — Sonnet '+toRoman(no)+'.'+tally+ctally+' A masterpiece, the press maintains, is surely next.';
     telegraph('The sheet is full. Set the press running again, or take the tour.');
   } else { el.pressnote.textContent='the press was stopped short; the sheet is left as it was found.';

@@ -132,8 +132,10 @@ regenerable.
 
 ## Still open
 
-- The Concord Cam paragraph in README quotes strike statistics (~130/sheet, adjacency
-  violations 2.4 → 0.1) measured before all of this; mechanism unchanged, figures unverified.
+- ~~The Concord Cam paragraph in README quotes strike statistics measured before all of this~~ **Re-measured
+  2026-08-17 (home machine, harness seed 7, 20 sheets/arm, tier 6, T=0.85): violations 4.7 → 0.0 per sheet,
+  fidelity 77.3 → 75.2, rhyme 56.4 → 59.3, ~120 strikes/sheet at 99.5% of draws. README updated; the press
+  tally now reports struck mass rather than count.**
 - PART-conditioned unigram backoff (the sense-preserving fallback) was explained and
   deliberately deferred, not rejected.
 - The schooling interlock table in README was measured with the previous (catapult) rhyme
