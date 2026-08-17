@@ -780,6 +780,7 @@ t ●●●○●○○   s ●●●○○●●
     <div class="plaque">
       <p class="conceit">At the mill’s outfall the engine renders its judgment — not a word, but a pressure upon every gauge in the house: a score for every slug in the catalogue at once.</p>
       <p class="truth"><span class="lead">In truth —</span> the model’s output at each step is a <b>probability for every token in its vocabulary</b> — all 50,000-odd, most of them minuscule. It does not <i>decide</i> the next word; it rates all possible ones. These gauges are live: they show this engine’s true arithmetic for the present context — and they obey the boiler lever at Station VII, should you care to move it.</p>
+      <p class="fine">One courtesy, disclosed: for the first two words after a fresh card the stop-mark and the full stops are held at nought and their pressure returned to the rest, so that a card of a single word cannot be answered with silence. From the third word the engine is naked, and may rest when it likes.</p>
     </div>
   </div>
 </section>
@@ -1797,7 +1798,19 @@ async function phChop(q){
 async function phDials(q){ renderDials(); await sleep(q?160:1150); }
 async function phAttn(q){ renderAttn(); await sleep(q?190:1250); }
 async function phMill(q){ await runMill(q); await sleep(q?60:320); }
-async function phGauges(q){ S.raw=rawDist(ctxWin()); renderGauges(); FOLEY.play('swell'); await sleep(q?280:1250); }
+/* the engine may not rest on the doorstep: for the first two words of a fresh card the stop-mark is held back
+   (its pressure returned to the other gauges), so a card of one word cannot end in silence — thereafter, naked */
+const DOOR_IDS=()=>['.','?','!'].map(t=>vocabId.get(t)).filter(x=>x!==undefined).concat([FINID]);
+function doorstep(raw){
+  const gen=S.ctx.length-(S.promptLen||0);
+  if(gen>=2) return raw;
+  const out=Float64Array.from(raw); let cut=0;
+  for(const id of DOOR_IDS()){ cut+=out[id]; out[id]=0; }   /* the stop-mark and the full stops alike: no silence on the doorstep */
+  if(cut<=1e-9) return raw;
+  const z=1-cut; if(z>1e-9) for(let i=0;i<out.length;i++) out[i]/=z;
+  return out;
+}
+async function phGauges(q){ S.raw=doorstep(rawDist(ctxWin())); renderGauges(); FOLEY.play('swell'); await sleep(q?280:1250); }
 async function phDraw(q){
   renderGauges(); /* honor any lever movement */
   const chosen=sample(S.q); S.chosen=chosen;
