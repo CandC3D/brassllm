@@ -85,7 +85,12 @@ body{
    standing exactly as tall as the two title lines */
 .titlerow{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2.6vw,28px);margin:6px 0 4px}
 .titlerow h1{margin:0;text-align:right}
-.portrait{display:block;height:calc(2 * 1.15 * clamp(25px,4.6vw,42px));width:auto;flex:none;
+/* the portrait is mounted as an engraving on a paper medallion let into the brass — the hatching needs a pale ground to read */
+.medallion{flex:none;display:flex;align-items:center;justify-content:center;
+  --mh:calc(2 * 1.15 * clamp(25px,4.6vw,42px) + 18px);height:var(--mh);width:var(--mh);border-radius:50%;
+  background:radial-gradient(circle at 42% 36%,#f7f0dc,#e9dcbb 62%,#d9c79b);
+  border:2px solid #6b5320;box-shadow:inset 0 0 0 3px #d9b563,inset 0 0 0 4px #43310f,inset 0 2px 8px rgba(80,60,20,.35),0 3px 8px rgba(0,0,0,.45);overflow:hidden}
+.portrait{display:block;height:92%;width:auto;margin-top:8%;opacity:1;filter:none}
   filter:drop-shadow(0 1px 0 rgba(255,242,196,.45));opacity:.92}
 @media (max-width:480px){.titlerow{flex-direction:column;gap:8px}.titlerow h1{text-align:center}}
 .masthead .rule{height:2px;max-width:520px;margin:10px auto;background:linear-gradient(90deg,rgba(67,49,15,0),#43310f,rgba(67,49,15,0))}
@@ -101,11 +106,11 @@ body{
 .legend a:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 /* the schooling — a three-notch folio lever on the masthead */
 /* the schooling — set apart on the operator's desk beneath a japanned band */
-.deskband{position:relative;margin:18px -22px 14px;height:22px;background:linear-gradient(#22180f,#0f0a06);
+.deskband{position:relative;margin:14px -22px 14px;height:22px;background:linear-gradient(#22180f,#0f0a06);
   border-top:1px solid #5a4517;border-bottom:1px solid #5a4517;display:flex;align-items:center;justify-content:center}
 .deskband::before{content:"";position:absolute;left:8px;right:8px;top:4px;bottom:4px;border:1px solid rgba(212,175,90,.45);border-radius:3px}
 .deskband span{position:relative;color:#e6c87d;font-size:13px;line-height:1;background:linear-gradient(#22180f,#0f0a06);padding:0 10px}
-.schooling{margin-top:2px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.schooling{margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .schooll{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--engrave)}
 #folio{width:300px;height:28px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
 #folio::-webkit-slider-runnable-track{height:9px;border-radius:5px;border:1px solid #40300f;
@@ -403,17 +408,37 @@ html.running #mill .camstack{animation-play-state:running}
 html.running .gspin{animation-play-state:running}
 
 /* station VI — gauges */
-#gauges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:flex-start}
-.tube-unit{display:flex;flex-direction:column;align-items:center;gap:6px;width:62px}
+#gauges{display:flex;flex-direction:column;gap:14px;align-items:center}
+/* row 1: the seven candidates; row 2: the pool, set apart */
+#gauges .grow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:flex-start}
+#gauges .grow.pool{padding-top:12px;border-top:1px dotted rgba(185,156,88,.45);width:100%}
+.tube-unit{display:flex;flex-direction:column;align-items:center;gap:6px;width:auto;min-width:66px}
 .tube-unit .pct{font-family:var(--mono);font-size:11.5px;color:#d8c793;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tube-unit.lead .pct{color:var(--glow);font-weight:700}
 .tube{width:26px;height:150px;border-radius:13px;position:relative;overflow:hidden;
   background:linear-gradient(#f6eed6,#e0d2ae);border:2px solid #7a6130;box-shadow:inset 0 2px 7px rgba(80,60,20,.4)}
 .fluid{position:absolute;left:3px;right:3px;bottom:3px;height:1.5%;border-radius:10px;min-height:3px;
   background:linear-gradient(#c1573f,#8e2f1d);transition:height calc(1.1s*var(--tk)) cubic-bezier(.25,1,.35,1)}
-.tube-unit.others .fluid{background:linear-gradient(#79a68d,#4c7a63)}
-.tlabel{font-family:var(--mono);font-size:11px;color:#e6d9b5;letter-spacing:.03em;max-width:62px;text-align:center;overflow-wrap:anywhere;line-height:1.25;min-height:2.5em}
-.tube-unit.others .tlabel{color:#a9c7b4;font-style:italic}
+.tube-unit.others .fluid{background:linear-gradient(90deg,#8d9297,#e9edf1 42%,#b9bfc6 70%,#6f757c);box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}   /* mercury, not spirit */
+.tube-unit.others{width:auto;gap:8px}
+.tube-unit.others .tube{width:34px}
+/* the pool's engraved brass nameplate */
+.tube-unit.others .plate-name{font-family:var(--serif);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#43310f;
+  text-shadow:0 1px 0 rgba(255,242,196,.45);background:linear-gradient(#e0c47c,#96742e);border:1px solid #43310f;border-radius:3px;
+  padding:3px 10px;box-shadow:inset 0 1px 0 rgba(255,245,210,.5),0 1px 3px rgba(0,0,0,.5)}
+/* the letter-registers: every candidate's name set on drums, in a brass window */
+.reg-win{display:flex;gap:1.5px;padding:3px 4px;border-radius:4px;border:1px solid #43310f;
+  background:linear-gradient(#a8823a,#6b5320);box-shadow:inset 0 1px 0 rgba(255,245,210,.5),0 2px 4px rgba(0,0,0,.45)}
+.ldrum{position:relative;width:9.5px;height:18px;overflow:hidden;border-radius:2px;
+  background:linear-gradient(#f7f3ea 0%,#ffffff 30%,#ffffff 70%,#e6e1d5 100%);
+  box-shadow:inset 0 2.5px 3px rgba(0,0,0,.35),inset 0 -2.5px 3px rgba(0,0,0,.28),inset 1px 0 0 rgba(0,0,0,.12),inset -1px 0 0 rgba(0,0,0,.12)}
+.ldrum .lreel{position:absolute;left:0;top:0;width:100%;font-family:var(--mono);font-weight:700;font-size:11px;line-height:18px;color:#111;text-align:center;
+  transition:transform calc(.8s*var(--tk)) cubic-bezier(.25,.9,.3,1.05)}
+.ldrum .lreel span{display:block;height:18px}
+.ldrum::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,0) 32%,rgba(0,0,0,0) 68%,rgba(0,0,0,.28))}
+.tube-unit.others .ldrum{width:13px}
+.tube-unit.others .ldrum .lreel{font-size:13px}
+.reg-win .lcomma{align-self:flex-end;font-family:var(--mono);font-weight:700;color:#2b2011;padding-bottom:1px}
 
 /* station VII — governor & lottery */
 .govgrid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}   /* always stacked: governor above the drum */
@@ -658,7 +683,7 @@ h2,h3{text-wrap:balance}
   <div class="orn" aria-hidden="true">❦</div>
   <div class="titlerow">
     <h1>The Analytical<br>Bard Engine</h1>
-    <img class="portrait" src="portrait.svg" alt="Engraved portrait of William Shakespeare" width="120" height="112" decoding="async">
+    <span class="medallion" aria-hidden="false"><img class="portrait" src="portrait.svg" alt="Engraved portrait of William Shakespeare" width="120" height="112" decoding="async"></span>
   </div>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage, and schooled upon nothing whatever but the Sonnets of Mr.&nbsp;William&nbsp;Shakespeare.</p>
@@ -678,7 +703,20 @@ h2,h3{text-wrap:balance}
 
 <section class="desk plate screws" aria-label="Operator's desk">
   <h2>The Operator’s Desk</h2>
-  <p class="ophelp">To operate: <b>1</b> — write a few opening words upon the card, or take a ready-punched card from the rack; <b>2</b> — pull <b>Begin the Demonstration</b> and follow the works, pressing <i>Proceed</i> at each station; <b>3</b> — thereafter <b>Turn the Crank</b> for each further word, or let the engine <b>Run</b>. Mind the boiler.</p>
+  <div class="schooling">
+    <div class="schooll">The Schooling — how much Shakespeare the engine has read · <i>set this first</i></div>
+    <input id="folio" type="range" min="0" max="5" step="1" value="0" autocomplete="off"
+           aria-label="Size of the engine's library: five to thirty sonnets">
+    <div class="folticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="folmarks" aria-hidden="true"><span>5 sonnets</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30 sonnets</span></div>
+    <div id="folcap" aria-live="polite">
+      <div class="reg"><div class="rwin" data-reg="n" data-digits="2"></div><div class="rlab">sonnets read</div></div>
+      <div class="reg"><div class="rwin" data-reg="sorts" data-digits="3"></div><div class="rlab">sorts in the catalogue</div></div>
+      <div class="reg"><div class="rwin" data-reg="wheels" data-digits="4"></div><div class="rlab">counting-wheels</div></div>
+    </div>
+  </div>
+  <div class="deskband" aria-hidden="true"><span>❦</span></div>
+  <p class="ophelp">To operate: <b>1</b> — set the schooling above; <b>2</b> — write a few opening words upon the card, or take a ready-punched card from the rack; <b>3</b> — pull <b>Begin the Demonstration</b> and follow the works, pressing <i>Proceed</i> at each station; <b>4</b> — thereafter <b>Turn the Crank</b> for each further word, or let the engine <b>Run</b>. Mind the boiler.</p>
   <div class="deskgrid">
     <div class="deskleft">
       <label class="deskl" for="prompt">Your card — a few opening words, for the engine to continue</label>
@@ -703,19 +741,6 @@ h2,h3{text-wrap:balance}
         <label><input type="checkbox" id="chkSound" autocomplete="off"> Let the works be heard (sound)</label>
         <button id="boilerchip" title="Go to the boiler, Station VII">BOILER: WARM (0.95)</button>
       </div>
-    </div>
-  </div>
-  <div class="deskband" aria-hidden="true"><span>❦</span></div>
-  <div class="schooling">
-    <div class="schooll">The Schooling — how much Shakespeare the engine has read · <i>set before you begin</i></div>
-    <input id="folio" type="range" min="0" max="5" step="1" value="0" autocomplete="off"
-           aria-label="Size of the engine's library: five to thirty sonnets">
-    <div class="folticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="folmarks" aria-hidden="true"><span>5 sonnets</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30 sonnets</span></div>
-    <div id="folcap" aria-live="polite">
-      <div class="reg"><div class="rwin" data-reg="n" data-digits="2"></div><div class="rlab">sonnets read</div></div>
-      <div class="reg"><div class="rwin" data-reg="sorts" data-digits="3"></div><div class="rlab">sorts in the catalogue</div></div>
-      <div class="reg"><div class="rwin" data-reg="wheels" data-digits="4"></div><div class="rlab">counting-wheels</div></div>
     </div>
   </div>
 </section>
@@ -1659,12 +1684,40 @@ function buildCrank(){
 }
 function buildTubes(){
   el.gauges.innerHTML='';
-  for(let i=0;i<8;i++){
-    const u=document.createElement('div');
-    u.className='tube-unit'+(i===7?' others':'');
-    u.innerHTML='<div class="pct">—</div><div class="tube"><div class="fluid"></div></div><div class="tlabel">—</div>';
-    el.gauges.appendChild(u);
+  const row=document.createElement('div'); row.className='grow';
+  for(let i=0;i<7;i++){
+    const u=document.createElement('div'); u.className='tube-unit';
+    u.innerHTML='<div class="pct">—</div><div class="tube"><div class="fluid"></div></div><div class="reg-win" data-reel="'+REEL_LETTERS+'" data-drums="'+REG_DRUMS+'"></div>';
+    row.appendChild(u);
   }
+  el.gauges.appendChild(row);
+  const pool=document.createElement('div'); pool.className='grow pool';
+  const o=document.createElement('div'); o.className='tube-unit others';
+  o.innerHTML='<div class="pct">—</div><div class="tube"><div class="fluid"></div></div><div class="plate-name">All others</div>'+
+              '<div class="reg-win" data-reel="0123456789" data-drums="4" data-commas="1"></div>';
+  pool.appendChild(o); el.gauges.appendChild(pool);
+}
+/* a register of drums, each carrying a reel of characters; setReel rolls every drum to spell the value */
+const REEL_LETTERS=" abcdefghijklmnopqrstuvwxyz',.;:!?∎";
+const REG_DRUMS=10;
+function setReel(win,value){
+  const reel=win.dataset.reel, n=+win.dataset.drums, commas=win.dataset.commas==='1';
+  let str=String(value);
+  if(commas) str=str.padStart(n,'0'); else str=str.slice(0,n).padEnd(n,' ');
+  if(!win.children.length){
+    for(let i=0;i<n;i++){
+      if(commas&&i>0&&(n-i)%3===0){ const c=document.createElement('span'); c.className='lcomma'; c.textContent=','; win.appendChild(c); }
+      const d=document.createElement('div'); d.className='ldrum';
+      const r=document.createElement('div'); r.className='lreel';
+      r.innerHTML=[...reel].map(ch=>'<span>'+(ch===' '?'&nbsp;':esc(ch))+'</span>').join('');
+      d.appendChild(r); win.appendChild(d);
+    }
+  }
+  const h=18;
+  const drums=win.querySelectorAll('.lreel');
+  [...str].forEach((ch,i)=>{ if(!drums[i]) return; let k=reel.indexOf(ch); if(k<0) k=0;
+    drums[i].style.transform='translateY('+(-h*k)+'px)'; });
+  win.setAttribute('aria-label',String(value).trim()); win.title=(!commas&&String(value).length>n)?String(value):'';
 }
 function buildBand(){
   el.band.innerHTML='';
@@ -1921,8 +1974,8 @@ async function runMill(quick){
   charge.setAttribute('opacity',1);
   FOLEY.bed('roll',true,260,0.05);
   el.millcap.textContent=`the column of “${lastW}” enters at the top — its settings drawn as bars…`;
-  await sleep(quick?60:450);
-  const rollMs=(quick?140:1050)*PACE, dropMs=(quick?60:240)*PACE;
+  await sleep(quick?50:375);
+  const rollMs=(quick?115:875)*PACE, dropMs=(quick?50:200)*PACE;   /* a fifth faster than the first cut — the race ran with too much dead air */
   /* resolve on the next frame, or a timer if the tab is throttled — the mill must not stall backstage */
   const raf=()=>new Promise(r=>{ requestAnimationFrame(r); setTimeout(r,60); });
   for(let f=0;f<6&&!S.halt;f++){
@@ -1961,7 +2014,7 @@ async function runMill(quick){
   FOLEY.bed('roll',false);
 }
 const fmtP=p=>p>=0.001?(p*100).toFixed(1)+'%':'<0.1%';
-const gaugeWord=id=>vocabArr[id]===FIN?'∎ stop':vocabArr[id];
+const gaugeWord=id=>vocabArr[id];
 function renderGauges(){
   if(!S.raw) return;
   const q=applyTemp(S.raw,S.T), {top,others}=topK(q,7);
@@ -1969,16 +2022,16 @@ function renderGauges(){
   const maxP=Math.max(top[0]?top[0].p:0,others,1e-9);
   const units=$$('#gauges .tube-unit');
   units.forEach((u,i)=>{
-    const pct=u.querySelector('.pct'), fluid=u.querySelector('.fluid'), lab=u.querySelector('.tlabel');
+    const pct=u.querySelector('.pct'), fluid=u.querySelector('.fluid'), win=u.querySelector('.reg-win');
     if(i<7){
       const t=top[i];
-      if(t){ pct.textContent=fmtP(t.p); lab.textContent=gaugeWord(t.id);
+      if(t){ pct.textContent=fmtP(t.p); setReel(win,gaugeWord(t.id));
         fluid.style.height=(2+(t.p/maxP)*92).toFixed(1)+'%';
         u.classList.toggle('lead',i===0); u.style.visibility='visible';
       } else { u.style.visibility='hidden'; }
     } else {
       pct.textContent=fmtP(others);
-      lab.textContent=`all others (${vocabArr.length-top.length})`;
+      setReel(win,vocabArr.length-top.length);
       fluid.style.height=(2+(others/maxP)*92).toFixed(1)+'%';
     }
   });
@@ -1992,7 +2045,7 @@ function renderBand(){
   segs.forEach((s,i)=>{
     const w=widths[i]||0;
     s.style.left=cum+'%'; s.style.width=Math.max(0,w-0.15)+'%';
-    const word=i<S.top.length?gaugeWord(S.top[i].id):`others`;
+    const word=i<S.top.length?(vocabArr[S.top[i].id]===FIN?'∎ stop':vocabArr[S.top[i].id]):`others`;
     s.textContent=w>=8?word:''; s.title=`${word} — ${fmtP((widths[i]||0)/100)}`;
     cum+=w;
   });
