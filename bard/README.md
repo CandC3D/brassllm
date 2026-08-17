@@ -15,8 +15,8 @@ og:url point at `/bard/`; the page is in the site sitemap.
 ## What differs from the parent engine
 
 - **Corpus**: the Sonnets of 1609, in seven folios selected by the schooling lever —
-  from 41 lines / 306 sorts / 1,528 wheels at the first notch (Sonnets 18, 151, 14,
-  130, 116) up to all 154 sonnets at the seventh: 2,155 verse lines, 3,216 sorts,
+  from 70 verse lines / 308 sorts / 1,658 wheels at the first notch (Sonnets 18, 151,
+  14, 130, 116) up to all 154 sonnets at the seventh: 2,155 verse lines, 3,216 sorts,
   36,582 wheels. Lowercased, punctuation pre-spaced. See **The Schooling** below.
   A corpus line is a **verse line**, as the 1609 quarto set it — not a sentence. The
   engine is given the line-breaks as a sort of their own, so line shape is *learned*.
@@ -43,21 +43,27 @@ temperature from 0.60 to 1.30, scoring each setting on two opposed measures —
   (how much of the output stays on Shakespeare's manifold), and
 - **novelty**: share of completions that are *not* verbatim corpus lines.
 
+Measured under the verse-line corpus and the Witten–Bell floor (300 completions
+of the seed *shall* per setting, seeded PRNG):
+
 | T | fidelity | novelty | product |
 |---|---|---|---|
-| 0.70 | 99.0% | 50.3% | 49.9 |
-| 0.85 | 97.1% | 74.0% | 71.8 |
-| **0.95** | **93.8%** | **86.7%** | **81.3** |
-| 1.00 | 91.5% | 90.3% | 82.6 |
-| 1.05 | 86.6% | 93.0% | 80.6 |
-| 1.30 | 62.3% | 97.3% | 60.7 |
+| 0.70 | 86.6% | 96.3% | 83.4 |
+| 0.85 | 85.8% | 98.3% | 84.3 |
+| **0.95** | 84.2% | 99.0% | 83.4 |
+| 1.00 | 83.8% | 98.7% | 82.7 |
+| 1.05 | 82.1% | 100% | 82.1 |
+| 1.30 | 65.4% | 100% | 65.4 |
 
-The product peaks in a broad plateau across 0.95–1.05, but fidelity falls off a
-cliff just past 1.00 (−4.9 points in a single step to 1.05, and collapsing
-thereafter), so 0.95 takes the near-optimal score while keeping a margin before
-the edge. Below ~0.80 the engine mostly recites; above ~1.10 it draws unseen
-word-pairs, which silences the trigram layer and leaves it steering on one word
-of memory until it stalls.
+Two things changed under the revision. Novelty is near-total at every setting,
+because completions now run across line-breaks and almost never reproduce a
+single verse line verbatim. And the old cliff past 1.00 is gone — the
+adaptive floor holds fidelity within ~4 points across the whole 0.70–1.05
+range, collapsing only past ~1.1. The crank keeps its historical 0.95: the
+product is level to within two points across the plateau, so the setting is
+now a matter of taste within it, and the lever's lesson survives at the
+extremes. (The original sweep on the sentence corpus with fixed weights showed
+a sharp peak at 0.95–1.05 and a cliff past 1.00; those figures are retired.)
 
 Reproduce the sweep by pasting the scoring loop into the console — it uses only
 `rawDist`, `tokenize`, `bi`, `LINES`, and `FINID`, all of which the page exposes.
@@ -196,7 +202,7 @@ naked model.
 
 | Cam | Rule | Enforcement |
 |---|---|---|
-| Comma | no point before word 2; a stop only after word 4; **the sonnet ends on a full stop** (line 14 leans to the terminal marks once the measure allows, a trailing comma is struck, and if no stop is drawn the press sets one) | logit mask / boost |
+| Comma | no point before word 2; a stop only after word 4; **the sonnet ends on a full stop** (line 14 leans to the terminal marks from two words past the measure, never while the phrase is open; a trailing comma is struck, and if no stop is drawn the press sets one) | logit mask / boost |
 | Measure | **advisory** — the engine proposes ⏎ where it has read a line-break; the cam only forbids ending before word 6 and takes the ceiling at 10 | mask ∎ and ⏎ before 6; close, unmarked, at 10 |
 | Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
 | Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |
@@ -259,6 +265,8 @@ entire training set is on the page.
 
 ## Growing the corpus
 
-Add more sonnet lines to `const CORPUS` (lowercase, space the punctuation,
-one clause-sized line each, ASCII apostrophes). Avoid ending a line with a
-preset's final word followed by `.` or that preset will draw early stops.
+Do not edit the `const CORPUS` blocks by hand: all seven are generated. Change the
+rules in `normalise.py` (and its transcription `normalise.ps1`), or the folio
+membership in `make_corpus_blocks.ps1`, and re-run the regeneration chain above.
+A corpus line is one verse line, lowercase, points spaced, ASCII apostrophes, and
+the builder supplies ⏎ and ∎ itself — they never appear in the corpus text.

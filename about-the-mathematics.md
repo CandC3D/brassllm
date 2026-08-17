@@ -42,12 +42,18 @@ To score every possible next token given the current context, it blends all thre
 P(w | context) ∝ λ₃·P₃(w | a,b) + λ₂·P₂(w | b) + λ₁·P₁(w)
 ```
 
-with weights **λ₃ = 0.72, λ₂ = 0.21, λ₁ = 0.07**. When the higher-order context has
-never been seen, its term drops out and the weights renormalise. The model
-gracefully **backs off** from trigram to bigram to unigram evidence. Rarer contexts
-lean on the general word frequencies; familiar ones are sharply predicted. This
-back-off is the counting-model ancestor of what a neural network learns to do
-smoothly and implicitly.
+with weights set by **Witten–Bell smoothing**: a context keeps its own evidence in
+the proportion `T/(T + c·D)`, where *T* is how often the context has been seen, *D*
+how many *different* tokens have followed it, and *c* a discount constant (0.25,
+set by measurement — at the textbook value of 1, a corpus this small surrenders
+half the mass of every once-seen context, since most contexts here are seen exactly
+once with one follower). Whatever a context does not keep passes down: trigram to
+bigram, bigram to unigram. So a well-attested, consistent context is sharply
+predicted, while a rare or fickle one leans on the general word frequencies — and
+how much the model falls back is *measured from the counts*, not chosen. When the
+higher-order context has never been seen at all, its term drops out entirely. This
+graceful **back-off** is the counting-model ancestor of what a neural network
+learns to do smoothly and implicitly.
 
 The result is a genuine **probability distribution over the entire catalogue** — one
 number per token, all summing to 1. Those numbers are precisely what the
