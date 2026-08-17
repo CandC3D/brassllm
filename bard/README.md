@@ -129,9 +129,12 @@ naked model.
 | Cam | Rule | Enforcement |
 |---|---|---|
 | Comma | no point before word 2; a stop only after word 4 | logit mask |
-| Measure | lines run 6–12 words | mask ∎ before 6; force-close (—) at 12 |
+| Measure | lines run 6–10 words (a pentameter line is ~8) | mask ∎ before 6; force-close (—) at 10 |
 | Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
 | Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |
+| **Concord** | grammar: no two of a kind (article·article, preposition·preposition, conjunction·conjunction, auxiliary·auxiliary), an article wants its noun (no *the of*), an auxiliary wants a verb (no *doth of*), pronoun–auxiliary agreement (*i am, thou art, he is, they are*), no doubled word | logit mask over successors, using each slug's **part** |
+
+**The Concord Cam's parts** are a distributional guess made from the corpus itself: closed classes by hand list; a word that follows *the/a/thy/my* is nominal; a word that follows *i/thou/he/she/they*, an auxiliary, or *to* is verbal; a word may be both; a word after a firmly-nominal word (adjective position) leans nominal; suffixes (*-'st/-eth → V, -ing → both, -ness/-tion/-'s → N*) break ties; ~20% of the vocabulary stays unknown and the cam holds its hand for those. Tags err instructively (*love* is both; *shines* reads nominal because it once followed *heaven*). Measured at 154 sonnets, 20 sheets: ~130 strikes per sheet, never an empty drum, adjacency violations 2.4 → 0.1 per sheet. **The cam forbids shapes; it cannot make a line mean** — the tally says so.
 
 **Rhyme is judged as the Bard would** — by sound (a clerk's phonetics on
 spelling: *day/may*, *night/bright*, *thee/be*, *shade/fade*), plus his own
