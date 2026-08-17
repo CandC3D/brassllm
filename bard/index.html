@@ -155,7 +155,8 @@ body{
 .drum .reel span{display:block;height:22px}
 .drum::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,0) 32%,rgba(0,0,0,0) 68%,rgba(0,0,0,.28))}
-.reg .rcomma{align-self:flex-end;font-family:var(--mono);font-weight:700;color:#2b2011;padding-bottom:3px}
+.reg .rcomma{display:block;height:22px;line-height:26px;font-family:var(--mono);font-weight:700;font-size:15px;color:#2b2011;width:6px;text-align:center}   /* same height as a drum, so the window never grows */
+.reg .rwin{align-items:stretch}
 
 /* ---------- operator's desk ---------- */
 .desk{padding:20px 22px;margin-bottom:38px;position:relative}
