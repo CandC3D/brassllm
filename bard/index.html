@@ -81,6 +81,13 @@ body{
   font-size:clamp(25px,4.6vw,42px);letter-spacing:.16em;text-transform:uppercase;
   margin:6px 0 4px;line-height:1.15;text-wrap:balance;
 }
+/* the title with the Bard's portrait beside it — an engraving, inked in the plate's own engrave colour,
+   standing exactly as tall as the two title lines */
+.titlerow{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2.6vw,28px);margin:6px 0 4px}
+.titlerow h1{margin:0;text-align:right}
+.portrait{display:block;height:calc(2 * 1.15 * clamp(25px,4.6vw,42px));width:auto;flex:none;
+  filter:drop-shadow(0 1px 0 rgba(255,242,196,.45));opacity:.92}
+@media (max-width:480px){.titlerow{flex-direction:column;gap:8px}.titlerow h1{text-align:center}}
 .masthead .rule{height:2px;max-width:520px;margin:10px auto;background:linear-gradient(90deg,rgba(67,49,15,0),#43310f,rgba(67,49,15,0))}
 .masthead .sub{color:#3f2f0f;max-width:640px;margin:0 auto 6px;font-size:15px}
 .masthead .sub2{color:#5b4517;max-width:640px;margin:0 auto;font-size:13px;font-style:italic}
@@ -649,7 +656,10 @@ h2,h3{text-wrap:balance}
 
 <header class="masthead plate screws">
   <div class="orn" aria-hidden="true">❦</div>
-  <h1>The Analytical Bard Engine</h1>
+  <div class="titlerow">
+    <h1>The Analytical<br>Bard Engine</h1>
+    <img class="portrait" src="portrait.svg" alt="Engraved portrait of William Shakespeare" width="120" height="112" decoding="async">
+  </div>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage, and schooled upon nothing whatever but the Sonnets of Mr.&nbsp;William&nbsp;Shakespeare.</p>
   <p class="sub2">Everything below actually runs: the gauges are moved by a real (if miniature) engine of probability computed live on this page. The plaques state, candidly, how the full-sized article differs — and terms under a dotted line yield their modern meaning to the pointer.</p>
