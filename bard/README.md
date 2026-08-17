@@ -64,9 +64,9 @@ to the parent. Editing notes in the parent repo's README apply here verbatim
 
 ## The Schooling (training-set & parameter-size exercise)
 
-A six-notch brass lever on the Operator's Desk (set apart beneath a japanned band)
-rebuilds the whole model live over **5, 10, 15, 20, 25, or 30 sonnets** (choice
-persists in localStorage):
+A seven-notch brass lever on the Operator's Desk (set apart beneath a japanned band)
+rebuilds the whole model live over **5, 10, 15, 20, 25, 30, or all 154 sonnets**
+(choice persists in localStorage):
 
 | Folio | Sonnets | Lines | Sorts (vocab) | Wheels (params) |
 |---|---|---|---|---|
@@ -76,6 +76,7 @@ persists in localStorage):
 | Fourth | + 55, 64, 71, 106, 129 | 144 | 895 | 5,521 |
 | Fifth | + 1, 15, 27, 66, 87 | 180 | 1,064 | 6,753 |
 | Sixth | + 2, 19, 94, 110, 138 | 217 | 1,205 | 8,021 |
+| Seventh | + the remaining 124 (all 154) | 1,010 | 3,230 | 34,789 |
 
 The counters on the masthead, plaques, and honesty footer all update live.
 The teaching demo: seed **"when i do count the clock"** — at 5 sonnets the
@@ -93,7 +94,15 @@ folio brings the procreation opening (1), the "huge stage" of 15, the sleepless
 27, the litany of 66 ("tired with all these"), and the legal-contract diction of
 87 (charter, patent, misprision); the sixth adds 2 (forty winters), 19 (devouring
 Time, lion, tiger, phoenix), 94 (festering lilies), 110 (motley, gored), and 138
-(the mutual lie). Demo: "when forty winters shall" → *besiege* 73% only at 30.
+(the mutual lie). Demo: "when forty winters shall" → *besiege* 73% only at 30; "two loves i
+have of comfort and" → *despair* 72% only at 154.
+
+The first thirty were transcribed by hand; the seventh folio (the remaining 124)
+is produced by rule from the Gutenberg text — `bard/normalise.py`: curly
+apostrophes to ASCII, hyphenated compounds split, `O!` to `o ,`, colons and
+semicolons (period-strength in that edition) end a line as full stops, lines
+under four words fold into the previous. Every corpus line carries a `# N`
+sonnet marker for the concordance.
 Texts from Project Gutenberg #1041, normalized to corpus format.
 
 ## The Sonnet Press (Appendix, Fig. 9)
