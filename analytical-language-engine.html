@@ -300,7 +300,12 @@ body{
 .dial i{position:absolute;left:calc(50% - 1px);bottom:50%;width:2px;height:8px;background:#5a1f14;border-radius:1px;
   transform-origin:50% 100%;transform:rotate(-135deg);transition:transform calc(.9s*var(--tk)) cubic-bezier(.3,1.35,.4,1)}
 .dial::after{content:"";position:absolute;left:calc(50% - 2px);top:calc(50% - 2px);width:4px;height:4px;border-radius:50%;background:#43310f}
-#specimens,#dialrow{display:flex;flex-wrap:wrap;gap:10px}
+#specimens{display:flex;flex-wrap:wrap;gap:10px}
+/* the eight slugs at hand always fill whole rows: 8 across, else 4, else 2 — never a lone straggler */
+#dialrow{display:grid;grid-template-columns:repeat(8,max-content);gap:10px;justify-content:start}
+.dialhost{container-type:inline-size}
+@container (max-width:579px){#dialrow{grid-template-columns:repeat(4,max-content)}}
+@container (max-width:287px){#dialrow{grid-template-columns:repeat(2,max-content)}}
 #specimens .dcol{background:linear-gradient(#e6dab8,#d5c497)}
 .speccap{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b99c58;margin:14px 0 8px}
 
@@ -686,7 +691,7 @@ t ●●●○●○○   s ●●●○○●●
       <div id="specimens"></div>
       <div class="mnote">Note how ENGINE and GEARS set their dials nearly alike, while FOG wears a different aspect.</div>
       <div class="speccap">The slugs at hand, exchanged for dial-columns</div>
-      <div id="dialrow"><span class="mnote">— awaiting slugs —</span></div>
+      <div class="dialhost"><div id="dialrow"><span class="mnote">— awaiting slugs —</span></div></div>
     </div>
     <div class="plaque">
       <p class="conceit">Each catalogue number is looked up in the Great Ledger, and the slug is exchanged for a column of dial-settings — its position upon the map of meaning.</p>
