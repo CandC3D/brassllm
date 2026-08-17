@@ -2482,13 +2482,24 @@ function tokenize(text){
   return toks.map(intern);
 }
 
-/* distribution: interpolated trigram → bigram → unigram (real counts) */
+/* distribution: interpolated trigram → bigram → unigram (real counts), the weights set by Witten–Bell —
+   a context trusts its own evidence in the proportion T/(T+D): T the times it has been seen, D the number of
+   different words seen to follow it.  A context met often and always answered the same way keeps nearly all its
+   mass; a context met once, or met with a new answer every time, gives most of it back to the shorter context.
+   No fixed floor: how much the engine falls back on general word-frequency is measured, not chosen.
+   The one constant, WB_D, tempers the count of different followers.  At its textbook value of 1 the library is
+   too small for the rule: 85 per cent of the engine's word-pairs have been met exactly once, and once-seen with
+   one follower scores T/(T+D) = 1/2 — half the mass surrendered by every ordinary context.  At 0.25, measured
+   over thirty sheets at every notch of the schooling, the sheet quotes more and derails less than it did under
+   the fixed weights it replaces. */
+const WB_D=0.25;
 function rawDist(ctx){
   const n=vocabArr.length, p=new Float64Array(n);
   const b=ctx[ctx.length-1], a=ctx.length>1?ctx[ctx.length-2]:undefined;
   const triE=(a!==undefined)?tri.get(a+','+b):undefined;
   const biE=bi.get(b);
-  const w3=triE?0.72:0, w2=biE?0.21:0, w1=0.07, W=w3+w2+w1;
+  const l3=triE?triE.t/(triE.t+WB_D*triE.m.size):0, l2=biE?biE.t/(biE.t+WB_D*biE.m.size):0;
+  const w3=l3, w2=(1-l3)*l2, w1=(1-l3)*(1-l2), W=w3+w2+w1;
   for(let i=0;i<n;i++){
     let v=0;
     if(triE) v+=w3*((triE.m.get(i)||0)/triE.t);
@@ -3438,11 +3449,12 @@ const EYE_RHYMES=[['love','prove','move','remove','approve','above'],['eyes','li
 const EYE_MAP=(()=>{ const m=new Map(); EYE_RHYMES.forEach((g,i)=>g.forEach(w=>m.set(w,i))); return m; })();
 /* words too slight to carry a rhyme: articles, prepositions, conjunctions, auxiliaries — a line may not
    rhyme ON them, nor be judged against them (else "memory / the" would pass, and no poet counts that) */
-const NORHYME=new Set(('the a an of and or nor but to in on at for from with as than that this these those its was '+
+const NORHYME=new Set(('the a an of and or nor but to in on at by for from with as than that this these those its was '+
   'am do did hath has had shall will can not if where who whom whose which what then thy thine my her his him their our your').split(' '));
 function rhymes(a,b){
   a=a.replace(/[^a-z']/g,''); b=b.replace(/[^a-z']/g,'');
   if(!a||!b||a===b) return null;   /* identity is not rhyme */
+  if(a.replace(/'s$|'$/,'')===b.replace(/'s$|'$/,'')) return null;   /* nor is a word against its own possessive: heart / heart's */
   if(NORHYME.has(a)||NORHYME.has(b)) return null;
   if(EYE_MAP.has(a)&&EYE_MAP.get(a)===EYE_MAP.get(b)) return 'eye';   /* the Bard's licence, marked as such */
   const ka=rhymeKey(a), kb=rhymeKey(b);
@@ -3508,9 +3520,29 @@ function concordStrike(q,ctx){
     else if(w===last&&!/^(most|so|very|no|far)$/.test(w)) bad=true;
     if(bad){ cut+=q[i]; q[i]=0; }
   }
+  /* E. the completion test — a line may not be ruled complete while a determiner, preposition or conjunction stands
+     unsatisfied within its final three tokens: no full stop, no FIN, after 'the', 'of the', 'and' */
+  if(unsatisfied(ctx)){ TERM_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; }); cut+=q[FINID]; q[FINID]=0; }
   return cut;
 }
+/* is the phrase still open? — a D or R in the last three tokens with no nominal or pronoun after it, or a C last of all */
+function unsatisfied(ctx){
+  const n=ctx.length; if(!n) return false;
+  const lt=PART[ctx[n-1]]||'?';
+  if(lt==='C') return true;
+  for(let k=Math.max(0,n-3);k<n;k++){
+    const t=PART[ctx[k]]||'?';
+    if(t!=='D'&&t!=='R') continue;
+    let met=false;
+    for(let j=k+1;j<n;j++){ const u=PART[ctx[j]]||'?'; if(u==='N'||u==='NV'||u==='?'||u==='P'){ met=true; break; } if(u==='.') break; }
+    if(!met) return true;
+  }
+  return false;
+}
 const SCHEME='ABABCDCDEFEFGG';
+/* the press has its own boiler: the crank's 0.95 was calibrated on free continuations; under the cams the drum is
+   already dominated by the harness, and 0.85 buys some five points of fidelity for no rhyme (thirty sheets, all 154) */
+const PRESS_T=0.85;
 const VOLTA_WORDS=['but','yet','or','nor','o','so','and yet','then','if'];
 const cam=id=>{ const n=$('#'+id); return !!(n&&n.checked); };
 const isWordId=id=>id!==FINID&&!PUNCT.has(vocabArr[id]);
@@ -3546,15 +3578,15 @@ async function composeSonnet(){
         if(cands.length){ let Z=0; const w=cands.map(e=>{Z+=e[1];return e[1];}); let r=Math.random()*Z;
           o=cands[cands.length-1][0]; for(let i=0;i<w.length;i++){ r-=w[i]; if(r<=0){ o=cands[i][0]; break; } } }
       }
-      if(o===undefined) o=drawOpener(S.T);
+      if(o===undefined) o=drawOpener(PRESS_T);
       ctx=[o]; parts=[esc(vocabArr[o])];
     }
     div.innerHTML=parts.join(' ');
     div.__toks=ctx.map((id,k)=>({w:vocabArr[id],seed:ln===0}));
-    let words=ctx.filter(isWordId).length, ended=false, lastWord=null, rhymed=null;
+    let words=ctx.filter(isWordId).length, ended=false, lastWord=null, cause='cap';   /* cause: why the line closed — cap | term | fin | rhyme */
     const target=rhymeTarget(ln);
     while(words<MAXW&&!S.halt){
-      const q=applyTemp(rawDist(ctx),S.T);
+      const q=applyTemp(rawDist(ctx),PRESS_T);
       let cut=0;
       /* THE COMMA CAM — no point before the 2nd word; no stop before the 4th */
       if(C.comma){
@@ -3563,11 +3595,15 @@ async function composeSonnet(){
       }
       /* THE MEASURE CAM — the engine may not rest before the sixth word */
       if(words<MINW){ cut+=q[FINID]; q[FINID]=0; if(C.measure) TERM_IDS.forEach(id=>{cut+=q[id];q[id]=0;}); }
-      /* THE COMMA CAM, closing rule — the fourteenth line must end on a full stop: once the measure allows, the
-         terminal marks are given half the drum, and no comma may stand as its last word */
+      /* THE COMMA CAM, closing rule — the fourteenth line must end on a full stop: two words past the measure, the
+         terminal marks are given half the drum, and no comma may stand as its last word — but never while the phrase
+         is still open (not 'gives life to .') */
       if(C.comma&&ln===13&&words>=MINW){
-        let tm=0; TERM_IDS.forEach(id=>{ tm+=q[id]; }); SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
-        if(tm>1e-9&&tm<0.5){ const boost=0.5/tm, rest=0.5/(1-tm); for(let i=0;i<q.length;i++) q[i]*=TERM_IDS.has(i)?boost:rest; cut=0; }
+        SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
+        if(words>=MINW+2&&!unsatisfied(ctx)){
+          let tm=0; TERM_IDS.forEach(id=>{ tm+=q[id]; });
+          if(tm>1e-9&&tm<0.5){ const boost=0.5/tm, rest=0.5/(1-tm); for(let i=0;i<q.length;i++) q[i]*=TERM_IDS.has(i)?boost:rest; cut=0; }
+        }
       }
       /* THE CONCORD CAM — strike every successor the rules of grammar forbid */
       if(C.concord){ const before=cut; const m=concordStrike(q,ctx); if(m>1e-9){ cut+=m; struck++; strikeMass+=m; } }
@@ -3582,36 +3618,39 @@ async function composeSonnet(){
       }
       if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; }
       const id=sample(q);
-      if(id===FINID){ ended=true; break; }
+      if(id===FINID){ ended=true; cause='fin'; break; }
       ctx.push(id); parts.push(esc(vocabArr[id])); div.__toks.push({w:vocabArr[id]});
       if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
       div.innerHTML=parts.join(' ');
       FOLEY.play('tick',{bright:2});
-      if(TERM_IDS.has(id)){ ended=true; break; }
-      /* the rhyme cam closes the line when a rhyme lands on a content word — never dangling from "of", "the", "and" —
-         once the measure allows */
-      if(target&&words>=MINW&&lastWord&&rhymes(lastWord,target)){
-        const prev=ctx.length>=2?vocabArr[ctx[ctx.length-2]]:'';
-        if(!DANGLE.has(prev)){ ended=true; break; }
-      }
+      if(TERM_IDS.has(id)){ ended=true; cause='term'; break; }
+      /* the rhyme cam closes the line when a rhyme lands on a content word and the phrase is not left open —
+         never on or after "of", "the", "and" — once the measure allows */
+      if(target&&words>=MINW&&lastWord&&rhymes(lastWord,target)&&!DANGLE.has(lastWord)&&!unsatisfied(ctx)){ ended=true; cause='rhyme'; break; }
       await sleep(150);
     }
-    /* finish the phrase: a line may not be ruled complete on a slight word — allow a few more draws to reach a content word */
+    /* finish the phrase: a line may not be ruled complete with its phrase left open — allow a few more draws to close it */
     let extra=0;
-    while(!S.halt&&!ended&&extra<3&&lastWord&&DANGLE.has(lastWord)){
-      const q=applyTemp(rawDist(ctx),S.T); q[FINID]=0; TERM_IDS.forEach(id=>{q[id]=0;}); SOFT_IDS.forEach(id=>{q[id]=0;});
+    while(!S.halt&&!ended&&extra<3&&lastWord&&(DANGLE.has(lastWord)||unsatisfied(ctx))){
+      const q=applyTemp(rawDist(ctx),PRESS_T); q[FINID]=0; TERM_IDS.forEach(id=>{q[id]=0;}); SOFT_IDS.forEach(id=>{q[id]=0;});
       if(C.concord) concordStrike(q,ctx);
       let Z=0; for(let i=0;i<q.length;i++) Z+=q[i]; if(Z<=1e-9) break; for(let i=0;i<q.length;i++) q[i]/=Z;
       const id=sample(q); ctx.push(id); parts.push(esc(vocabArr[id])); div.__toks.push({w:vocabArr[id]}); if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
       div.innerHTML=parts.join(' '); extra++; await sleep(120);
     }
+    if(!ended&&lastWord&&(DANGLE.has(lastWord)||unsatisfied(ctx))) cause='open';   /* the phrase could not be closed in three */
+    /* the tail: the sheet shows only what the engine drew — a line cut at the measure or closed on its rhyme is left
+       open, as the sonnets' own lines mostly are; a rhyme that closes a quatrain takes the harness's comma; the
+       fourteenth line takes the harness's full stop.  (Formerly every such line wore an em-dash — a mark the type
+       drawer does not hold.) */
     if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){
       if(C.comma&&ln===13){   /* the sonnet ends on a period: strike any trailing comma, then set the stop */
         while(ctx.length>1&&SOFT_IDS.has(ctx[ctx.length-1])){ ctx.pop(); parts.pop(); div.__toks.pop(); }
         const dot=vocabId.get('.'); if(dot!==undefined){ ctx.push(dot); parts.push('.'); div.__toks.push({w:'.'}); }
         div.innerHTML=parts.join(' ');
-      } else { parts.push('—'); div.innerHTML=parts.join(' '); div.__tail=' —'; }
+      } else if(cause==='rhyme'&&(ln===3||ln===7||ln===11)&&!SOFT_IDS.has(ctx[ctx.length-1])){ parts.push(','); div.innerHTML=parts.join(' '); div.__tail=' ,'; }
     }
+    div.dataset.cause=cause;
     /* THE CAPITAL CAM — capitals to the openers and to the poet's I */
     if(C.volta&&!S.halt){ let h=div.innerHTML;
       h=h.replace(/^(<span class="seed">)?([a-z])/,(m,s,c)=>(s||'')+c.toUpperCase());

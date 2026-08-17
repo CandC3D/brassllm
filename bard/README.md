@@ -14,9 +14,12 @@ og:url point at `/bard/`; the page is in the site sitemap.
 
 ## What differs from the parent engine
 
-- **Corpus**: 41 verse lines drawn from Sonnets 18, 151, 14, 130, and 116
-  (public domain, 1609), lowercased with pre-spaced punctuation. ~306-token
-  vocabulary, ~1,500 counting-wheels.
+- **Corpus**: the Sonnets of 1609, in seven folios selected by the schooling lever —
+  from 41 lines / 306 sorts / 1,528 wheels at the first notch (Sonnets 18, 151, 14,
+  130, 116) up to all 154 sonnets at the seventh: 1,010 corpus lines, 3,230 sorts,
+  34,789 wheels. Lowercased, punctuation pre-spaced. See **The Schooling** below.
+  Note that a corpus "line" is a *sentence*, not a verse line — `normalise.py` joins
+  the line-breaks — so the press's line shape is imposed by the Measure Cam, not learned.
 - **Presets**: "shall i compare thee", "my mistress' eyes", "love is not love",
   "not from the stars" — each tuned to branch cleanly into its sonnet.
 - **Type-drawer domains**: Machina/Urbs/Fabula give way to
@@ -26,7 +29,9 @@ og:url point at `/bard/`; the page is in the site sitemap.
   thine…) so the copper attention head courts content words.
 - Branding, colophon ("the verses Mr. William Shakespeare's, his Sonnets,
   MDCIX — the machinery ours"), and specimen dials re-cut accordingly.
-- **Boiler default 0.95 (WARM)**, not the parent's 0.70 — see the tuning sweep below.
+- **Boiler default 0.95 (WARM)** on the crank, not the parent's 0.70 — see the tuning
+  sweep below. **The press runs at its own setting, `PRESS_T` = 0.85**, separately
+  measured; the sweep below is a measurement of the crank, not of the press.
 - GA/canonical tags removed pending a hosting decision.
 
 ## Tuning the boiler
@@ -56,6 +61,32 @@ of memory until it stalls.
 
 Reproduce the sweep by pasting the scoring loop into the console — it uses only
 `rawDist`, `tokenize`, `bi`, `LINES`, and `FINID`, all of which the page exposes.
+
+**This sweep measures the crank, not the press.** Under the press the drum is
+dominated by the cams, and the trade-off is different: measured with
+`press_harness.js` (30 sheets, all 154 sonnets, all cams), fidelity — here the
+share of words standing in quoted runs of three or more, the concordance's own
+measure — runs 71.9% at T=0.95, **76.8% at 0.85**, 77.7% at 0.80, with rhyme
+success flat across the three. The press therefore takes its own boiler,
+`PRESS_T` = 0.85, and the crank keeps 0.95.
+
+## Measuring the press — `press_harness.js`
+
+`bard/press_harness.js` re-implements `composeSonnet` without the DOM, animation
+and audio, driving the page's own `buildModel`, `rawDist`, `applyTemp`, `sample`,
+`drawOpener`, `rhymes`, `concordStrike` and `inCorpus`, with `Math.random` replaced
+by a seeded PRNG. Open the page, paste the file into the console, then:
+
+```js
+ABE_HARNESS.run({sheets:30, tier:6, seed:5})            // current press
+ABE_HARNESS.run({sheets:30, tier:6, seed:5, mods:{legacy:1}, T:0.95})  // the press before the 2026 revisions
+ABE_HARNESS.vocabFacts(6)                                // sorts, wheels, rhyme classes, orphan sorts
+```
+
+It reports fidelity, derailment (share of draws with no trigram context),
+rhyme rate, the line-closing cause breakdown, and the rhyme cam's boost factors.
+`mods` also carries the unmerged experiments: `floor`, `boostCap`, `boostLate`,
+`noDangleBoost`, `bigramOnly`, `carry`.
 
 The mechanics — the interpolated trigram/bigram/unigram engine, temperature,
 the lottery drum, the punching clavier, the fly-ball governor — are identical
@@ -114,9 +145,16 @@ masterpieces might emerge. Mechanics, candidly: the operator's card seeds
 line 1 (shown in blue ink); each later line opens via a weighted draw over
 the corpus's own line-opening words; the engine is forbidden ∎ *and* the
 full stop before a line's fourth word; a full stop thereafter ends the line
-honourably; any line reaching twelve words — or ending by ∎ without its own
-mark — is ruled complete with an em-dash. All at the boiler's current
-setting.
+honourably. All at the press boiler, `PRESS_T` = 0.85.
+
+**Line tails.** A line that reaches the measure's ceiling is left **unmarked** —
+that is enjambment, and it is the commonest line-ending in the sonnets themselves.
+A rhyme that closes lines 4, 8 or 12 takes a comma; line 14 takes the full stop.
+No other mark is added. (Until 2026 every such line wore an **em-dash**, on 74–79%
+of lines, standing in for four different events — and the em-dash is not in the type
+drawer at all, the normaliser having converted it to a comma before the wheels were
+cut. The sheet now shows only marks the engine drew, plus the two the harness owns
+and names.)
 
 ## The Sonnet-Master's Rule-Book (the harness)
 
@@ -129,10 +167,10 @@ naked model.
 | Cam | Rule | Enforcement |
 |---|---|---|
 | Comma | no point before word 2; a stop only after word 4; **the sonnet ends on a full stop** (line 14 leans to the terminal marks once the measure allows, a trailing comma is struck, and if no stop is drawn the press sets one) | logit mask / boost |
-| Measure | lines run 6–10 words (a pentameter line is ~8) | mask ∎ before 6; force-close (—) at 10 |
+| Measure | lines run 6–10 words (a pentameter line is ~8) | mask ∎ before 6; close, unmarked, at 10 |
 | Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
 | Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |
-| **Concord** | grammar: no two of a kind (article·article, preposition·preposition, conjunction·conjunction, auxiliary·auxiliary), an article wants its noun (no *the of*), an auxiliary wants a verb (no *doth of*), pronoun–auxiliary agreement (*i am, thou art, he is, they are*), no doubled word | logit mask over successors, using each slug's **part** |
+| **Concord** | grammar: no two of a kind (article·article, preposition·preposition, conjunction·conjunction, auxiliary·auxiliary), an article wants its noun (no *the of*), an auxiliary wants a verb (no *doth of*), pronoun–auxiliary agreement (*i am, thou art, he is, they are*), no doubled word; **and the completion test** — no stop and no ∎ while a determiner or preposition stands unsatisfied within the last three tokens, or a conjunction stands last (no *gives life to .*) | logit mask over successors, using each slug's **part** |
 
 **The Concord Cam's parts** are a distributional guess made from the corpus itself: closed classes by hand list; a word that follows *the/a/thy/my* is nominal; a word that follows *i/thou/he/she/they*, an auxiliary, or *to* is verbal; a word may be both; a word after a firmly-nominal word (adjective position) leans nominal; suffixes (*-'st/-eth → V, -ing → both, -ness/-tion/-'s → N*) break ties; ~20% of the vocabulary stays unknown and the cam holds its hand for those. Tags err instructively (*love* is both; *shines* reads nominal because it once followed *heaven*). Measured at 154 sonnets, 20 sheets: ~130 strikes per sheet, never an empty drum, adjacency violations 2.4 → 0.1 per sheet. **The cam forbids shapes; it cannot make a line mean** — the tally says so.
 
@@ -148,15 +186,23 @@ pass. His licences (*love/prove*, *have/save*) are consulted before the phonetic
 so they are always marked as licence, not passed as true. Like him, the press
 does not stop for an imperfect rhyme.
 
-**Line closing.** A rhyme closes a line only when it lands on a content word
-that does not dangle from a preposition or article ("…spoil **of when** —" is
-forbidden), and a line that runs out of measure on a slight word is allowed up
-to three more draws to reach a content word before the dash is ruled.
+**Line closing.** A rhyme closes a line only when it lands on a content word that
+is not itself a slight word and does not leave the phrase open — neither
+"…spoil of **when**" nor "…and all **by**" will do — and a line that runs out of
+measure with its phrase open is allowed up to three more draws to close it. Line 14's
+lean toward the terminal marks begins two words past the measure, and never while
+the phrase is open, so the couplet is not cut short on a preposition.
 
-**The interlock with The Schooling** (60 sheets per tier, seed "shall i
-compare thee", boiler 0.95): rhyme success rises from the mid-70s at 5
-sonnets to the low-80s at 10–20 (a 60-sheet sample carries a few points of
-noise; the trend is monotone across repeated sweeps). Same harness, more training data, fewer ✗ marks — the harness's
+Identity is not rhyme, and neither is a word against its own possessive
+(*heart / heart's*, *time / time's*, which the phonetic key would otherwise pass).
+
+**The interlock with The Schooling** (`press_harness.js`, 20 sheets per tier,
+seed "shall i compare thee", press boiler 0.85): rhyme success **59% at 5
+sonnets, 74% at 10, 71% at 20, 79% at all 154**, while fidelity falls the other
+way — 85% at 5 sonnets down to 78% at 154 — because a larger library offers more
+roads and the sheet quotes in shorter runs. A 20-sheet sample carries a few
+points of noise, and the middle tiers are within it of each other; the ends are
+not. Same harness, more training data, more rhymes found — the harness's
 effectiveness scales with the model's capability, and it can never add a
 word the wheels have not read.
 

@@ -1161,13 +1161,22 @@ function tokenize(text){
   return toks.map(intern);
 }
 
-/* distribution: interpolated trigram → bigram → unigram (real counts) */
+/* distribution: interpolated trigram → bigram → unigram (real counts), the weights set by Witten–Bell —
+   a context trusts its own evidence in the proportion T/(T+D): T the times it has been seen, D the number of
+   different words seen to follow it.  A context met often and always answered the same way keeps nearly all its
+   mass; a context met once, or met with a new answer every time, gives most of it back to the shorter context.
+   No fixed floor: how much the engine falls back on general word-frequency is measured, not chosen.
+   The one constant, WB_D, tempers the count of different followers: at its textbook value of 1 this library is
+   too small for the rule, most word-pairs having been met exactly once, and once-seen with one follower would
+   surrender half its mass.  0.25 is set by measurement over the Bard's press, whose sheets can be scored. */
+const WB_D=0.25;
 function rawDist(ctx){
   const n=vocabArr.length, p=new Float64Array(n);
   const b=ctx[ctx.length-1], a=ctx.length>1?ctx[ctx.length-2]:undefined;
   const triE=(a!==undefined)?tri.get(a+','+b):undefined;
   const biE=bi.get(b);
-  const w3=triE?0.72:0, w2=biE?0.21:0, w1=0.07, W=w3+w2+w1;
+  const l3=triE?triE.t/(triE.t+WB_D*triE.m.size):0, l2=biE?biE.t/(biE.t+WB_D*biE.m.size):0;
+  const w3=l3, w2=(1-l3)*l2, w1=(1-l3)*(1-l2), W=w3+w2+w1;
   for(let i=0;i<n;i++){
     let v=0;
     if(triE) v+=w3*((triE.m.get(i)||0)/triE.t);
