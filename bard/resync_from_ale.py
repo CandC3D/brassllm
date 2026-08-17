@@ -59,6 +59,7 @@ new=new.replace('<footer class="honesty">',old[oi:oj]+'<footer class="honesty">'
 
 # ---- honesty footer: the Bard's own candid note (plaque + button row), up to the colophon ----
 graft('<footer class="honesty">','  <p class="colophon">','honesty footer',False)
+assert new.count('<section ')==new.count('</section>'), 'unbalanced <section> — a graft ate a closing tag'
 # ---- colophon ----
 swap('  <p class="colophon">Devised by <b>MESSRS. HORROCKS &amp; CLAUDE</b> (an engine of the very kind depicted)<br>',
      '  <p class="colophon">Devised by <b>MESSRS. HORROCKS &amp; CLAUDE</b> (an engine of the very kind depicted)<br>\n  the verses <b>MR. WILLIAM SHAKESPEARE’S</b>, his Sonnets, MDCIX — the machinery ours<br>','colophon')

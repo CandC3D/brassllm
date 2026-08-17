@@ -93,9 +93,14 @@ body{
 .legend a:hover{filter:brightness(1.08)}
 .legend a:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 /* the schooling — a three-notch folio lever on the masthead */
-.schooling{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:3px}
+/* the schooling — set apart on the operator's desk beneath a japanned band */
+.deskband{position:relative;margin:18px -22px 14px;height:22px;background:linear-gradient(#22180f,#0f0a06);
+  border-top:1px solid #5a4517;border-bottom:1px solid #5a4517;display:flex;align-items:center;justify-content:center}
+.deskband::before{content:"";position:absolute;left:8px;right:8px;top:4px;bottom:4px;border:1px solid rgba(212,175,90,.45);border-radius:3px}
+.deskband span{position:relative;color:#e6c87d;font-size:13px;line-height:1;background:linear-gradient(#22180f,#0f0a06);padding:0 10px}
+.schooling{margin-top:2px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .schooll{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--engrave)}
-#folio{width:250px;height:28px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
+#folio{width:300px;height:28px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
 #folio::-webkit-slider-runnable-track{height:9px;border-radius:5px;border:1px solid #40300f;
   background:linear-gradient(90deg,#8a6a2a,#c9a24b 50%,#f2d98e)}
 #folio::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;border-radius:50%;
@@ -106,20 +111,24 @@ body{
   background:radial-gradient(circle at 35% 30%,#f2d98e,#a8823a);border:2px solid #43310f}
 #folio:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
 /* engraved detent marks under the lever, one to each notch — laid on the thumb's travel (track width less the thumb) */
-.folticks{position:relative;width:250px;height:8px;margin-top:-4px}
+.folticks{position:relative;width:300px;height:8px;margin-top:-4px}
 .folticks i{position:absolute;top:0;width:2px;height:8px;margin-left:-1px;border-radius:1px;
   background:linear-gradient(#2f240c,#6b5320);box-shadow:1px 0 0 rgba(255,240,200,.45)}
 .folticks i:nth-child(1){left:11px}
-.folticks i:nth-child(2){left:calc(11px + (250px - 22px) * 1 / 3)}
-.folticks i:nth-child(3){left:calc(11px + (250px - 22px) * 2 / 3)}
-.folticks i:nth-child(4){left:calc(250px - 11px)}
-.folmarks{position:relative;width:250px;height:12px;font-size:9.5px;letter-spacing:.1em;
+.folticks i:nth-child(2){left:calc(11px + (300px - 22px) * 1 / 5)}
+.folticks i:nth-child(3){left:calc(11px + (300px - 22px) * 2 / 5)}
+.folticks i:nth-child(4){left:calc(11px + (300px - 22px) * 3 / 5)}
+.folticks i:nth-child(5){left:calc(11px + (300px - 22px) * 4 / 5)}
+.folticks i:nth-child(6){left:calc(300px - 11px)}
+.folmarks{position:relative;width:300px;height:12px;font-size:9.5px;letter-spacing:.1em;
   text-transform:uppercase;color:#4a3811;margin-top:1px}
 .folmarks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
 .folmarks span:nth-child(1){left:11px}
-.folmarks span:nth-child(2){left:calc(11px + (250px - 22px) * 1 / 3)}
-.folmarks span:nth-child(3){left:calc(11px + (250px - 22px) * 2 / 3)}
-.folmarks span:nth-child(4){left:calc(250px - 11px)}
+.folmarks span:nth-child(2){left:calc(11px + (300px - 22px) * 1 / 5)}
+.folmarks span:nth-child(3){left:calc(11px + (300px - 22px) * 2 / 5)}
+.folmarks span:nth-child(4){left:calc(11px + (300px - 22px) * 3 / 5)}
+.folmarks span:nth-child(5){left:calc(11px + (300px - 22px) * 4 / 5)}
+.folmarks span:nth-child(6){left:calc(300px - 11px)}
 /* the schooling registers — figures on white drums, read through brass-framed windows */
 #folcap{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 .reg{display:flex;flex-direction:column;align-items:center;gap:4px}
@@ -655,18 +664,6 @@ h2,h3{text-wrap:balance}
     <a href="#st8">VIII · The loop</a>
     <a href="#press">❦ · The sonnet press</a>
   </nav>
-  <div class="schooling">
-    <div class="schooll">The Schooling — how much Shakespeare the engine has read</div>
-    <input id="folio" type="range" min="0" max="3" step="1" value="0" autocomplete="off"
-           aria-label="Size of the engine's library: five, ten, fifteen, or twenty sonnets">
-    <div class="folticks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="folmarks" aria-hidden="true"><span>5 sonnets</span><span>10</span><span>15</span><span>20 sonnets</span></div>
-    <div id="folcap" aria-live="polite">
-      <div class="reg"><div class="rwin" data-reg="n" data-digits="2"></div><div class="rlab">sonnets read</div></div>
-      <div class="reg"><div class="rwin" data-reg="sorts" data-digits="3"></div><div class="rlab">sorts in the catalogue</div></div>
-      <div class="reg"><div class="rwin" data-reg="wheels" data-digits="4"></div><div class="rlab">counting-wheels</div></div>
-    </div>
-  </div>
 </header>
 
 <section class="desk plate screws" aria-label="Operator's desk">
@@ -696,6 +693,19 @@ h2,h3{text-wrap:balance}
         <label><input type="checkbox" id="chkSound" autocomplete="off"> Let the works be heard (sound)</label>
         <button id="boilerchip" title="Go to the boiler, Station VII">BOILER: WARM (0.95)</button>
       </div>
+    </div>
+  </div>
+  <div class="deskband" aria-hidden="true"><span>❦</span></div>
+  <div class="schooling">
+    <div class="schooll">The Schooling — how much Shakespeare the engine has read · <i>set before you begin</i></div>
+    <input id="folio" type="range" min="0" max="5" step="1" value="0" autocomplete="off"
+           aria-label="Size of the engine's library: five to thirty sonnets">
+    <div class="folticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="folmarks" aria-hidden="true"><span>5 sonnets</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30 sonnets</span></div>
+    <div id="folcap" aria-live="polite">
+      <div class="reg"><div class="rwin" data-reg="n" data-digits="2"></div><div class="rlab">sonnets read</div></div>
+      <div class="reg"><div class="rwin" data-reg="sorts" data-digits="3"></div><div class="rlab">sorts in the catalogue</div></div>
+      <div class="reg"><div class="rwin" data-reg="wheels" data-digits="4"></div><div class="rlab">counting-wheels</div></div>
     </div>
   </div>
 </section>
@@ -1008,6 +1018,8 @@ t ●●●○●○○   s ●●●○○●●
       <p class="fine">The trade term for the whole panel is <i>the harness</i>, and it is no small part of any modern engine: the good manners of a chat machine — its refusals, its formats, its stopping when it should — are largely rule-book rather than model. Two lessons follow. The harness cannot add knowledge, only shape it; and its success rises with the engine's schooling — throw the Rhyme Cam at five sonnets, then at fifteen, and count the ✗ marks. Rhyme is judged as the Bard would: by sound, with his own eye-rhymes and old pronunciations allowed (<i>love/prove</i>, <i>eyes/lies</i>) and marked in the margin as such; and, like him, the press does not stop for an imperfect rhyme. All at the boiler's present setting.</p>
     </div>
   </div>
+</section>
+
 <footer class="honesty">
   <div class="plaque">
     <p class="conceit">A candid note, screwed to the cabinet.</p>
@@ -1315,15 +1327,94 @@ let FINID=intern(FIN);
 const uniC=[], bi=new Map(), tri=new Map(), coocc=new Map();
 let uniT=0;
 function bump(m,key,next){ let e=m.get(key); if(!e){e={t:0,m:new Map()};m.set(key,e);} e.t++; e.m.set(next,(e.m.get(next)||0)+1); }
+/* the fifth folio — sonnets 1, 15, 27, 66, 87 */
+const CORPUS_E=`
+from fairest creatures we desire increase , that thereby beauty's rose might never die .
+but as the riper should by time decease , his tender heir might bear his memory .
+but thou , contracted to thine own bright eyes , feed'st thy light's flame with self substantial fuel .
+making a famine where abundance lies , thyself thy foe , to thy sweet self too cruel .
+thou that art now the world's fresh ornament , and only herald to the gaudy spring .
+within thine own bud buriest thy content , and tender churl mak'st waste in niggarding .
+pity the world , or else this glutton be , to eat the world's due , by the grave and thee .
+when i consider everything that grows holds in perfection but a little moment .
+that this huge stage presenteth nought but shows whereon the stars in secret influence comment .
+when i perceive that men as plants increase , cheered and checked even by the self same sky .
+vaunt in their youthful sap , at height decrease , and wear their brave state out of memory .
+then the conceit of this inconstant stay sets you most rich in youth before my sight .
+where wasteful time debateth with decay to change your day of youth to sullied night .
+and all in war with time for love of you , as he takes from you , i engraft you new .
+weary with toil , i haste me to my bed , the dear repose for limbs with travel tir'd .
+but then begins a journey in my head to work my mind , when body's work's expired .
+for then my thoughts , from far where i abide , intend a zealous pilgrimage to thee .
+and keep my drooping eyelids open wide , looking on darkness which the blind do see .
+save that my soul's imaginary sight presents thy shadow to my sightless view , which , like a jewel hung in ghastly night , makes black night beauteous , and her old face new .
+lo , thus , by day my limbs , by night my mind , for thee , and for myself , no quiet find .
+tired with all these , for restful death i cry .
+as to behold desert a beggar born , and needy nothing trimm'd in jollity , and purest faith unhappily forsworn .
+and gilded honour shamefully misplac'd , and maiden virtue rudely strumpeted .
+and right perfection wrongfully disgrac'd , and strength by limping sway disabled .
+and art made tongue tied by authority , and folly , doctor like , controlling skill .
+and simple truth miscall'd simplicity , and captive good attending captain ill .
+tir'd with all these , from these would i be gone , save that , to die , i leave my love alone .
+farewell , thou art too dear for my possessing , and like enough thou know'st thy estimate .
+the charter of thy worth gives thee releasing .
+my bonds in thee are all determinate .
+for how do i hold thee but by thy granting ?
+and for that riches where is my deserving ?
+the cause of this fair gift in me is wanting , and so my patent back again is swerving .
+thyself thou gav'st , thy own worth then not knowing , or me to whom thou gav'st it , else mistaking .
+so thy great gift , upon misprision growing , comes home again , on better judgement making .
+thus have i had thee , as a dream doth flatter , in sleep a king , but waking no such matter .
+`;
+/* the sixth folio — sonnets 2, 19, 94, 110, 138 */
+const CORPUS_F=`
+when forty winters shall besiege thy brow , and dig deep trenches in thy beauty's field .
+thy youth's proud livery so gazed on now , will be a tatter'd weed of small worth held .
+then being asked , where all thy beauty lies , where all the treasure of thy lusty days .
+to say , within thine own deep sunken eyes , were an all eating shame , and thriftless praise .
+how much more praise deserv'd thy beauty's use , if thou couldst answer this fair child of mine shall sum my count , and make my old excuse , proving his beauty by succession thine .
+this were to be new made when thou art old , and see thy blood warm when thou feel'st it cold .
+devouring time , blunt thou the lion's paws , and make the earth devour her own sweet brood .
+pluck the keen teeth from the fierce tiger's jaws , and burn the long liv'd phoenix , in her blood .
+make glad and sorry seasons as thou fleets , and do whate'er thou wilt , swift footed time , to the wide world and all her fading sweets .
+but i forbid thee one most heinous crime .
+o , carve not with thy hours my love's fair brow , nor draw no lines there with thine antique pen .
+him in thy course untainted do allow for beauty's pattern to succeeding men .
+yet do thy worst , old time , despite thy wrong , my love shall in my verse ever live young .
+they that have power to hurt , and will do none , that do not do the thing they most do show .
+who , moving others , are themselves as stone , unmoved , cold , and to temptation slow .
+they rightly do inherit heaven's graces , and husband nature's riches from expense .
+they are the lords and owners of their faces , others , but stewards of their excellence .
+the summer's flower is to the summer sweet , though to itself , it only live and die .
+but if that flower with base infection meet , the basest weed outbraves his dignity .
+for sweetest things turn sourest by their deeds .
+lilies that fester , smell far worse than weeds .
+alas , 'tis true , i have gone here and there , and made my self a motley to the view .
+gor'd mine own thoughts , sold cheap what is most dear , made old offences of affections new .
+most true it is , that i have look'd on truth askance and strangely .
+but , by all above , these blenches gave my heart another youth , and worse essays prov'd thee my best of love .
+now all is done , save what shall have no end .
+mine appetite i never more will grind on newer proof , to try an older friend , a god in love , to whom i am confin'd .
+then give me welcome , next my heaven the best , even to thy pure and most most loving breast .
+when my love swears that she is made of truth , i do believe her though i know she lies .
+that she might think me some untutor'd youth , unlearned in the world's false subtleties .
+thus vainly thinking that she thinks me young , although she knows my days are past the best .
+simply i credit her false speaking tongue .
+on both sides thus is simple truth suppressed .
+but wherefore says she not she is unjust ?
+and wherefore say not i that i am old ?
+o , love's best habit is in seeming trust , and age in love , loves not to have years told .
+therefore i lie with her , and she with me , and in our faults by lies we flatter'd be .
+`;
 /* the schooling: the same machine may be built over three sizes of library */
-const FOLIOS=[{n:5},{n:10},{n:15},{n:20}];
+const FOLIOS=[{n:5},{n:10},{n:15},{n:20},{n:25},{n:30}];
 let FOLIO=0, LINES=[], BASE_N=0, WHEELS=0;
 function buildModel(tier){
-  FOLIO=Math.min(3,Math.max(0,tier|0));
+  FOLIO=Math.min(5,Math.max(0,tier|0));
   vocabArr.length=0; vocabId.clear(); uniC.length=0; uniT=0;
   bi.clear(); tri.clear(); coocc.clear();
   FINID=intern(FIN);
-  const text=[CORPUS,CORPUS_B,CORPUS_C,CORPUS_D].slice(0,FOLIO+1).join('\n');
+  const text=[CORPUS,CORPUS_B,CORPUS_C,CORPUS_D,CORPUS_E,CORPUS_F].slice(0,FOLIO+1).join('\n');
   LINES=text.trim().split('\n').map(l=>l.trim()).filter(Boolean);
   for(const line of LINES){
     const seq=line.split(/\s+/).map(intern); seq.push(FINID);
@@ -2517,7 +2608,7 @@ function glossify(){
 
 /* ---------------- init ---------------- */
 function init(){
-  let ft=0; try{ ft=Math.min(3,Math.max(0,parseInt(localStorage.getItem('abe-folio'))||0)); }catch(e){}
+  let ft=0; try{ ft=Math.min(5,Math.max(0,parseInt(localStorage.getItem('abe-folio'))||0)); }catch(e){}
   $('#folio').value=ft;
   buildModel(ft);
   $('#folio').addEventListener('input',async()=>{

@@ -64,8 +64,9 @@ to the parent. Editing notes in the parent repo's README apply here verbatim
 
 ## The Schooling (training-set & parameter-size exercise)
 
-A four-notch brass lever on the masthead rebuilds the whole model live over
-**5, 10, 15, or 20 sonnets** (choice persists in localStorage):
+A six-notch brass lever on the Operator's Desk (set apart beneath a japanned band)
+rebuilds the whole model live over **5, 10, 15, 20, 25, or 30 sonnets** (choice
+persists in localStorage):
 
 | Folio | Sonnets | Lines | Sorts (vocab) | Wheels (params) |
 |---|---|---|---|---|
@@ -73,6 +74,8 @@ A four-notch brass lever on the masthead rebuilds the whole model live over
 | Second | + 12, 30, 65, 73, 127 | 75 | 531 | 2,940 |
 | Third | + 29, 33, 60, 97, 147 | 111 | 736 | 4,246 |
 | Fourth | + 55, 64, 71, 106, 129 | 144 | 895 | 5,521 |
+| Fifth | + 1, 15, 27, 66, 87 | 180 | 1,064 | 6,753 |
+| Sixth | + 2, 19, 94, 110, 138 | 217 | 1,205 | 8,021 |
 
 The counters on the masthead, plaques, and honesty footer all update live.
 The teaching demo: seed **"when i do count the clock"** — at 5 sonnets the
@@ -85,7 +88,12 @@ The fourth folio adds the monumental register (55 marble/gilded monuments;
 ocean), the funereal (71, the surly sullen bell and vilest worms), the
 chronicle-and-blazon of 106, and the sequence's most violent vocabulary in
 129 (lust, perjur'd, murderous, bloody, savage, extreme). Fourth-folio demo:
-"not marble, nor the gilded" → *monuments* 93% only at 20 sonnets.
+"not marble, nor the gilded" → *monuments* 93% only at 20 sonnets. The fifth
+folio brings the procreation opening (1), the "huge stage" of 15, the sleepless
+27, the litany of 66 ("tired with all these"), and the legal-contract diction of
+87 (charter, patent, misprision); the sixth adds 2 (forty winters), 19 (devouring
+Time, lion, tiger, phoenix), 94 (festering lilies), 110 (motley, gored), and 138
+(the mutual lie). Demo: "when forty winters shall" → *besiege* 73% only at 30.
 Texts from Project Gutenberg #1041, normalized to corpus format.
 
 ## The Sonnet Press (Appendix, Fig. 9)
