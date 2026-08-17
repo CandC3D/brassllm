@@ -2335,14 +2335,20 @@ const EYE_RHYMES=[['love','prove','move','remove','approve','above'],['eyes','li
   ['said','maid','laid'],['worth','forth'],['loved','proved','beloved'],['past','waste'],["possess'd",'least'],['eye','alchemy'],
   ['youth','truth'],['fruit','mute'],['herd','beard'],['art','convert'],['fair','heir'],['friend','end'],['unrest',"express'd"],["crown'd",'confound'],['lie','by'],['red','head']];
 const EYE_MAP=(()=>{ const m=new Map(); EYE_RHYMES.forEach((g,i)=>g.forEach(w=>m.set(w,i))); return m; })();
+/* words too slight to carry a rhyme: articles, prepositions, conjunctions, auxiliaries — a line may not
+   rhyme ON them, nor be judged against them (else "memory / the" would pass, and no poet counts that) */
+const NORHYME=new Set(('the a an of and or nor but to in on at for from with as than that this these those its was '+
+  'am do did hath has had shall will can not if where who whom whose which what then thy thine my her his him their our your').split(' '));
 function rhymes(a,b){
   a=a.replace(/[^a-z']/g,''); b=b.replace(/[^a-z']/g,'');
   if(!a||!b||a===b) return null;   /* identity is not rhyme */
+  if(NORHYME.has(a)||NORHYME.has(b)) return null;
+  if(EYE_MAP.has(a)&&EYE_MAP.get(a)===EYE_MAP.get(b)) return 'eye';   /* the Bard's licence, marked as such */
   const ka=rhymeKey(a), kb=rhymeKey(b);
   if(ka&&kb&&ka===kb) return 'true';
-  if(EYE_MAP.has(a)&&EYE_MAP.get(a)===EYE_MAP.get(b)) return 'eye';
   return null;
 }
+const DANGLE=new Set('of the a an and or nor but to in on at by for from with as than that his her thy my their our your its'.split(' '));
 const SCHEME='ABABCDCDEFEFGG';
 const VOLTA_WORDS=['but','yet','or','nor','o','so','and yet','then','if'];
 const cam=id=>{ const n=$('#'+id); return !!(n&&n.checked); };
@@ -2411,9 +2417,21 @@ async function composeSonnet(){
       div.innerHTML=parts.join(' ');
       FOLEY.play('tick',{bright:2});
       if(TERM_IDS.has(id)){ ended=true; break; }
-      /* the rhyme cam closes the line the moment a rhyme lands, once the measure allows */
-      if(target&&words>=MINW&&lastWord&&rhymes(lastWord,target)){ ended=true; break; }
+      /* the rhyme cam closes the line when a rhyme lands on a content word — never dangling from "of", "the", "and" —
+         once the measure allows */
+      if(target&&words>=MINW&&lastWord&&rhymes(lastWord,target)){
+        const prev=ctx.length>=2?vocabArr[ctx[ctx.length-2]]:'';
+        if(!DANGLE.has(prev)){ ended=true; break; }
+      }
       await sleep(150);
+    }
+    /* finish the phrase: a line may not be ruled complete on a slight word — allow a few more draws to reach a content word */
+    let extra=0;
+    while(!S.halt&&!ended&&extra<3&&lastWord&&DANGLE.has(lastWord)){
+      const q=applyTemp(rawDist(ctx),S.T); q[FINID]=0; TERM_IDS.forEach(id=>{q[id]=0;}); SOFT_IDS.forEach(id=>{q[id]=0;});
+      let Z=0; for(let i=0;i<q.length;i++) Z+=q[i]; if(Z<=1e-9) break; for(let i=0;i<q.length;i++) q[i]/=Z;
+      const id=sample(q); ctx.push(id); parts.push(esc(vocabArr[id])); if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
+      div.innerHTML=parts.join(' '); extra++; await sleep(120);
     }
     if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){ parts.push('—'); div.innerHTML=parts.join(' '); }
     /* THE CAPITAL CAM — capitals to the openers and to the poet's I */

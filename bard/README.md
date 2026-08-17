@@ -129,8 +129,17 @@ spelling: *day/may*, *night/bright*, *thee/be*, *shade/fade*), plus his own
 eye-rhymes and Elizabethan pronunciations (*love/prove*, *eyes/lies*,
 *past/waste*), which are marked `X*` in the margin. The rhymer was proven
 against **106 of Shakespeare's own rhyme-pairs from the corpus (106 pass)**
-with no false pairs among controls; identity is never rhyme. Like him, the
-press does not stop for an imperfect rhyme.
+with no false pairs among controls; identity is never rhyme, and slight words
+(articles, prepositions, conjunctions, auxiliaries — *the, of, and, hath, shall…*)
+may neither carry a rhyme nor be judged against one, so "memory / the" cannot
+pass. His licences (*love/prove*, *have/save*) are consulted before the phonetics
+so they are always marked as licence, not passed as true. Like him, the press
+does not stop for an imperfect rhyme.
+
+**Line closing.** A rhyme closes a line only when it lands on a content word
+that does not dangle from a preposition or article ("…spoil **of when** —" is
+forbidden), and a line that runs out of measure on a slight word is allowed up
+to three more draws to reach a content word before the dash is ruled.
 
 **The interlock with The Schooling** (60 sheets per tier, seed "shall i
 compare thee", boiler 0.95): rhyme success rises from the mid-70s at 5
