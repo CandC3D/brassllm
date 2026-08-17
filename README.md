@@ -13,6 +13,11 @@ Hosted copies:
 - GitHub Pages: https://candc3d.github.io/brassllm/
 - Claude artifact: https://claude.ai/code/artifact/f0c03be7-7e4f-49c5-ba5d-83f67ae0eae2
 
+The **Analytical Bard Engine** — the same machine re-schooled on
+Shakespeare's Sonnets, with a schooling lever (5–20 sonnets), a sonnet press,
+and a rule-book of harness cams — lives at `/bard/` (source of truth is
+`bard/index.html`; its own README is `bard/README.md`).
+
 An **educators' guide** (spiral curriculum for US grades 3, 6, 9, and 12 — computer
 science, probability, Babbage & Lovelace history, and the philosophy of machine
 minds) lives at `/educators.html`, with a self-contained page per grade band.

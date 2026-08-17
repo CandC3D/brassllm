@@ -1,0 +1,132 @@
+# The Analytical Bard Engine
+
+*A subproject fork of [The Analytical Language Engine](https://github.com/CandC3D/brassllm) —
+the same brass machine, re-schooled upon nothing whatever but the Sonnets of
+Mr. William Shakespeare.*
+
+Open `analytical-bard-engine.html` in any modern browser. Fully self-contained.
+
+## What differs from the parent engine
+
+- **Corpus**: 41 verse lines drawn from Sonnets 18, 151, 14, 130, and 116
+  (public domain, 1609), lowercased with pre-spaced punctuation. ~306-token
+  vocabulary, ~1,500 counting-wheels.
+- **Presets**: "shall i compare thee", "my mistress' eyes", "love is not love",
+  "not from the stars" — each tuned to branch cleanly into its sonnet.
+- **Type-drawer domains**: Machina/Urbs/Fabula give way to
+  *Amor* (love & the heart), *Tempus* (time & the sickle),
+  *Natura* (weather & the heavens), *Forma* (beauty & the face).
+- **Stop-word list** extended with the archaic pronouns (thee, thou, thy,
+  thine…) so the copper attention head courts content words.
+- Branding, colophon ("the verses Mr. William Shakespeare's, his Sonnets,
+  MDCIX — the machinery ours"), and specimen dials re-cut accordingly.
+- **Boiler default 0.95 (WARM)**, not the parent's 0.70 — see the tuning sweep below.
+- GA/canonical tags removed pending a hosting decision.
+
+## Tuning the boiler
+
+The default was chosen empirically: 300 completions of the seed "shall" at each
+temperature from 0.60 to 1.30, scoring each setting on two opposed measures —
+
+- **fidelity**: share of adjacent word-pairs that occur somewhere in the sonnets
+  (how much of the output stays on Shakespeare's manifold), and
+- **novelty**: share of completions that are *not* verbatim corpus lines.
+
+| T | fidelity | novelty | product |
+|---|---|---|---|
+| 0.70 | 99.0% | 50.3% | 49.9 |
+| 0.85 | 97.1% | 74.0% | 71.8 |
+| **0.95** | **93.8%** | **86.7%** | **81.3** |
+| 1.00 | 91.5% | 90.3% | 82.6 |
+| 1.05 | 86.6% | 93.0% | 80.6 |
+| 1.30 | 62.3% | 97.3% | 60.7 |
+
+The product peaks in a broad plateau across 0.95–1.05, but fidelity falls off a
+cliff just past 1.00 (−4.9 points in a single step to 1.05, and collapsing
+thereafter), so 0.95 takes the near-optimal score while keeping a margin before
+the edge. Below ~0.80 the engine mostly recites; above ~1.10 it draws unseen
+word-pairs, which silences the trigram layer and leaves it steering on one word
+of memory until it stalls.
+
+Reproduce the sweep by pasting the scoring loop into the console — it uses only
+`rawDist`, `tokenize`, `bi`, `LINES`, and `FINID`, all of which the page exposes.
+
+The mechanics — the interpolated trigram/bigram/unigram engine, temperature,
+the lottery drum, the punching clavier, the fly-ball governor — are identical
+to the parent. Editing notes in the parent repo's README apply here verbatim
+(line 1 = whole `<head>`; artifact copy = `sed '1d;$d'`).
+
+## The Schooling (training-set & parameter-size exercise)
+
+A four-notch brass lever on the masthead rebuilds the whole model live over
+**5, 10, 15, or 20 sonnets** (choice persists in localStorage):
+
+| Folio | Sonnets | Lines | Sorts (vocab) | Wheels (params) |
+|---|---|---|---|---|
+| First | 18, 151, 14, 130, 116 | 41 | 306 | 1,528 |
+| Second | + 12, 30, 65, 73, 127 | 75 | 531 | 2,940 |
+| Third | + 29, 33, 60, 97, 147 | 111 | 736 | 4,246 |
+| Fourth | + 55, 64, 71, 106, 129 | 144 | 895 | 5,521 |
+
+The counters on the masthead, plaques, and honesty footer all update live.
+The teaching demo: seed **"when i do count the clock"** — at 5 sonnets the
+engine has never read Sonnet 12 and can only stammer (best guess: a comma at
+7%); at 10 it continues *"that tells the time"* at 93%. The second folio
+brings the Dark Lady explicitly (127 "raven black", 147 "black as hell, as
+dark as night") plus the brass-most sonnet, 65 ("Since brass, nor stone…").
+The fourth folio adds the monumental register (55 marble/gilded monuments;
+64 "brass eternal slave to mortal rage", towers down-razed, the hungry
+ocean), the funereal (71, the surly sullen bell and vilest worms), the
+chronicle-and-blazon of 106, and the sequence's most violent vocabulary in
+129 (lust, perjur'd, murderous, bloody, savage, extreme). Fourth-folio demo:
+"not marble, nor the gilded" → *monuments* 93% only at 20 sonnets.
+Texts from Project Gutenberg #1041, normalized to corpus format.
+
+## The Sonnet Press (Appendix, Fig. 9)
+
+Designed and built in a Victorian burst of enthusiasm for Shakespeare, the
+press composes complete **14-line sonnets** (quatrains and couplet, a
+persistent Sonnet № counter in Roman numerals) in the vain hope that new
+masterpieces might emerge. Mechanics, candidly: the operator's card seeds
+line 1 (shown in blue ink); each later line opens via a weighted draw over
+the corpus's own line-opening words; the engine is forbidden ∎ *and* the
+full stop before a line's fourth word; a full stop thereafter ends the line
+honourably; any line reaching twelve words — or ending by ∎ without its own
+mark — is ruled complete with an em-dash. All at the boiler's current
+setting.
+
+## The Sonnet-Master's Rule-Book (the harness)
+
+Above the sheet sits a bank of four brass **cams** — each a rule the harness
+lays on the engine's draws (constrained decoding: forbidden slugs are struck
+from the drum before the lottery, or the drum is steered toward permitted
+ones). The cams govern the **press only**; the eight stations always show the
+naked model.
+
+| Cam | Rule | Enforcement |
+|---|---|---|
+| Comma | no point before word 2; a stop only after word 4 | logit mask |
+| Measure | lines run 6–12 words | mask ∎ before 6; force-close (—) at 12 |
+| Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
+| Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |
+
+**Rhyme is judged as the Bard would** — by sound (a clerk's phonetics on
+spelling: *day/may*, *night/bright*, *thee/be*, *shade/fade*), plus his own
+eye-rhymes and Elizabethan pronunciations (*love/prove*, *eyes/lies*,
+*past/waste*), which are marked `X*` in the margin. The rhymer was proven
+against **106 of Shakespeare's own rhyme-pairs from the corpus (106 pass)**
+with no false pairs among controls; identity is never rhyme. Like him, the
+press does not stop for an imperfect rhyme.
+
+**The interlock with The Schooling** (60 sheets per tier, seed "shall i
+compare thee", boiler 0.95): rhyme success rises from the mid-70s at 5
+sonnets to the low-80s at 10–20 (a 60-sheet sample carries a few points of
+noise; the trend is monotone across repeated sweeps). Same harness, more training data, fewer ✗ marks — the harness's
+effectiveness scales with the model's capability, and it can never add a
+word the wheels have not read.
+
+## Growing the corpus
+
+Add more sonnet lines to `const CORPUS` (lowercase, space the punctuation,
+one clause-sized line each, ASCII apostrophes). Avoid ending a line with a
+preset's final word followed by `.` or that preset will draw early stops.

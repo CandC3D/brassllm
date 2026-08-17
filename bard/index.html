@@ -1,5 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://candc3d.github.io/brassllm/"><!-- Google Analytics (GA4) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-G7GXZPF2YR"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G7GXZPF2YR');</script><meta name="description" content="See what happens inside a Large Language Model, from prompt to output, staged as a working Victorian brass machine — with live probabilities, station by station."><meta name="theme-color" content="#1a100a"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180"><link rel="manifest" href="site.webmanifest"><meta property="og:type" content="website"><meta property="og:title" content="The Analytical Language Engine"><meta property="og:description" content="How an LLM works, from prompt to output — illustrated as a working brass machine, after Mr. Babbage."><meta property="og:url" content="https://candc3d.github.io/brassllm/"><meta property="og:image" content="https://candc3d.github.io/brassllm/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://candc3d.github.io/brassllm/og-image.png"></head><body>
-<title>The Analytical Language Engine — how an LLM works, in brass</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://candc3d.github.io/brassllm/bard/"><meta name="description" content="An LLM schooled on nothing but Shakespeare's Sonnets — the Analytical Bard Engine, a working Victorian brass machine with live probabilities, station by station."><meta name="theme-color" content="#1a100a"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="icon" href="../favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="../apple-touch-icon.png" sizes="180x180"><link rel="manifest" href="../site.webmanifest"><meta property="og:type" content="website"><meta property="og:title" content="The Analytical Bard Engine"><meta property="og:url" content="https://candc3d.github.io/brassllm/bard/"><meta property="og:description" content="An LLM of the Sonnets — the brass engine re-schooled on Mr. Shakespeare, after Mr. Babbage."><meta property="og:image" content="https://candc3d.github.io/brassllm/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://candc3d.github.io/brassllm/og-image.png"></head><body>
+<title>The Analytical Bard Engine — an LLM of the Sonnets, in brass</title>
 <style>
 :root{
   --tk:1;
@@ -92,6 +92,50 @@ body{
 }
 .legend a:hover{filter:brightness(1.08)}
 .legend a:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
+/* the schooling — a three-notch folio lever on the masthead */
+.schooling{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.schooll{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--engrave)}
+#folio{width:250px;height:28px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
+#folio::-webkit-slider-runnable-track{height:9px;border-radius:5px;border:1px solid #40300f;
+  background:linear-gradient(90deg,#8a6a2a,#c9a24b 50%,#f2d98e)}
+#folio::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f2d98e,#a8823a);border:2px solid #43310f;box-shadow:0 2px 5px rgba(0,0,0,.5)}
+#folio::-moz-range-track{height:9px;border-radius:5px;border:1px solid #40300f;
+  background:linear-gradient(90deg,#8a6a2a,#c9a24b 50%,#f2d98e)}
+#folio::-moz-range-thumb{width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f2d98e,#a8823a);border:2px solid #43310f}
+#folio:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+/* engraved detent marks under the lever, one to each notch — laid on the thumb's travel (track width less the thumb) */
+.folticks{position:relative;width:250px;height:8px;margin-top:-4px}
+.folticks i{position:absolute;top:0;width:2px;height:8px;margin-left:-1px;border-radius:1px;
+  background:linear-gradient(#2f240c,#6b5320);box-shadow:1px 0 0 rgba(255,240,200,.45)}
+.folticks i:nth-child(1){left:11px}
+.folticks i:nth-child(2){left:calc(11px + (250px - 22px) * 1 / 3)}
+.folticks i:nth-child(3){left:calc(11px + (250px - 22px) * 2 / 3)}
+.folticks i:nth-child(4){left:calc(250px - 11px)}
+.folmarks{position:relative;width:250px;height:12px;font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:#4a3811;margin-top:1px}
+.folmarks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.folmarks span:nth-child(1){left:11px}
+.folmarks span:nth-child(2){left:calc(11px + (250px - 22px) * 1 / 3)}
+.folmarks span:nth-child(3){left:calc(11px + (250px - 22px) * 2 / 3)}
+.folmarks span:nth-child(4){left:calc(250px - 11px)}
+/* the schooling registers — figures on white drums, read through brass-framed windows */
+#folcap{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.reg{display:flex;flex-direction:column;align-items:center;gap:4px}
+.reg .rlab{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#4a3811}
+.reg .rwin{display:flex;gap:2px;padding:4px 5px;border-radius:5px;border:1px solid #43310f;
+  background:linear-gradient(#a8823a,#6b5320);box-shadow:inset 0 1px 0 rgba(255,245,210,.5),0 2px 4px rgba(0,0,0,.45)}
+.drum{position:relative;width:15px;height:22px;overflow:hidden;border-radius:2px;
+  background:linear-gradient(#f7f3ea 0%,#ffffff 30%,#ffffff 70%,#e6e1d5 100%);
+  box-shadow:inset 0 3px 4px rgba(0,0,0,.35),inset 0 -3px 4px rgba(0,0,0,.28),inset 1px 0 0 rgba(0,0,0,.12),inset -1px 0 0 rgba(0,0,0,.12)}
+.drum .reel{position:absolute;left:0;top:0;width:100%;
+  font-family:var(--mono);font-weight:700;font-size:15px;line-height:22px;color:#111;text-align:center;
+  transition:transform calc(.9s*var(--tk)) cubic-bezier(.25,.9,.3,1.05)}
+.drum .reel span{display:block;height:22px}
+.drum::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,0) 32%,rgba(0,0,0,0) 68%,rgba(0,0,0,.28))}
+.reg .rcomma{align-self:flex-end;font-family:var(--mono);font-weight:700;color:#2b2011;padding-bottom:3px}
 
 /* ---------- operator's desk ---------- */
 .desk{padding:20px 22px;margin-bottom:38px;position:relative}
@@ -470,6 +514,53 @@ html.running .mbot{animation:mrollB .55s linear infinite}
 #revno{font-family:var(--mono);font-size:11.5px;color:#e6d9b5;letter-spacing:.06em;font-variant-numeric:tabular-nums;white-space:nowrap}
 #tapelegend{margin-top:10px;font-size:12px;color:#c9b787;font-style:italic}
 
+/* the sonnet press — a fair-copy sheet, fourteen lines to completion */
+#sheet{background:linear-gradient(175deg,#f4ecd6,#e6d8b6);border:1px solid #ac9366;border-radius:4px 14px 4px 4px;
+  padding:22px 26px 18px;max-width:520px;margin:0 auto;box-shadow:0 4px 10px rgba(0,0,0,.5);color:var(--ink);
+  font-style:italic;font-size:15.5px;line-height:1.75;min-height:130px}
+#sheet .stitle{font-style:normal;font-variant:small-caps;letter-spacing:.22em;text-align:center;color:#43310f;
+  font-size:13px;margin-bottom:12px}
+#sheet .sline{min-height:1.7em;overflow-wrap:anywhere}
+#sheet .sline.qgap{margin-top:13px}
+#sheet .sline.couplet{margin-left:26px}
+#sheet .sline .seed{color:#2e4d7b}
+#sheet .sline.live::after{content:"▮";color:#8e2f1d;margin-left:2px;animation:lampblink 1.1s ease-in-out infinite}
+#sheet .finis{font-style:normal;text-align:center;color:#77602f;font-size:12px;letter-spacing:.3em;margin-top:13px}
+#pressrow{display:flex;justify-content:center;margin-top:14px}
+/* the sonnet-master's rule-book — a bank of cams; each is a rule the harness enforces */
+#rulebook{position:relative;overflow:hidden;margin:0 auto 14px;max-width:520px;border:1px solid #513e18;border-radius:8px;padding:10px 12px 8px;
+  background:linear-gradient(#2a1c10,#1c1109);box-shadow:inset 0 2px 10px rgba(0,0,0,.55)}
+#rulebook .rbcap{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#b99c58;margin-bottom:8px;text-align:center}
+.cams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px}
+@media (max-width:560px){.cams{grid-template-columns:1fr}}
+.cam{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:12.5px;color:#e6d9b5;user-select:none}
+.cam input{position:absolute;opacity:0;width:0;height:0}
+.cam .lug{flex:none;width:34px;height:16px;border-radius:9px;border:1px solid #43310f;position:relative;
+  background:linear-gradient(#3a2c14,#241811);box-shadow:inset 0 1px 3px rgba(0,0,0,.7);transition:background .2s}
+.cam .lug::after{content:"";position:absolute;top:1px;left:1px;width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f2d98e,#a8823a);border:1px solid #43310f;transition:left .18s}
+.cam input:checked+.lug{background:linear-gradient(#b0713d,#8a5426)}
+.cam input:checked+.lug::after{left:19px}
+.cam input:focus-visible+.lug{outline:2px solid var(--glow);outline-offset:2px}
+.cam .camname{font-variant:small-caps;letter-spacing:.06em;color:#e8cd85}
+.cam .camrule{font-size:11px;color:#c9b787;font-style:italic}
+#rulebook .rbnote{margin-top:8px;font-size:11px;color:#c9b787;font-style:italic;text-align:center}
+/* the camshaft — after Maillardet's automaton: a shaft of many close-set brass cams, each profile a stored rule */
+#camshaft{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;opacity:.5}
+#rulebook>*:not(#camshaft){position:relative;z-index:1}
+#camshaft .fol{transition:opacity .25s}
+#camshaft .fol.idle{opacity:.35}
+
+/* marginal marks on the sheet — the rhyme letter, or the harness's confession */
+#sheet .sline{position:relative;padding-right:30px}
+#sheet .sline .rmark{position:absolute;right:0;top:.15em;font-style:normal;font-family:var(--serif);font-size:11px;
+  letter-spacing:.06em;color:#8a6a2a;font-variant:small-caps}
+#sheet .sline .rmark.miss{color:#8e2f1d;font-family:var(--mono);font-size:12px}
+#sheet .sline .rmark.eye{color:#a68b52}
+#sheet .sline .rword{border-bottom:1px dotted #8a6a2a}
+#sheet .sline.volta{margin-top:13px}
+#pressnote b{color:#e6c87d}
+
 /* fly */
 .fly{position:fixed;z-index:99;pointer-events:none;transition:transform calc(.95s*var(--tk)) cubic-bezier(.3,.7,.25,1),opacity calc(.95s*var(--tk));will-change:transform}
 
@@ -549,9 +640,9 @@ h2,h3{text-wrap:balance}
 
 <header class="masthead plate screws">
   <div class="orn" aria-hidden="true">❦</div>
-  <h1>The Analytical Language Engine</h1>
+  <h1>The Analytical Bard Engine</h1>
   <div class="rule" aria-hidden="true"></div>
-  <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — what truly happens between your question and its answer — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage.</p>
+  <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage, and schooled upon nothing whatever but the Sonnets of Mr.&nbsp;William&nbsp;Shakespeare.</p>
   <p class="sub2">Everything below actually runs: the gauges are moved by a real (if miniature) engine of probability computed live on this page. The plaques state, candidly, how the full-sized article differs — and terms under a dotted line yield their modern meaning to the pointer.</p>
   <nav class="legend" aria-label="Stations of the engine">
     <a href="#st1">I · Card writer</a>
@@ -562,7 +653,20 @@ h2,h3{text-wrap:balance}
     <a href="#st6">VI · Probabilities</a>
     <a href="#st7">VII · Temperature</a>
     <a href="#st8">VIII · The loop</a>
+    <a href="#press">❦ · The sonnet press</a>
   </nav>
+  <div class="schooling">
+    <div class="schooll">The Schooling — how much Shakespeare the engine has read</div>
+    <input id="folio" type="range" min="0" max="3" step="1" value="0" autocomplete="off"
+           aria-label="Size of the engine's library: five, ten, fifteen, or twenty sonnets">
+    <div class="folticks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="folmarks" aria-hidden="true"><span>5 sonnets</span><span>10</span><span>15</span><span>20 sonnets</span></div>
+    <div id="folcap" aria-live="polite">
+      <div class="reg"><div class="rwin" data-reg="n" data-digits="2"></div><div class="rlab">sonnets read</div></div>
+      <div class="reg"><div class="rwin" data-reg="sorts" data-digits="3"></div><div class="rlab">sorts in the catalogue</div></div>
+      <div class="reg"><div class="rwin" data-reg="wheels" data-digits="4"></div><div class="rlab">counting-wheels</div></div>
+    </div>
+  </div>
 </header>
 
 <section class="desk plate screws" aria-label="Operator's desk">
@@ -571,12 +675,12 @@ h2,h3{text-wrap:balance}
   <div class="deskgrid">
     <div class="deskleft">
       <label class="deskl" for="prompt">Your card — a few opening words, for the engine to continue</label>
-      <input id="prompt" type="text" value="the engine" autocomplete="off" spellcheck="false" maxlength="120">
+      <input id="prompt" type="text" value="shall i compare thee" autocomplete="off" spellcheck="false" maxlength="120">
       <div class="pcards" role="group" aria-label="Ready-punched cards">
-        <button class="pcard" data-t="the engine"><b>CARD № 1</b>“the engine”</button>
-        <button class="pcard" data-t="once upon a time"><b>CARD № 2</b>“once upon a time”</button>
-        <button class="pcard" data-t="the fog rolls"><b>CARD № 3</b>“the fog rolls”</button>
-        <button class="pcard" data-t="the moon"><b>CARD № 4</b>“the moon”</button>
+        <button class="pcard" data-t="shall i compare thee"><b>CARD № 1</b>“shall i compare thee”</button>
+        <button class="pcard" data-t="my mistress' eyes"><b>CARD № 2</b>“my mistress’ eyes”</button>
+        <button class="pcard" data-t="love is not love"><b>CARD № 3</b>“love is not love”</button>
+        <button class="pcard" data-t="not from the stars"><b>CARD № 4</b>“not from the stars”</button>
       </div>
     </div>
     <div class="deskright">
@@ -590,7 +694,7 @@ h2,h3{text-wrap:balance}
         <label><input type="checkbox" id="chkFollow" autocomplete="off" checked> Follow the works (scroll with the demonstration)</label>
         <label><input type="checkbox" id="chkWait" autocomplete="off" checked> Wait at each station (press <i>Proceed</i> to advance)</label>
         <label><input type="checkbox" id="chkSound" autocomplete="off"> Let the works be heard (sound)</label>
-        <button id="boilerchip" title="Go to the boiler, Station VII">BOILER: TEMPERATE (0.70)</button>
+        <button id="boilerchip" title="Go to the boiler, Station VII">BOILER: WARM (0.95)</button>
       </div>
     </div>
   </div>
@@ -625,7 +729,7 @@ t ●●●○●○○   s ●●●○○●●
         </div>
         <div id="punchcard">
           <div id="pcHoles" aria-hidden="true"></div>
-          <div id="pcText">the engine</div>
+          <div id="pcText">shall i compare thee</div>
           <div class="holecap">your words, as holes — seven bits the column, 2⁷ = 128 sorts</div>
         </div>
       </div>
@@ -690,7 +794,7 @@ t ●●●○●○○   s ●●●○○●●
     <div class="mech">
       <div class="mcap">Specimens from the ledger · a fixed exhibit</div>
       <div id="specimens"></div>
-      <div class="mnote">Note how ENGINE and GEARS set their dials nearly alike, while FOG wears a different aspect.</div>
+      <div class="mnote">Note how LOVE and EYES set their dials near one another, while SUMMER wears a different aspect.</div>
       <div class="speccap">The slugs at hand, exchanged for dial-columns</div>
       <div class="dialhost"><div id="dialrow"><span class="mnote">— awaiting slugs —</span></div></div>
     </div>
@@ -816,8 +920,8 @@ t ●●●○●○○   s ●●●○○●●
             <line id="tneedle" x1="90" y1="92" x2="90" y2="30"></line>
             <circle cx="90" cy="92" r="6" fill="#43310f"></circle>
           </svg>
-          <input id="lever" type="range" min="0.1" max="2.5" step="0.05" value="0.7" autocomplete="off" aria-label="Temperature lever">
-          <div id="tname">TEMPERATE · T = 0.70</div>
+          <input id="lever" type="range" min="0.1" max="2.5" step="0.05" value="0.95" autocomplete="off" aria-label="Temperature lever">
+          <div id="tname">WARM · T = 0.95</div>
         </div>
         <div class="lottery">
           <div class="mcap">The lottery drum · lots cast in proportion to the gauges</div>
@@ -869,18 +973,53 @@ t ●●●○●○○   s ●●●○○●●
   </div>
 </section>
 
+<section class="station plate screws" id="press" aria-labelledby="h-press">
+  <div class="sthead">
+    <span class="stno">Appendix</span>
+    <h2 class="stname" id="h-press">The Sonnet Press</h2>
+    <span class="stfig">Fig. 9 — the vain hope <span class="stlamp"></span></span>
+  </div>
+  <div class="stbody">
+    <div class="mech">
+      <div class="mcap">The sonnet-master’s rule-book · cams the harness sets upon the engine</div>
+      <div id="rulebook">
+        <svg id="camshaft" aria-hidden="true" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="rbcap">Throw a cam to enforce its rule · the engine proposes, the rule-book disposes</div>
+        <div class="cams">
+          <label class="cam"><input type="checkbox" id="camComma" checked autocomplete="off"><span class="lug"></span>
+            <span><span class="camname">The Comma Cam</span><br><span class="camrule">no point before the 2nd word; a stop only after the 4th</span></span></label>
+          <label class="cam"><input type="checkbox" id="camMeasure" checked autocomplete="off"><span class="lug"></span>
+            <span><span class="camname">The Measure Cam</span><br><span class="camrule">a line runs six words to twelve</span></span></label>
+          <label class="cam"><input type="checkbox" id="camRhyme" checked autocomplete="off"><span class="lug"></span>
+            <span><span class="camname">The Rhyme Cam</span><br><span class="camrule">ABAB CDCD EFEF GG — as the Bard would do</span></span></label>
+          <label class="cam"><input type="checkbox" id="camVolta" checked autocomplete="off"><span class="lug"></span>
+            <span><span class="camname">The Capital &amp; Volta Cam</span><br><span class="camrule">capitals to the openers; the turn at line nine</span></span></label>
+        </div>
+        <div class="rbnote">the cams forbid and steer — they cannot invent; only the counting-wheels propose a word</div>
+      </div>
+      <div class="mcap">The fair-copy sheet · fourteen lines to completion · quatrains &amp; couplet</div>
+      <div id="sheet" aria-live="polite"><div class="stitle">Sonnet —</div></div>
+      <div id="pressrow"><button class="btn primary" id="btnPress">Set the Press Running</button></div>
+      <div class="mnote" id="pressnote">The press stands ready; your card seeds the first line.</div>
+    </div>
+    <div class="plaque">
+      <p class="conceit">Designed and built in a Victorian burst of enthusiasm for Shakespeare, the press sets the engine running line upon line — fourteen to the sheet, quatrains and couplet — in the hope, sincerely held and entirely vain, that new poetic masterpieces might emerge.</p>
+      <p class="truth"><span class="lead">In truth —</span> nothing can emerge but recombination. Every line is a walk through the sonnets the machine has read, spliced at the words Mr.&nbsp;Shakespeare himself repeated. What makes it <i>look</i> like a sonnet is not the engine at all but the <b>harness</b> — the rule-book of cams above the sheet. Each cam is a rule laid upon the lottery: it strikes forbidden slugs from the drum before the draw (the trade calls this <b>constrained decoding</b>), or steers the draw toward permitted ones. The cams forbid and steer; they cannot invent. Only the counting-wheels propose a word — and if the engine has never read a rhyme for <i>compass</i>, no rule can conjure one. Watch the Rhyme Cam fail, and mark it ✗ in the margin: that failure is the exhibit.</p>
+      <p class="fine">The trade term for the whole panel is <i>the harness</i>, and it is no small part of any modern engine: the good manners of a chat machine — its refusals, its formats, its stopping when it should — are largely rule-book rather than model. Two lessons follow. The harness cannot add knowledge, only shape it; and its success rises with the engine's schooling — throw the Rhyme Cam at five sonnets, then at fifteen, and count the ✗ marks. Rhyme is judged as the Bard would: by sound, with his own eye-rhymes and old pronunciations allowed (<i>love/prove</i>, <i>eyes/lies</i>) and marked in the margin as such; and, like him, the press does not stop for an imperfect rhyme. All at the boiler's present setting.</p>
+    </div>
+  </div>
 <footer class="honesty">
   <div class="plaque">
     <p class="conceit">A candid note, screwed to the cabinet.</p>
-    <p class="truth"><span class="lead">This cabinet is very small.</span> Our product is, properly speaking, an <b>Infinitesimal Language Model</b> (ILM) — the Large’s antipode in every dimension but design. Its probabilities come from a working, miniature engine — a counting of word-patterns (a <i>Markov chain</i>) over a little library of <span id="vL2">—</span> sentences — so that real arithmetic, not pantomime, moves the gauges.</p>
-    <p class="truth" style="margin-top:10px">A modern LLM produces its probabilities not by counting but by the learned machinery of Stations III–V, and its scale is of another order: a catalogue of ~50,000–200,000 tokens against our <span id="vN2">—</span> · a rack of ~200,000 slugs against our 24 · ~100 floors against our pretended 6 · a thousand milliard parameters against our <span id="vK2">—</span> wheels. However, the machine itself — cut to slugs, look up the dials, regard the context, refine by floors, gauge every candidate, draw the lot, and crank again — is a toy replica of considerable fidelity.</p>
-    <p class="truth" style="margin-top:12px"><span class="lead">Post-scriptum, on the question of building it.</span> A Large Analytical Language Engine of our acquaintance has computed what a full-sized specimen would come to, wrought honestly in brass at one counting-column to each parameter. At a million million parts, and with decent aisles between machines for the oilers to labour, the works would cover an area approximately the size of Wales. With every mill labouring together at Mr.&nbsp;Babbage’s own pace, it might mint one word in a season, and a full correspondence in a generation. Its boilers would want half the coal of Britain, and its frames would require more brass than the world of 1843 had ever smelted. The arithmetic is left in the margin for the sceptical.</p>
-    <p class="fine">Marginalia — <b>area:</b> 10¹² parameters × one five-wheel column at a hand’s-breadth square, (0.1&nbsp;m)², ≈ 10,000&nbsp;km²; doubled for aisles and shafting ≈ Wales, 20,779&nbsp;km². <b>Pace:</b> ~2×10¹² multiply-accumulations the token, shared among two million mills at ten seconds the operation ≈ four months the word. <b>Coal:</b> those mills steam-driven Victorian efficiency ≈ tens of millions of tons the year, Britain’s whole output of 1850 being about sixty million. <b>Brass:</b> ~½&nbsp;kg the column ≈ 500 million tons — centuries of smelting, as reckoned from 1843.</p>
-    <p class="truth" style="margin-top:12px"><span class="lead">Post-post-scriptum, on the labour question.</span> A correspondent of sterner economy, a certain Mr.&nbsp;E.&nbsp;Scrooge, London, asks if the treadwheel might replace the boiler, with the destitute and the orphan turning the works while saving the expense of burning coal. Prisons and workhouses are amply stocked with labour. The arithmetic does not support his conjectures: to replace the boilers would want some forty million souls in relays — half again the population of Great Britain — upon eight hundred and fifty thousand wheels; every pauper actually on the parish books, treading day and night, would hasten each four-month word by merely four days; and the orphans at their cranks would buy, at most, an hour. Bread, moreover, runs thirty times dearer than coal, watt for watt.</p>
-    <p class="fine">Marginalia — <b>demand:</b> ~1&nbsp;GW at the prime movers, as computed above. <b>A treader:</b> ~60&nbsp;W for a ten-hour day; a child at the crank, ~15&nbsp;W. <b>Replacement:</b> 10⁹&nbsp;÷&nbsp;60 ≈ 17 million treading at every hour, ×2.4 for relays ≈ 40 million; ÷&nbsp;20 places the wheel ≈ 850,000 wheels, whose sheds ≈ 42&nbsp;km² — a five-hundredth part of Wales, the scheme’s one economy. <b>As found:</b> Britain’s ~1.5 million paupers yield ~37&nbsp;MW ≈ 4 per cent ≈ four days the word; its ~65,000 workhouse orphans ~0.4&nbsp;MW ≈ an hour. <b>The ledger:</b> a pauper’s keep, ~5d the day, buys ~2&nbsp;MJ of work; a ton of coal at 10s buys 1.5&nbsp;GJ — near thirty-fold the value. The penal wheel was struck off by the Prison Act of 1898.</p>
+    <p class="truth"><span class="lead">This is the same machine, differently schooled.</span> The Analytical Bard Engine is <a href="https://candc3d.github.io/brassllm/">the Analytical Language Engine</a> in every brass particular — the same clavier, mill, gauges, governor, drum and crank, and the same miniature counting engine (a <i>Markov chain</i>) beneath them. What differs is only what it has read: not the parent’s little library of household prose, but <span id="vL2">—</span> lines from the Sonnets of Mr.&nbsp;William&nbsp;Shakespeare, presently <span id="vN2">—</span> sorts in the catalogue and <span id="vK2">—</span> counting-wheels. Its every word is his; the order is the lottery’s. For the candid account of how such an engine differs from the full-sized article — its scale, its arithmetic, and the celebrated question of whether one might be built in brass across Wales — the reader is referred to the parent cabinet, whose notes we do not repeat here.</p>
+    <p class="truth" style="margin-top:12px"><span class="lead">On fine-tuning, which is what this is.</span> The trade calls a machine re-schooled on a narrower library a <b>fine-tune</b>, and this cabinet is one in the strictest sense: identical architecture, identical mechanism, only the reading exchanged. Observe that the voice came along with the reading. A style, to the machine, is nothing but a set of probabilities — and the more distinctive the style, the sharper the probabilities and the easier the counterfeit. Observe too where the counterfeit’s seams fall: every splice we have caught turns on a word the poet <i>himself</i> repeated — <i>fair</i> from <i>fair</i>, <i>eternal</i> summer and <i>eternal</i> lines, <i>love</i> upon <i>love</i>. His rhetorical figures are, quite literally, the graph’s hubs. The style is the topology.</p>
+    <p class="truth" style="margin-top:12px"><span class="lead">On the schooling lever, and what it teaches.</span> The four folios are the same machine at four sizes of library, and the registers on the masthead report the consequence in sorts and wheels — the two quantities the trade calls vocabulary and parameters. Seed the card with <i>“when i do count the clock”</i> at five sonnets and the engine can only stammer, for it has never read the twelfth; at ten it continues <i>“that tells the time”</i> at better than nine parts in ten. Seed <i>“not marble, nor the gilded”</i> and only the twentieth-sonnet folio knows <i>monuments</i>. That is what training data <i>is</i>: not cleverness, but coverage.</p>
+    <p class="truth" style="margin-top:12px"><span class="lead">On the press and its rule-book.</span> The sonnet press was built in a burst of enthusiasm and in the vain hope of masterpieces; it composes fourteen lines because the rule-book compels it, not because the engine knows what a sonnet is. The rule-book — the <b>harness</b> — forbids and steers but cannot invent: it can strike a full stop from the drum, or tilt the lottery toward a rhyme, but if the wheels have never read a rhyme for <i>compass</i>, no cam can conjure one, and the margin says so with a ✗. Two lessons are engraved there. The harness cannot add knowledge, only shape it; and its success rises with the schooling — throw the Rhyme Cam at five sonnets and again at twenty, and count the marks. Much of a modern chat engine’s good behaviour is harness of exactly this kind.</p>
+    <p class="fine">Marginalia — <b>the boiler</b> stands at 0.95 by measurement, not taste: three hundred completions of the seed <i>shall</i> at each setting from 0.60 to 1.30, scored for fidelity (adjacent pairs found in the corpus) against novelty (completions not verbatim Shakespeare); the product peaks 0.95–1.05 and fidelity falls off a cliff past 1.00. <b>The rhymer</b> judges by sound with the Bard’s own licences (<i>love/prove</i>, <i>eyes/lies</i>, <i>past/waste</i>), and was made to pass 106 of his own rhyme-pairs before it was let judge the engine’s. <b>The rhyme cam’s success</b> at 5 · 10 · 15 · 20 sonnets, sixty sheets the tier: roughly three in four rising to better than four in five. <b>Sources:</b> the Sonnets of 1609, from the Gutenberg text (№ 1041), lower-cased and their points spaced; the machinery from the parent cabinet, whose editing notes apply here verbatim.</p>
   </div>
-  <p style="text-align:center;margin-top:20px"><a href="https://candc3d.github.io/brassllm/bard/" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">✒</span> The Bard Engine ▸</a><a href="https://candc3d.github.io/brassllm/about.html" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">⟁</span> The Mathematics Behind the Engine ▸</a><a href="https://candc3d.github.io/brassllm/educators.html" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">✎</span> For Educators ▸</a></p>
+  <p style="text-align:center;margin-top:20px"><a href="https://candc3d.github.io/brassllm/" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">⚙</span> The Parent Engine ▸</a><a href="https://candc3d.github.io/brassllm/about.html" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">⟁</span> The Mathematics ▸</a><a href="https://candc3d.github.io/brassllm/educators.html" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">✎</span> For Educators ▸</a></p>
   <p class="colophon">Devised by <b>MESSRS. HORROCKS &amp; CLAUDE</b> (an engine of the very kind depicted)<br>
+  the verses <b>MR. WILLIAM SHAKESPEARE’S</b>, his Sonnets, MDCIX — the machinery ours<br>
   <span class="warrant"><span class="crown" aria-hidden="true">♛ </span>By Warrant of Her Majesty — Purveyors of Analytical Language Engines — © MMXXVI</span>
   <span class="addr">Oldham, Lancs.</span></p>
   <p class="licence">Code: <a href="https://github.com/CandC3D/brassllm/blob/main/LICENSE">MIT Licence</a> · Text, plaques &amp; curriculum: <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a></p>
@@ -1013,113 +1152,224 @@ const FOLEY=(()=>{
 
 /* ---------------- the little library ---------------- */
 const CORPUS=`
-the engine turns and the tape unwinds .
-the engine turns and the brass begins to sing .
-the engine turns all night in the cellar .
-the engine hums like a hive of patient bees .
-the engine hums and the lamps flicker .
-the engine dreams in numbers .
-the engine dreams of the sea .
-the engine counts the stars one by one .
-the engine counts everything and understands nothing .
-the engine waits for the next question .
-the engine waits in the dark , patient as a clock .
-the engine writes one word at a time and never hurries .
-the engine writes letters to the moon .
-the engine remembers nothing and predicts everything .
-the engine is made of brass and borrowed words .
-the great wheel turns and the small gears follow .
-the gears mesh and the numbers march like soldiers .
-the gears are cold but the arithmetic is warm .
-the crank turns and a word falls out .
-the crank turns and the whole city listens .
-the steam rises and the pistons keep the beat .
-the steam rises through the floor of the mill .
-the tape unwinds across the table like a white road .
-the tape unwinds and the letter arrives at last .
-the brass shines in the lamplight .
-the clockmaker taught the brass to speak .
-the clockmaker winds the engine every morning .
-a machine that reads will one day write .
-a machine that writes must first learn to count .
-the mill grinds words instead of corn .
-the mill grinds slowly through the long afternoon .
-once upon a time there was a machine that could write .
-once upon a time there was a clockmaker with brass fingers .
-once upon a time there was a city made of fog .
-once upon a time the moon fell in love with the sea .
-once upon a time a small gear asked the great wheel why it turned .
-once upon a time the stars came down to read .
-there was a machine that dreamed , and its dreams were made of numbers .
-there was a city where the lamps never went out .
-the small gear asked why , and the great wheel said , because .
-the fog rolls over london like a grey tide .
-the fog rolls in from the river at dusk .
-the fog swallows the lamps one by one .
-the fog is thick tonight and the streets are quiet .
-the fog presses its face to the window .
-london wakes to the sound of bells .
-london sleeps under a blanket of smoke .
-the streets are quiet and the rain is soft .
-the lamps burn low in the reading room .
-the lamps go out one by one along the river .
-the river moves slowly under the bridge .
-the river carries the fog out to the sea .
-the bells ring across the rooftops at dawn .
-the rain falls on the rooftops all night .
-the moon climbs over the rooftops .
-the moon is a pale coin in a dark pocket .
-the moon fell in love with the sea and the tide has followed her ever since .
-the stars come out over the quiet city .
-the stars are numbers the night is counting .
-the sea answers the moon in long slow sentences .
-the sea keeps its own ledger of tides .
-the night is long and full of small sounds .
-the night leans on the window like a tired friend .
-the kettle sings and the tea is poured .
-the tea grows cold beside the ledger .
-the letter arrives with the morning post .
-the letter is late but the news is kind .
-the candle burns down to a thumb of wax .
-the clock on the mantel keeps its own quiet hours .
-the ledger is full of small neat numbers .
-the ink dries slowly in the cold room .
-the engine turns . the tape unwinds . the letter is written .
-the fog rolls in . the lamps go out . the city sleeps .
-the crank turns and a word falls out . then another . then another .
-the moon climbs . the tide follows . the sea keeps count .
-the kettle sings . the tea is poured . the work begins .
-the engine waits . the question comes . the answer unwinds like tape .
-the stars come out . the engine counts them . the night goes on .
-the clockmaker sleeps . the engine does not .
+shall i compare thee to a summer's day ?
+thou art more lovely and more temperate .
+rough winds do shake the darling buds of may , and summer's lease hath all too short a date .
+sometime too hot the eye of heaven shines , and often is his gold complexion dimmed .
+and every fair from fair sometime declines , by chance , or nature's changing course , untrimmed .
+but thy eternal summer shall not fade , nor lose possession of that fair thou ow'st .
+nor shall death brag thou wander'st in his shade when in eternal lines to time thou grow'st .
+so long as men can breathe or eyes can see , so long lives this , and this gives life to thee .
+love is too young to know what conscience is .
+yet who knows not conscience is born of love ?
+then , gentle cheater , urge not my amiss , lest guilty of my faults thy sweet self prove .
+for , thou betraying me , i do betray my nobler part to my gross body's treason .
+my soul doth tell my body that he may triumph in love .
+flesh stays no farther reason , but rising at thy name doth point out thee as his triumphant prize .
+proud of this pride , he is contented thy poor drudge to be , to stand in thy affairs , fall by thy side .
+no want of conscience hold it that i call her love for whose dear love i rise and fall .
+not from the stars do i my judgement pluck , and yet methinks i have astronomy .
+but not to tell of good or evil luck , of plagues , of dearths , or seasons' quality .
+nor can i fortune to brief minutes tell , pointing to each his thunder , rain and wind .
+or say with princes if it shall go well , by oft predict that i in heaven find .
+but from thine eyes my knowledge i derive , and , constant stars , in them i read such art .
+as truth and beauty shall together thrive , if from thyself to store thou wouldst convert .
+or else of thee this i prognosticate .
+thy end is truth's and beauty's doom and date .
+my mistress' eyes are nothing like the sun .
+coral is far more red than her lips' red .
+if snow be white , why then her breasts are dun .
+if hairs be wires , black wires grow on her head .
+i have seen roses damask'd , red and white , but no such roses see i in her cheeks .
+and in some perfumes is there more delight than in the breath that from my mistress reeks .
+i love to hear her speak , yet well i know that music hath a far more pleasing sound .
+i grant i never saw a goddess go .
+my mistress , when she walks , treads on the ground .
+and yet , by heaven , i think my love as rare as any she belied with false compare .
+let me not to the marriage of true minds admit impediments .
+love is not love which alters when it alteration finds , or bends with the remover to remove .
+o , no ! it is an ever fixed mark , that looks on tempests and is never shaken .
+it is the star to every wandering bark , whose worth's unknown , although his height be taken .
+love's not time's fool , though rosy lips and cheeks within his bending sickle's compass come .
+love alters not with his brief hours and weeks , but bears it out even to the edge of doom .
+if this be error and upon me proved , i never writ , nor no man ever loved .
+`;
+/* the second folio — sonnets 12, 30, 65, 73, 127 */
+const CORPUS_B=`
+when i do count the clock that tells the time , and see the brave day sunk in hideous night .
+when i behold the violet past prime , and sable curls , all silvered o'er with white .
+when lofty trees i see barren of leaves , which erst from heat did canopy the herd .
+and summer's green all girded up in sheaves , borne on the bier with white and bristly beard .
+then of thy beauty do i question make , that thou among the wastes of time must go .
+since sweets and beauties do themselves forsake and die as fast as they see others grow .
+and nothing 'gainst time's scythe can make defence save breed , to brave him when he takes thee hence .
+when to the sessions of sweet silent thought i summon up remembrance of things past .
+i sigh the lack of many a thing i sought , and with old woes new wail my dear time's waste .
+then can i drown an eye , unused to flow , for precious friends hid in death's dateless night .
+and weep afresh love's long since cancell'd woe , and moan the expense of many a vanish'd sight .
+then can i grieve at grievances foregone , and heavily from woe to woe tell o'er the sad account of fore bemoaned moan , which i new pay as if not paid before .
+but if the while i think on thee , dear friend , all losses are restor'd and sorrows end .
+since brass , nor stone , nor earth , nor boundless sea , but sad mortality o'ersways their power , how with this rage shall beauty hold a plea , whose action is no stronger than a flower ?
+o , how shall summer's honey breath hold out , against the wrackful siege of battering days ?
+when rocks impregnable are not so stout , nor gates of steel so strong but time decays ?
+o fearful meditation , where , alack , shall time's best jewel from time's chest lie hid ?
+or what strong hand can hold his swift foot back ?
+or who his spoil of beauty can forbid ?
+o , none , unless this miracle have might , that in black ink my love may still shine bright .
+that time of year thou mayst in me behold when yellow leaves , or none , or few , do hang upon those boughs which shake against the cold .
+bare ruin'd choirs , where late the sweet birds sang .
+in me thou see'st the twilight of such day as after sunset fadeth in the west .
+which by and by black night doth take away , death's second self , that seals up all in rest .
+in me thou see'st the glowing of such fire , that on the ashes of his youth doth lie .
+as the death bed , whereon it must expire , consum'd with that which it was nourish'd by .
+this thou perceiv'st , which makes thy love more strong , to love that well , which thou must leave ere long .
+in the old age black was not counted fair , or if it were , it bore not beauty's name .
+but now is black beauty's successive heir , and beauty slander'd with a bastard shame .
+for since each hand hath put on nature's power , fairing the foul with art's false borrowed face .
+sweet beauty hath no name , no holy bower , but is profan'd , if not lives in disgrace .
+therefore my mistress' eyes are raven black , her eyes so suited , and they mourners seem .
+at such who , not born fair , no beauty lack , sland'ring creation with a false esteem .
+yet so they mourn becoming of their woe , that every tongue says beauty should look so .
+`;
+/* the third folio — sonnets 29, 33, 60, 97, 147 */
+const CORPUS_C=`
+when in disgrace with fortune and men's eyes i all alone beweep my outcast state .
+and trouble deaf heaven with my bootless cries , and look upon myself , and curse my fate .
+wishing me like to one more rich in hope , featur'd like him , like him with friends possess'd .
+desiring this man's art , and that man's scope , with what i most enjoy contented least .
+yet in these thoughts my self almost despising , haply i think on thee , and then my state , like to the lark at break of day arising from sullen earth , sings hymns at heaven's gate .
+for thy sweet love remember'd such wealth brings that then i scorn to change my state with kings .
+full many a glorious morning have i seen flatter the mountain tops with sovereign eye .
+kissing with golden face the meadows green , gilding pale streams with heavenly alchemy .
+anon permit the basest clouds to ride with ugly rack on his celestial face .
+and from the forlorn world his visage hide , stealing unseen to west with this disgrace .
+even so my sun one early morn did shine , with all triumphant splendour on my brow .
+but out , alack , he was but one hour mine , the region cloud hath mask'd him from me now .
+yet him for this my love no whit disdaineth .
+suns of the world may stain when heaven's sun staineth .
+like as the waves make towards the pebbled shore , so do our minutes hasten to their end .
+each changing place with that which goes before , in sequent toil all forwards do contend .
+nativity , once in the main of light , crawls to maturity , wherewith being crown'd .
+crooked eclipses 'gainst his glory fight , and time that gave doth now his gift confound .
+time doth transfix the flourish set on youth and delves the parallels in beauty's brow .
+feeds on the rarities of nature's truth , and nothing stands but for his scythe to mow .
+and yet to times in hope , my verse shall stand , praising thy worth , despite his cruel hand .
+how like a winter hath my absence been from thee , the pleasure of the fleeting year !
+what freezings have i felt , what dark days seen !
+what old december's bareness everywhere !
+and yet this time removed was summer's time , the teeming autumn , big with rich increase .
+bearing the wanton burden of the prime , like widow'd wombs after their lords' decease .
+yet this abundant issue seem'd to me but hope of orphans , and unfather'd fruit .
+for summer and his pleasures wait on thee , and , thou away , the very birds are mute .
+or , if they sing , 'tis with so dull a cheer , that leaves look pale , dreading the winter's near .
+my love is as a fever longing still , for that which longer nurseth the disease .
+feeding on that which doth preserve the ill , the uncertain sickly appetite to please .
+my reason , the physician to my love , angry that his prescriptions are not kept .
+hath left me , and i desperate now approve desire is death , which physic did except .
+past cure i am , now reason is past care , and frantic mad with evermore unrest .
+my thoughts and my discourse as madmen's are , at random from the truth vainly express'd .
+for i have sworn thee fair , and thought thee bright , who art as black as hell , as dark as night .
+`;
+/* the fourth folio — sonnets 55, 64, 71, 106, 129 */
+const CORPUS_D=`
+not marble , nor the gilded monuments of princes , shall outlive this powerful rhyme .
+but you shall shine more bright in these contents than unswept stone , besmear'd with sluttish time .
+when wasteful war shall statues overturn , and broils root out the work of masonry .
+nor mars his sword , nor war's quick fire shall burn the living record of your memory .
+'gainst death , and all oblivious enmity shall you pace forth .
+your praise shall still find room even in the eyes of all posterity that wear this world out to the ending doom .
+so , till the judgement that yourself arise , you live in this , and dwell in lovers' eyes .
+when i have seen by time's fell hand defac'd the rich proud cost of outworn buried age .
+when sometime lofty towers i see down raz'd , and brass eternal slave to mortal rage .
+when i have seen the hungry ocean gain advantage on the kingdom of the shore .
+and the firm soil win of the watery main , increasing store with loss , and loss with store .
+when i have seen such interchange of state , or state itself confounded , to decay .
+ruin hath taught me thus to ruminate , that time will come and take my love away .
+this thought is as a death which cannot choose but weep to have , that which it fears to lose .
+no longer mourn for me when i am dead than you shall hear the surly sullen bell give warning to the world that i am fled from this vile world with vilest worms to dwell .
+nay , if you read this line , remember not the hand that writ it , for i love you so , that i in your sweet thoughts would be forgot , if thinking on me then should make you woe .
+o if , i say , you look upon this verse , when i perhaps compounded am with clay , do not so much as my poor name rehearse .
+but let your love even with my life decay .
+lest the wise world should look into your moan , and mock you with me after i am gone .
+when in the chronicle of wasted time i see descriptions of the fairest wights , and beauty making beautiful old rime , in praise of ladies dead and lovely knights .
+then , in the blazon of sweet beauty's best , of hand , of foot , of lip , of eye , of brow , i see their antique pen would have express'd even such a beauty as you master now .
+so all their praises are but prophecies of this our time , all you prefiguring .
+and for they looked but with divining eyes , they had not skill enough your worth to sing .
+for we , which now behold these present days , have eyes to wonder , but lack tongues to praise .
+the expense of spirit in a waste of shame is lust in action .
+and till action , lust is perjur'd , murderous , bloody , full of blame , savage , extreme , rude , cruel , not to trust .
+enjoy'd no sooner but despised straight .
+past reason hunted , and no sooner had , past reason hated , as a swallow'd bait , on purpose laid to make the taker mad .
+mad in pursuit and in possession so .
+had , having , and in quest , to have extreme .
+a bliss in proof , and proved , a very woe .
+before , a joy propos'd , behind a dream .
+all this the world well knows , yet none knows well to shun the heaven that leads men to this hell .
 `;
 
 /* ---------------- build the counting engine ---------------- */
 const FIN='∎', PUNCT=new Set(['.',',',';',':','!','?']);
 const vocabArr=[], vocabId=new Map();
 function intern(w){ if(vocabId.has(w)) return vocabId.get(w); const id=vocabArr.length; vocabArr.push(w); vocabId.set(w,id); return id; }
-const FINID=intern(FIN);
+let FINID=intern(FIN);
 const uniC=[], bi=new Map(), tri=new Map(), coocc=new Map();
 let uniT=0;
 function bump(m,key,next){ let e=m.get(key); if(!e){e={t:0,m:new Map()};m.set(key,e);} e.t++; e.m.set(next,(e.m.get(next)||0)+1); }
-const LINES=CORPUS.trim().split('\n').map(l=>l.trim()).filter(Boolean);
-for(const line of LINES){
-  const seq=line.split(/\s+/).map(intern); seq.push(FINID);
-  for(let i=0;i<seq.length;i++){
-    uniC[seq[i]]=(uniC[seq[i]]||0)+1; uniT++;
-    if(i+1<seq.length) bump(bi,seq[i],seq[i+1]);
-    if(i+2<seq.length) bump(tri,seq[i]+','+seq[i+1],seq[i+2]);
+/* the schooling: the same machine may be built over three sizes of library */
+const FOLIOS=[{n:5},{n:10},{n:15},{n:20}];
+let FOLIO=0, LINES=[], BASE_N=0, WHEELS=0;
+function buildModel(tier){
+  FOLIO=Math.min(3,Math.max(0,tier|0));
+  vocabArr.length=0; vocabId.clear(); uniC.length=0; uniT=0;
+  bi.clear(); tri.clear(); coocc.clear();
+  FINID=intern(FIN);
+  const text=[CORPUS,CORPUS_B,CORPUS_C,CORPUS_D].slice(0,FOLIO+1).join('\n');
+  LINES=text.trim().split('\n').map(l=>l.trim()).filter(Boolean);
+  for(const line of LINES){
+    const seq=line.split(/\s+/).map(intern); seq.push(FINID);
+    for(let i=0;i<seq.length;i++){
+      uniC[seq[i]]=(uniC[seq[i]]||0)+1; uniT++;
+      if(i+1<seq.length) bump(bi,seq[i],seq[i+1]);
+      if(i+2<seq.length) bump(tri,seq[i]+','+seq[i+1],seq[i+2]);
+    }
+    const uniq=[...new Set(seq.filter(id=>id!==FINID&&!PUNCT.has(vocabArr[id])))];
+    for(let a=0;a<uniq.length;a++)for(let b=a+1;b<uniq.length;b++){
+      const k=Math.min(uniq[a],uniq[b])+','+Math.max(uniq[a],uniq[b]);
+      coocc.set(k,(coocc.get(k)||0)+1);
+    }
   }
-  const uniq=[...new Set(seq.filter(id=>id!==FINID&&!PUNCT.has(vocabArr[id])))];
-  for(let a=0;a<uniq.length;a++)for(let b=a+1;b<uniq.length;b++){
-    const k=Math.min(uniq[a],uniq[b])+','+Math.max(uniq[a],uniq[b]);
-    coocc.set(k,(coocc.get(k)||0)+1);
-  }
+  BASE_N=vocabArr.length;
+  for(let i=0;i<BASE_N;i++) if(uniC[i]===undefined) uniC[i]=0;
+  WHEELS=uniC.filter(c=>c>0).length;
+  bi.forEach(e=>WHEELS+=e.m.size); tri.forEach(e=>WHEELS+=e.m.size);
+  rebuildPressTables();
+  refreshFolio();
 }
-const BASE_N=vocabArr.length;
-for(let i=0;i<BASE_N;i++) if(uniC[i]===undefined) uniC[i]=0;
-let WHEELS=uniC.filter(c=>c>0).length;
-bi.forEach(e=>WHEELS+=e.m.size); tri.forEach(e=>WHEELS+=e.m.size);
+function refreshFolio(){
+  $('#vN').textContent=BASE_N; $('#vN2').textContent=BASE_N;
+  $('#vK').textContent=WHEELS.toLocaleString('en-GB'); $('#vK2').textContent=WHEELS.toLocaleString('en-GB');
+  $('#vL').textContent=LINES.length; $('#vL2').textContent=LINES.length;
+  setRegister('n',FOLIOS[FOLIO].n); setRegister('sorts',BASE_N); setRegister('wheels',WHEELS);
+}
+/* the registers: each figure is a stack of digits on a reel; the reel rolls to show the right one */
+function setRegister(name,value){
+  const win=document.querySelector('.rwin[data-reg="'+name+'"]'); if(!win) return;
+  const digits=+win.dataset.digits||String(value).length;
+  const str=String(value).padStart(digits,'0');
+  if(!win.children.length){
+    for(let i=0;i<digits;i++){
+      if(digits>3&&i>0&&(digits-i)%3===0){ const c=document.createElement('span'); c.className='rcomma'; c.textContent=','; win.appendChild(c); }
+      const d=document.createElement('div'); d.className='drum';
+      const r=document.createElement('div'); r.className='reel';
+      r.innerHTML='<span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>';
+      d.appendChild(r); win.appendChild(d);
+    }
+    win.setAttribute('aria-label',value.toLocaleString('en-GB'));
+  }
+  const drums=win.querySelectorAll('.drum .reel');
+  [...str].forEach((ch,i)=>{ if(drums[i]) drums[i].style.transform='translateY('+(-22*(+ch))+'px)'; });
+  win.setAttribute('aria-label',value.toLocaleString('en-GB'));
+}
 const cooGet=(a,b)=>coocc.get(Math.min(a,b)+','+Math.max(a,b))||0;
 
 function tokenize(text){
@@ -1162,13 +1412,13 @@ function sample(q){
 
 /* ---------------- the ledger of meanings (dials) ---------------- */
 const CLUSTERS={
-  machina:'engine gears gear crank brass steam tape mill wheel pistons machine clockmaker arithmetic numbers ledger clock kettle candle ink work word words letter letters count counts counting',
-  urbs:'london city streets river bridge bells rooftops lamps lamplight window room cellar table post reading mantel',
-  natura:'fog moon sea stars tide rain night dawn dusk morning smoke bees hive corn afternoon wax sound sounds',
-  fabula:'time love dreams dream dreamed question answer news soldiers friend coin pocket road blanket face fingers story'
+  amor:"love love's loved marriage minds mistress mistress' sweet dear conscience soul body body's flesh pride prize drudge cheater faults treason amiss self affairs fever desire physician friend friends heart lust lovers' bliss joy spirit shame pursuit possession",
+  tempus:"time time's hours weeks minutes date doom death death's shade eternal sometime end edge fool sickle's compass lease fade error impediments alteration remover clock scythe wastes waste december winter autumn twilight sunset age hence decease expire minutes maturity nativity eclipses memory posterity ruin decay chronicle antique dead gone fled buried outworn ending",
+  natura:"summer summer's day winds buds may sun heaven heaven's stars star thunder rain wind snow roses coral tempests bark seasons' plagues dearths nature's course waves shore leaves boughs birds violet trees sheaves herd morning mountain meadows streams clouds cloud rack lark earth flower rocks fire ashes year prime ocean soil main worms clay towers marble stone monuments statues masonry",
+  forma:"fair beauty beauty's truth truth's lovely temperate eyes lips lips' cheeks breasts hairs head complexion gold red white black dun rare music sound perfumes delight breath goddess art astronomy raven ink golden pale bright name esteem shame disgrace alchemy splendour rhyme rime verse praise praises blazon pen tongues wights knights ladies gilded"
 };
-const PROTO={machina:[.86,.2,.72,.35,.9,.15,.6,.42], urbs:[.25,.8,.4,.7,.2,.75,.5,.3],
-             natura:[.12,.45,.15,.85,.3,.55,.2,.78], fabula:[.6,.62,.85,.2,.5,.4,.8,.62]};
+const PROTO={amor:[.6,.62,.85,.2,.5,.4,.8,.62], tempus:[.86,.2,.72,.35,.9,.15,.6,.42],
+             natura:[.12,.45,.15,.85,.3,.55,.2,.78], forma:[.25,.8,.4,.7,.2,.75,.5,.3]};
 const clusterOf=(()=>{ const m=new Map();
   for(const[c,ws]of Object.entries(CLUSTERS)) for(const w of ws.split(/\s+/)) m.set(w,c);
   return w=>m.get(w); })();
@@ -1183,7 +1433,7 @@ function dialVals(word){
 }
 
 /* attention (illustrative): a recency head and an affinity head */
-const STOPW=new Set('the a an of and in to is are was were its it at on with for by that there then but must will'.split(' '));
+const STOPW=new Set('the a an of and in to is are was were its it at on with for by that there then but must will thee thou thy thine i me my her his he she o be do nor or if as so yet not'.split(' '));
 function attnWeights(win){
   const li=win.length-1, rec=[], aff=[];
   const lastW=vocabArr[win[li]], lastC=clusterOf(lastW);
@@ -1211,6 +1461,7 @@ const ctxWin=()=>S.ctx.slice(-WINDOW);
 /* ---------------- element handles ---------------- */
 const el={
   prompt:$('#prompt'),begin:$('#btnBegin'),crank:$('#btnCrank'),run:$('#btnRun'),reset:$('#btnReset'),
+  sheet:$('#sheet'),pressnote:$('#pressnote'),pressBtn:$('#btnPress'),
   chkWait:$('#chkWait'),chkFollow:$('#chkFollow'),chkSound:$('#chkSound'),boiler:$('#boilerchip'),
   card:$('#punchcard'),pcText:$('#pcText'),pcHoles:$('#pcHoles'),cardnote:$('#cardnote'),
   clavier:$('#clavier'),carriage:$('#carriage'),pkeys:[...document.querySelectorAll('.pkey')],
@@ -1325,7 +1576,7 @@ function buildBand(){
 }
 function buildSpecimens(){
   el.specimens.innerHTML='';
-  for(const w of ['engine','gears','fog']) el.specimens.appendChild(dialCol(w,true));
+  for(const w of ['love','summer','eyes']) el.specimens.appendChild(dialCol(w,true));
 }
 function dialCol(word,set){
   const d=document.createElement('div'); d.className='dcol';
@@ -1714,6 +1965,7 @@ function refreshButtons(){
   el.begin.disabled=S.busy||S.running;
   el.crank.disabled=S.busy||S.running||!S.started||S.finished;
   el.run.disabled=S.finished||!S.started||(S.busy&&!S.running);
+  el.pressBtn.disabled=S.busy||S.running;
   updateTgButtons();
 }
 let proceedRes=null;
@@ -1842,8 +2094,259 @@ function clearWorks(){
   buildBand(); el.pointer.style.left='2%'; el.drawres.textContent='No lot has yet been drawn.';
   el.tape.innerHTML='<span class="stamp prompt">❧</span>';
   telegraph('Idle. Write a card and begin.');
+  el.sheet.innerHTML='<div class="stitle">Sonnet —</div>';
+  el.pressnote.textContent='The press stands ready; your card seeds the first line.';
   FOLEY.bed('hum',false); FOLEY.bed('roll',false);
   deactivate(); refreshButtons();
+}
+
+/* ---- the camshaft behind the rule-book, after Maillardet — seen END-ON: four discs, one to each rule,
+        each turning on the common shaft with a follower-pin riding its rim; the pin lifts and drops as the profile
+        passes beneath it.  A thrown cam's follower is engaged and bright; an idle cam's is lifted clear and dim. ---- */
+/* each cam is a machined disc with rectangular slots of assorted depth cut into the rim — a stored programme in
+   brass, in the manner of a droid's dataport wheel; the follower drops into each slot and rides out again.
+   A profile is a list of [angle°, width°, depth (0..1 of R)] slots; the rim is R elsewhere. */
+function slotted(slots){
+  return a=>{ let d=((a%(2*Math.PI))+2*Math.PI)%(2*Math.PI)*180/Math.PI; let depth=0;
+    for(const [c,w,dp] of slots){ let diff=Math.abs(((d-c+540)%360)-180); if(diff<=w/2){ depth=Math.max(depth,dp); } }
+    return 1-0.42*depth; };
+}
+const CAMS={
+  camComma:  {r:34, prof:slotted([[0,22,1],[60,14,.5],[130,30,.8],[200,10,.35],[250,18,1],[300,26,.6]])},
+  camMeasure:{r:34, prof:slotted([[20,40,1],[90,12,.4],[150,12,.7],[190,12,1],[240,34,.55],[320,16,.85]])},
+  camRhyme:  {r:34, prof:slotted([[0,16,.6],[45,16,1],[90,16,.6],[135,16,1],[180,16,.6],[225,16,1],[270,16,.6],[315,16,1]])},
+  camVolta:  {r:34, prof:slotted([[10,50,.9],[100,10,.3],[140,10,.6],[180,10,.9],[260,44,1],[330,14,.5]])},
+};
+const SHAFT={svg:null,theta:0,last:0,items:[],running:false};
+function buildCamshaft(){
+  const svg=$('#camshaft'); if(!svg) return; SHAFT.svg=svg;
+  const W=520,H=150; svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+  svg.innerHTML=''; SHAFT.items=[];
+  const defs=svgEl('defs',{},svg);
+  const g1=svgEl('radialGradient',{id:'camBrass',cx:'38%',cy:'32%',r:'75%'},defs);
+  [['0','#f2d98e'],['0.5','#c9a24b'],['1','#6b5320']].forEach(([o,c])=>svgEl('stop',{offset:o,'stop-color':c},g1));
+  const ids=Object.keys(CAMS), n=ids.length, cy=H/2+22, pitch=W/n;
+  /* the common shaft, seen end-on, is a hub at each cam's centre; a faint rail joins them so the eye reads one axle */
+  svgEl('line',{x1:pitch/2,y1:cy,x2:W-pitch/2,y2:cy,stroke:'#43310f','stroke-width':1.5,'stroke-dasharray':'3 5',opacity:.6},svg);
+  ids.forEach((id,i)=>{
+    const cx=pitch*i+pitch/2, C=CAMS[id], R=C.r;
+    const g=svgEl('g',{},svg);
+    const disc=svgEl('polygon',{fill:'url(#camBrass)',stroke:'#43310f','stroke-width':1},g);
+    const face=svgEl('g',{},g);
+    svgEl('circle',{cx:cx,cy:cy,r:R*0.5,fill:'none',stroke:'rgba(67,49,15,.55)','stroke-width':.8},face);
+    for(let q=0;q<8;q++){ const a=q*Math.PI/4+0.4; svgEl('circle',{cx:cx+Math.cos(a)*R*0.5,cy:cy+Math.sin(a)*R*0.5,r:1.4,fill:'#43310f'},face); }
+    svgEl('circle',{cx:cx,cy:cy,r:4.5,fill:'#3a2c14',stroke:'#43310f','stroke-width':.8},g);
+    svgEl('rect',{x:cx-1.4,y:cy-6,width:2.8,height:3,fill:'#3a2c14'},face);
+    const key=face;
+    /* the follower: a pin standing on the rim at twelve o'clock, in a guide, lifting as the lobe passes */
+    const fol=svgEl('g',{class:'fol'},svg);
+    svgEl('rect',{x:cx-5,y:cy-R-52,width:10,height:16,rx:1.5,fill:'#3a2c14',stroke:'#43310f','stroke-width':.8},fol); /* the guide */
+    const pin=svgEl('rect',{x:cx-2.2,y:cy-R-44,width:4.4,height:36,rx:1.5,fill:'url(#camBrass)',stroke:'#43310f','stroke-width':.7},fol);
+    const foot=svgEl('circle',{cx:cx,cy:cy-R-8,r:3.6,fill:'#e8cd85',stroke:'#43310f','stroke-width':.8},fol);
+    SHAFT.items.push({id,cx,cy,R,prof:C.prof,disc,key,pin,foot,fol,phase:i*1.3});
+  });
+  drawShaft(); shaftUpdateEngaged();
+}
+function drawShaft(){
+  const th=SHAFT.theta;
+  for(const it of SHAFT.items){
+    const steps=360, pts=[];
+    for(let k=0;k<steps;k++){ const a=k/steps*Math.PI*2; const r=it.R*it.prof(a-th-it.phase);
+      pts.push((it.cx+Math.cos(a)*r).toFixed(1)+','+(it.cy+Math.sin(a)*r).toFixed(1)); }
+    it.disc.setAttribute('points',pts.join(' '));
+    /* keyway turns with the disc */
+    it.key.setAttribute('transform','rotate('+((th+it.phase)*180/Math.PI)+' '+it.cx+' '+it.cy+')');
+    /* the follower rides the rim at twelve o'clock: rim radius there is R·prof(−π/2 − θ − phase) */
+    const rTop=it.R*it.prof(-Math.PI/2-th-it.phase);
+    const engaged=!it.fol.classList.contains('idle');
+    const lift=engaged?(rTop-it.R):(it.R*0.45);   /* an idle follower is held clear of the rim */
+    it.foot.setAttribute('cy',(it.cy-it.R-8-lift).toFixed(1));
+    it.pin.setAttribute('y',(it.cy-it.R-44-lift).toFixed(1));
+  }
+}
+function shaftUpdateEngaged(){
+  for(const it of SHAFT.items){ const on=!!($('#'+it.id)&&$('#'+it.id).checked); it.fol.classList.toggle('idle',!on); }
+  drawShaft();
+}
+function shaftTick(ts){
+  if(!SHAFT.running) return;
+  const dt=SHAFT.last?Math.min(0.05,(ts-SHAFT.last)/1000):0; SHAFT.last=ts;
+  SHAFT.theta+=dt*1.1;   /* ~10 s the revolution */
+  drawShaft();
+  requestAnimationFrame(shaftTick);
+}
+function shaftRun(on){
+  if(on&&!SHAFT.running){ SHAFT.running=true; SHAFT.last=0; requestAnimationFrame(shaftTick); }
+  else if(!on){ SHAFT.running=false; }
+}
+/* ---------------- the sonnet press ---------------- */
+let OPENERS=[], TERM_IDS=new Set(), SOFT_IDS=new Set();
+function rebuildPressTables(){
+  const m=new Map();
+  for(const line of LINES){ const id=vocabId.get(line.split(/\s+/)[0]);
+    if(id!==undefined) m.set(id,(m.get(id)||0)+1); }
+  OPENERS=[...m.entries()];
+  TERM_IDS=new Set(['.','?','!'].map(t=>vocabId.get(t)).filter(x=>x!==undefined));
+  SOFT_IDS=new Set([',',';',':'].map(t=>vocabId.get(t)).filter(x=>x!==undefined));
+}
+function drawOpener(T){
+  const inv=1/Math.max(0.05,T); let Z=0;
+  const w=OPENERS.map(e=>{ const q=Math.pow(e[1],inv); Z+=q; return q; });
+  let r=Math.random()*Z;
+  for(let i=0;i<w.length;i++){ r-=w[i]; if(r<=0) return OPENERS[i][0]; }
+  return OPENERS[OPENERS.length-1][0];
+}
+function toRoman(n){
+  const T=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+  let s=''; for(const[v,r]of T){ while(n>=v){ s+=r; n-=v; } } return s||'I';
+}
+/* ---- the rhymer: as the Bard would judge it — by sound, with his own eye-rhymes and old pronunciations ----
+   proven against 106 of Mr. Shakespeare's own rhyme-pairs from the corpus (106 pass; no false pairs among controls) */
+function rhymeKey(w){
+  w=w.replace(/[^a-z']/g,'');
+  w=w.replace(/o'er$/,'ore').replace(/'d$/,'d').replace(/'st$/,'st').replace(/'s$/,'').replace(/'$/,'').replace(/'/g,'');
+  if(w.length<1) return null;
+  let s=w;
+  const R=[   /* a clerk's phonetics, applied to the word's end */
+    [/tion$/,'shun'],[/ies$/,'ize'],[/ied$/,'ide'],[/eigh$/,'ay'],[/ight$/,'ite'],[/igh$/,'iy'],
+    [/ough$/,'oe'],[/ould$/,'ood'],
+    [/ea(d|lth|th|lm|dy|ther|rt|rth|lt|nt|dow|sure)$/,'e$1'],
+    [/ea(k|t|m|n|p|l|r|se|ve|ch|s|ks|ts|ms|ns|ps|ls|rs|st)$/,'ee$1'],[/ea$/,'ee'],
+    [/y$/,'ee'],[/ey$/,'ee'],[/ie$/,'iy'],[/ye$/,'iy'],[/(?<=[^aeiou])y(?=[^aeiou]+$)/,'i'],
+    [/ow$/,'oe'],[/(?<=[^aeiou])oe$/,'oe'],[/o$/,'oe'],[/ew$/,'oo'],[/ue$/,'oo'],[/oo/,'oo'],
+    [/ai/,'ay'],[/oa/,'oe'],[/ee/,'ee'],[/(?<=[^aeiou])es$/,'z'],[/(?<=[^aeiou])ed$/,'d'],
+    [/ck$/,'k'],[/ph/,'f'],[/wh/,'w'],
+  ];
+  for(const[re,to]of R) s=s.replace(re,to);
+  /* the silent e: 'shade'→shad, 'ore'→or — but never 'be'/'me'/'thee' (a stem must keep a vowel) */
+  if(s.length>=3&&/[^aeiouy]e$/.test(s)&&/[aeiouy]/.test(s.slice(0,-2))) s=s.slice(0,-1);
+  if(/^[^aeiouy]*e$/.test(s)) s=s.replace(/e$/,'ee');   /* an open final e sounds long: be, me, we, ye */
+  const m=s.match(/([aeiouy]+[^aeiouy]*)$/); if(!m) return null;
+  let k=m[1].replace(/([^aeiouy])\1+/g,'$1');
+  /* an unstressed -er/-en/-el tail is too weak to carry a rhyme (summer/winter): take the syllable before it too */
+  if(/^(er|en|el|es|ez)$/.test(k)&&s.length>k.length){ const m2=s.match(/([aeiouy]+[^aeiouy]*)([aeiouy]+[^aeiouy]*)$/); if(m2) k=(m2[1]+m2[2]).replace(/([^aeiouy])\1+/g,'$1'); }
+  return k;
+}
+/* Shakespeare's licence: sight-rhymes and Elizabethan sound the modern ear has lost */
+const EYE_RHYMES=[['love','prove','move','remove','approve','above'],['eyes','lies','despise','cries'],['was','pass'],
+  ['done','one','none','gone','alone','moan','foregone'],['come','doom','tomb'],['are','care','compare','rare','bare'],
+  ['have','grave','save'],['ear','were','fear','dear','bear','wear','year','everywhere','here','there'],['die','memory','melancholy'],['heaven','even'],
+  ['said','maid','laid'],['worth','forth'],['loved','proved','beloved'],['past','waste'],["possess'd",'least'],['eye','alchemy'],
+  ['youth','truth'],['fruit','mute'],['herd','beard'],['art','convert'],['fair','heir'],['friend','end'],['unrest',"express'd"],["crown'd",'confound'],['lie','by'],['red','head']];
+const EYE_MAP=(()=>{ const m=new Map(); EYE_RHYMES.forEach((g,i)=>g.forEach(w=>m.set(w,i))); return m; })();
+function rhymes(a,b){
+  a=a.replace(/[^a-z']/g,''); b=b.replace(/[^a-z']/g,'');
+  if(!a||!b||a===b) return null;   /* identity is not rhyme */
+  const ka=rhymeKey(a), kb=rhymeKey(b);
+  if(ka&&kb&&ka===kb) return 'true';
+  if(EYE_MAP.has(a)&&EYE_MAP.get(a)===EYE_MAP.get(b)) return 'eye';
+  return null;
+}
+const SCHEME='ABABCDCDEFEFGG';
+const VOLTA_WORDS=['but','yet','or','nor','o','so','and yet','then','if'];
+const cam=id=>{ const n=$('#'+id); return !!(n&&n.checked); };
+const isWordId=id=>id!==FINID&&!PUNCT.has(vocabArr[id]);
+async function composeSonnet(){
+  if(S.busy||S.running) return;
+  S.busy=true; document.documentElement.classList.add('running'); refreshButtons();
+  deactivate(); const pr=$('#press'); pr.classList.add('on');
+  if(el.chkFollow.checked) pr.scrollIntoView({behavior:PACE<0.5?'auto':'smooth',block:'center'});
+  telegraph('The press is running — fourteen lines to the sheet …');
+  FOLEY.play('press'); FOLEY.bed('hum',true,170,0.045); shaftRun(true);
+  let no=1; try{ no=(parseInt(localStorage.getItem('abe-sonnet-no'))||0)+1;
+    localStorage.setItem('abe-sonnet-no',String(no)); }catch(e){}
+  el.sheet.innerHTML='<div class="stitle">Sonnet '+toRoman(no)+'</div>';
+  S.prompt=(el.prompt.value.trim()||'shall i compare thee'); el.prompt.value=S.prompt;
+  const C={comma:cam('camComma'),measure:cam('camMeasure'),rhyme:cam('camRhyme'),volta:cam('camVolta')};
+  const MINW=C.measure?6:1, MAXW=12;
+  const lastWords=[];   /* the closing word of every line laid, for the rhyme cam */
+  let hits=0, eyes=0, misses=0;
+  const rhymeTarget=ln=>{ if(!C.rhyme) return null;
+    const L=SCHEME[ln]; const j=SCHEME.indexOf(L); return (j<ln&&lastWords[j])?lastWords[j]:null; };
+  for(let ln=0;ln<14&&!S.halt;ln++){
+    const div=document.createElement('div');
+    div.className='sline live'+((ln===4||ln===8||ln===12)?' qgap':'')+(ln>=12?' couplet':'')+(C.volta&&ln===8?' volta':'');
+    el.sheet.appendChild(div);
+    let ctx, parts;
+    if(ln===0){ ctx=tokenize(S.prompt);
+      parts=ctx.map(id=>'<span class="seed">'+esc(vocabArr[id])+'</span>'); }
+    else {
+      let o;
+      if(C.volta&&ln===8){   /* the turn: the ninth line opens on a word of contrast, if the corpus has one */
+        const cands=OPENERS.filter(e=>VOLTA_WORDS.includes(vocabArr[e[0]]));
+        if(cands.length){ let Z=0; const w=cands.map(e=>{Z+=e[1];return e[1];}); let r=Math.random()*Z;
+          o=cands[cands.length-1][0]; for(let i=0;i<w.length;i++){ r-=w[i]; if(r<=0){ o=cands[i][0]; break; } } }
+      }
+      if(o===undefined) o=drawOpener(S.T);
+      ctx=[o]; parts=[esc(vocabArr[o])];
+    }
+    div.innerHTML=parts.join(' ');
+    let words=ctx.filter(isWordId).length, ended=false, lastWord=null, rhymed=null;
+    const target=rhymeTarget(ln);
+    while(words<MAXW&&!S.halt){
+      const q=applyTemp(rawDist(ctx),S.T);
+      let cut=0;
+      /* THE COMMA CAM — no point before the 2nd word; no stop before the 4th */
+      if(C.comma){
+        if(words<4){ TERM_IDS.forEach(id=>{cut+=q[id];q[id]=0;}); }
+        if(words<2){ SOFT_IDS.forEach(id=>{cut+=q[id];q[id]=0;}); }
+      }
+      /* THE MEASURE CAM — the engine may not rest before the sixth word */
+      if(words<MINW){ cut+=q[FINID]; q[FINID]=0; if(C.measure) TERM_IDS.forEach(id=>{cut+=q[id];q[id]=0;}); }
+      /* THE RHYME CAM — in the closing zone, steer the draw toward slugs that rhyme with the partner line */
+      if(target&&words>=Math.max(MINW-1,3)&&lastWord!==null&&rhymes(lastWord,target)===null){
+        let mass=0; const good=[];
+        for(let i=0;i<q.length;i++) if(q[i]>0&&isWordId(i)&&rhymes(vocabArr[i],target)) { good.push(i); mass+=q[i]; }
+        if(good.length&&mass>1e-9){   /* boost the rhyming candidates to half the drum, honestly renormalised */
+          const boost=0.5/mass, rest=0.5/(1-mass);
+          for(let i=0;i<q.length;i++) q[i]*=(good.includes(i)?boost:rest); cut=0;
+        }
+      }
+      if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; }
+      const id=sample(q);
+      if(id===FINID){ ended=true; break; }
+      ctx.push(id); parts.push(esc(vocabArr[id]));
+      if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
+      div.innerHTML=parts.join(' ');
+      FOLEY.play('tick',{bright:2});
+      if(TERM_IDS.has(id)){ ended=true; break; }
+      /* the rhyme cam closes the line the moment a rhyme lands, once the measure allows */
+      if(target&&words>=MINW&&lastWord&&rhymes(lastWord,target)){ ended=true; break; }
+      await sleep(150);
+    }
+    if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){ parts.push('—'); div.innerHTML=parts.join(' '); }
+    /* THE CAPITAL CAM — capitals to the openers and to the poet's I */
+    if(C.volta&&!S.halt){ let h=div.innerHTML;
+      h=h.replace(/^(<span class="seed">)?([a-z])/,(m,s,c)=>(s||'')+c.toUpperCase());
+      h=h.replace(/(^|\s)i(?=\s|$|'|,|\.)/g,'$1I'); div.innerHTML=h; }
+    lastWords[ln]=lastWord;
+    /* the margin: rhyme letter on a hit, its eye-rhyme variant, or the harness's confession */
+    if(C.rhyme){
+      const L=SCHEME[ln], mk=document.createElement('span'); mk.className='rmark';
+      if(target===null&&SCHEME.indexOf(L)===ln){ mk.textContent=L; }
+      else if(target&&lastWord){ const r=rhymes(lastWord,target);
+        if(r==='true'){ mk.textContent=L; hits++; }
+        else if(r==='eye'){ mk.textContent=L+'*'; mk.classList.add('eye'); eyes++; }
+        else { mk.textContent='✗'; mk.classList.add('miss'); misses++; mk.title='the engine offered no rhyme for “'+target+'”'; } }
+      else { mk.textContent='✗'; mk.classList.add('miss'); misses++; }
+      div.appendChild(mk);
+    }
+    div.classList.remove('live');
+    FOLEY.play('dialtick');
+    el.pressnote.textContent=ln<13?('line '+(ln+1)+' of 14 laid — '+(13-ln)+' to come …'):'the couplet closes.';
+    await sleep(300);
+  }
+  if(!S.halt){
+    const f=document.createElement('div'); f.className='finis'; f.textContent='— FINIS —';
+    el.sheet.appendChild(f); FOLEY.play('bell');
+    const tally=C.rhyme?(' The Rhyme Cam: <b>'+hits+'</b> true rhyme'+(hits===1?'':'s')+(eyes?', <b>'+eyes+'</b> by the Bard’s licence':'')+
+      ', <b>'+misses+'</b> the engine could not supply'+(misses?' — no rule can conjure a word the wheels never read':'')+'.'):'';
+    el.pressnote.innerHTML='the sheet is full — Sonnet '+toRoman(no)+'.'+tally+' A masterpiece, the press maintains, is surely next.';
+    telegraph('The sheet is full. Set the press running again, or take the tour.');
+  } else el.pressnote.textContent='the press stands idle; the sheet is left as it was found.';
+  FOLEY.bed('hum',false); shaftRun(false);
+  document.documentElement.classList.remove('running'); pr.classList.remove('on');
+  S.busy=false; refreshButtons();
 }
 async function doHaltAndClear(){
   S.halt=true; if(proceedRes) proceedRes();
@@ -1854,7 +2357,7 @@ el.begin.addEventListener('click',async()=>{
   if(S.busy||S.running) return;
   FOLEY.play('press');
   await doHaltAndClear();
-  S.prompt=(el.prompt.value.trim()||'the engine'); el.prompt.value=S.prompt;
+  S.prompt=(el.prompt.value.trim()||'shall i compare thee'); el.prompt.value=S.prompt;
   S.ctx=tokenize(S.prompt); S.promptLen=S.ctx.length;
   if(!S.ctx.length){ telegraph('The card is blank.'); return; }
   S.started=true;
@@ -1863,6 +2366,7 @@ el.begin.addEventListener('click',async()=>{
   await revolution('tour');
 });
 el.crank.addEventListener('click',()=>revolution('quick'));
+el.pressBtn.addEventListener('click',composeSonnet);
 el.run.addEventListener('click',async()=>{
   if(S.running){ S.halt=true; return; }
   if(S.busy||!S.started||S.finished) return;
@@ -1915,8 +2419,8 @@ addEventListener('resize',(()=>{ let t; return ()=>{ clearTimeout(t);
 
 /* ---------------- the type drawer ---------------- */
 const DRAWER={mode:'no',open:false};
-const BAYS=[['machina','Machina — the engine’s own words'],['urbs','Urbs — the city'],
-            ['natura','Natura — weather & the heavens'],['fabula','Fabula — story & sentiment'],
+const BAYS=[['amor','Amor — love & the heart'],['tempus','Tempus — time & the sickle'],
+            ['natura','Natura — weather & the heavens'],['forma','Forma — beauty & the face'],
             [null,'Mortar & points — the small words that bind']];
 function topNext(id,k){
   const e=bi.get(id); if(!e) return [];
@@ -2013,15 +2517,27 @@ function glossify(){
 
 /* ---------------- init ---------------- */
 function init(){
-  $('#vN').textContent=BASE_N; $('#vN2').textContent=BASE_N;
-  $('#vK').textContent=WHEELS.toLocaleString('en-GB'); $('#vK2').textContent=WHEELS.toLocaleString('en-GB');
-  $('#vL').textContent=LINES.length; $('#vL2').textContent=LINES.length;
-  buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand(); buildCutter();
+  let ft=0; try{ ft=Math.min(3,Math.max(0,parseInt(localStorage.getItem('abe-folio'))||0)); }catch(e){}
+  $('#folio').value=ft;
+  buildModel(ft);
+  $('#folio').addEventListener('input',async()=>{
+    const t=parseInt($('#folio').value)||0;
+    if(t===FOLIO) return;
+    await doHaltAndClear();
+    buildModel(t); buildSpecimens();
+    if(DRAWER.open) renderDrawer();
+    try{ localStorage.setItem('abe-folio',String(t)); }catch(e){}
+    FOLEY.play('drawerroll');
+    for(let i=0;i<7;i++) setTimeout(()=>FOLEY.play('pawl'),(90+i*110)*PACE);   /* the registers click over */
+    telegraph('The engine is re-schooled on '+FOLIOS[t].n+' sonnets. Write a card and begin.');
+  });
+  buildMill(); buildCrank(); buildSpecimens(); buildTubes(); buildBand(); buildCutter(); buildCamshaft();
+  $$('.cam input').forEach(c=>c.addEventListener('change',()=>{ shaftUpdateEngaged(); FOLEY.play('clunk'); if(!SHAFT.running){ shaftRun(true); setTimeout(()=>{ if(!S.busy) shaftRun(false); },1400); } }));
   $$('.mech').forEach(m=>{ for(const side of ['l','r']){
     const p=document.createElement('i'); p.className='tpillar '+side; m.appendChild(p); } });
   S.prompt=el.prompt.value; renderCard();   // the card stays out of view until the demonstration begins
   carriagePark(true);                       // the carriage idles at its right-hand bay, clear of the code card
-  setTemp(parseFloat(el.lever.value)||0.7); setRev(); refreshButtons(); glossify();
+  setTemp(parseFloat(el.lever.value)||0.95); setRev(); refreshButtons(); glossify();
   el.chkSound.addEventListener('change',()=>FOLEY.setEnabled(el.chkSound.checked));
   try{ if(localStorage.getItem('ale-sound')==='1'){ el.chkSound.checked=true; FOLEY.setEnabled(true); } }catch(e){}
   $('#drawerpull').addEventListener('click',()=>toggleDrawer());
