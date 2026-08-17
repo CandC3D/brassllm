@@ -128,7 +128,7 @@ naked model.
 
 | Cam | Rule | Enforcement |
 |---|---|---|
-| Comma | no point before word 2; a stop only after word 4 | logit mask |
+| Comma | no point before word 2; a stop only after word 4; **the sonnet ends on a full stop** (line 14 leans to the terminal marks once the measure allows, a trailing comma is struck, and if no stop is drawn the press sets one) | logit mask / boost |
 | Measure | lines run 6–10 words (a pentameter line is ~8) | mask ∎ before 6; force-close (—) at 10 |
 | Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
 | Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |

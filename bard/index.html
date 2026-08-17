@@ -1047,7 +1047,7 @@ t ●●●○●○○   s ●●●○○●●
         <div class="rbcap">Throw a cam to enforce its rule · the engine proposes, the rule-book disposes</div>
         <div class="cams">
           <label class="cam"><input type="checkbox" id="camComma" checked autocomplete="off"><span class="lug"></span>
-            <span><span class="camname">The Comma Cam</span><br><span class="camrule">no point before the 2nd word; a stop only after the 4th</span></span></label>
+            <span><span class="camname">The Comma Cam</span><br><span class="camrule">no point before the 2nd word; a stop only after the 4th; the sonnet ends on a full stop</span></span></label>
           <label class="cam"><input type="checkbox" id="camMeasure" checked autocomplete="off"><span class="lug"></span>
             <span><span class="camname">The Measure Cam</span><br><span class="camrule">a line runs six words to ten</span></span></label>
           <label class="cam"><input type="checkbox" id="camRhyme" checked autocomplete="off"><span class="lug"></span>
@@ -3563,6 +3563,12 @@ async function composeSonnet(){
       }
       /* THE MEASURE CAM — the engine may not rest before the sixth word */
       if(words<MINW){ cut+=q[FINID]; q[FINID]=0; if(C.measure) TERM_IDS.forEach(id=>{cut+=q[id];q[id]=0;}); }
+      /* THE COMMA CAM, closing rule — the fourteenth line must end on a full stop: once the measure allows, the
+         terminal marks are given half the drum, and no comma may stand as its last word */
+      if(C.comma&&ln===13&&words>=MINW){
+        let tm=0; TERM_IDS.forEach(id=>{ tm+=q[id]; }); SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
+        if(tm>1e-9&&tm<0.5){ const boost=0.5/tm, rest=0.5/(1-tm); for(let i=0;i<q.length;i++) q[i]*=TERM_IDS.has(i)?boost:rest; cut=0; }
+      }
       /* THE CONCORD CAM — strike every successor the rules of grammar forbid */
       if(C.concord){ const before=cut; const m=concordStrike(q,ctx); if(m>1e-9){ cut+=m; struck++; strikeMass+=m; } }
       /* THE RHYME CAM — in the closing zone, steer the draw toward slugs that rhyme with the partner line */
@@ -3599,7 +3605,13 @@ async function composeSonnet(){
       const id=sample(q); ctx.push(id); parts.push(esc(vocabArr[id])); div.__toks.push({w:vocabArr[id]}); if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
       div.innerHTML=parts.join(' '); extra++; await sleep(120);
     }
-    if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){ parts.push('—'); div.innerHTML=parts.join(' '); div.__tail=' —'; }
+    if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){
+      if(C.comma&&ln===13){   /* the sonnet ends on a period: strike any trailing comma, then set the stop */
+        while(ctx.length>1&&SOFT_IDS.has(ctx[ctx.length-1])){ ctx.pop(); parts.pop(); div.__toks.pop(); }
+        const dot=vocabId.get('.'); if(dot!==undefined){ ctx.push(dot); parts.push('.'); div.__toks.push({w:'.'}); }
+        div.innerHTML=parts.join(' ');
+      } else { parts.push('—'); div.innerHTML=parts.join(' '); div.__tail=' —'; }
+    }
     /* THE CAPITAL CAM — capitals to the openers and to the poet's I */
     if(C.volta&&!S.halt){ let h=div.innerHTML;
       h=h.replace(/^(<span class="seed">)?([a-z])/,(m,s,c)=>(s||'')+c.toUpperCase());
