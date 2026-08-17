@@ -85,13 +85,9 @@ body{
    standing exactly as tall as the two title lines */
 .titlerow{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2.6vw,28px);margin:6px 0 4px}
 .titlerow h1{margin:0;text-align:right}
-/* the portrait is mounted as an engraving on a paper medallion let into the brass — the hatching needs a pale ground to read */
-.medallion{flex:none;position:relative;display:block;
-  --mh:calc(2 * 1.15 * clamp(25px,4.6vw,42px) + 18px);height:var(--mh);width:var(--mh);border-radius:50%;
-  background:radial-gradient(circle at 42% 36%,#f7f0dc,#e9dcbb 62%,#d9c79b);
-  border:2px solid #6b5320;box-shadow:inset 0 0 0 3px #d9b563,inset 0 0 0 4px #43310f,inset 0 2px 8px rgba(80,60,20,.35),0 3px 8px rgba(0,0,0,.45);overflow:hidden;clip-path:circle(50% at 50% 50%)}
-.portrait{display:block;height:88%;width:auto;position:absolute;left:50%;top:5%;transform:translateX(-50%);opacity:1;filter:none}   /* a cameo: the head fills the disc and the shoulders are cut off by the bezel below */
-  filter:drop-shadow(0 1px 0 rgba(255,242,196,.45));opacity:.92}
+/* the poet, etched into the brass beside the title — the plate's own engrave-ink, with the same raised highlight the lettering carries */
+.portrait{display:block;height:calc(2 * 1.15 * clamp(25px,4.6vw,42px));width:auto;flex:none;
+  filter:drop-shadow(0 1px 0 rgba(255,242,196,.55)) drop-shadow(0 -0.5px 0 rgba(0,0,0,.25));opacity:.9}
 @media (max-width:480px){.titlerow{flex-direction:column;gap:8px}.titlerow h1{text-align:center}}
 .masthead .rule{height:2px;max-width:520px;margin:10px auto;background:linear-gradient(90deg,rgba(67,49,15,0),#43310f,rgba(67,49,15,0))}
 .masthead .sub{color:#3f2f0f;max-width:640px;margin:0 auto 6px;font-size:15px}
@@ -697,7 +693,7 @@ h2,h3{text-wrap:balance}
   <div class="orn" aria-hidden="true">❦</div>
   <div class="titlerow">
     <h1>The Analytical<br>Bard Engine</h1>
-    <span class="medallion" aria-hidden="false"><img class="portrait" src="portrait.svg" alt="Engraved portrait of William Shakespeare" width="120" height="112" decoding="async"></span>
+    <img class="portrait" src="portrait.svg" alt="Silhouette of William Shakespeare, etched in the brass" width="120" height="112" decoding="async">
   </div>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage, and schooled upon nothing whatever but the Sonnets of Mr.&nbsp;William&nbsp;Shakespeare.</p>
