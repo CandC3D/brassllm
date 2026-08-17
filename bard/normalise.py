@@ -45,7 +45,7 @@ def strip_quotes(w):
 def normalise(body):
     s=body
     s=s.replace('’',"'").replace('‘',"'").replace('“','').replace('”','')
-    s=s.replace('—',' , ').replace('–',' , ')      # the em-dash is not a sort; it reads as a comma
+    s=s.replace('—',' — ').replace('–',' — ')      # the em-dash is a sort of its own, and the engine may propose it
     s=s.lower()
     s=re.sub(r'(\w)-(\w)',r'\1 \2',s)                        # hyphenated compounds split
     s=re.sub(r'[()\[\]]',' ',s)
@@ -54,7 +54,7 @@ def normalise(body):
     for raw in s.split('\n'):
         l=raw.strip()
         if not l: continue
-        l=re.sub(r'\s*([,;:.?!])\s*',r' \1 ',l)              # every point stands as its own sort
+        l=re.sub(r'\s*([,;:.?!—])\s*',r' \1 ',l)             # every point stands as its own sort
         words=[strip_quotes(w) for w in l.split()]
         l=' '.join(w for w in words if w)
         l=re.sub(r'\s+',' ',l).strip()

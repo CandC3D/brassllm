@@ -40,7 +40,7 @@ function Remove-QuoteMark([string]$w){
 
 function ConvertTo-CorpusLines([string]$body){
   $s = $body -replace [char]0x2019,"'" -replace [char]0x2018,"'" -replace [char]0x201C,'' -replace [char]0x201D,''
-  $s = $s -replace [char]0x2014,' , ' -replace [char]0x2013,' , '
+  $s = $s -replace [char]0x2014,(' '+[char]0x2014+' ') -replace [char]0x2013,(' '+[char]0x2014+' ')
   $s = $s.ToLower()
   $s = [regex]::Replace($s, '(\w)-(\w)', '$1 $2')
   $s = [regex]::Replace($s, '[()\[\]]', ' ')
@@ -49,7 +49,7 @@ function ConvertTo-CorpusLines([string]$body){
   foreach($raw in ($s -split "`n")){
     $l = $raw.Trim()
     if(-not $l){ continue }
-    $l = [regex]::Replace($l, '\s*([,;:.?!])\s*', ' $1 ')
+    $l = [regex]::Replace($l, ('\s*([,;:.?!' + [char]0x2014 + '])\s*'), ' $1 ')
     $words = @()
     foreach($w in ($l -split '\s+')){ $c = Remove-QuoteMark $w; if($c){ $words += $c } }
     $l = ($words -join ' ')

@@ -16,10 +16,10 @@ og:url point at `/bard/`; the page is in the site sitemap.
 
 - **Corpus**: the Sonnets of 1609, in seven folios selected by the schooling lever —
   from 41 lines / 306 sorts / 1,528 wheels at the first notch (Sonnets 18, 151, 14,
-  130, 116) up to all 154 sonnets at the seventh: 1,010 corpus lines, 3,230 sorts,
-  34,789 wheels. Lowercased, punctuation pre-spaced. See **The Schooling** below.
-  Note that a corpus "line" is a *sentence*, not a verse line — `normalise.py` joins
-  the line-breaks — so the press's line shape is imposed by the Measure Cam, not learned.
+  130, 116) up to all 154 sonnets at the seventh: 2,155 verse lines, 3,216 sorts,
+  36,582 wheels. Lowercased, punctuation pre-spaced. See **The Schooling** below.
+  A corpus line is a **verse line**, as the 1609 quarto set it — not a sentence. The
+  engine is given the line-breaks as a sort of their own, so line shape is *learned*.
 - **Presets**: "shall i compare thee", "my mistress' eyes", "love is not love",
   "not from the stars" — each tuned to branch cleanly into its sonnet.
 - **Type-drawer domains**: Machina/Urbs/Fabula give way to
@@ -99,15 +99,15 @@ A seven-notch brass lever on the Operator's Desk (set apart beneath a japanned b
 rebuilds the whole model live over **5, 10, 15, 20, 25, 30, or all 154 sonnets**
 (choice persists in localStorage):
 
-| Folio | Sonnets | Lines | Sorts (vocab) | Wheels (params) |
+| Folio | Sonnets | Verse lines | Sorts (vocab) | Wheels (params) |
 |---|---|---|---|---|
-| First | 18, 151, 14, 130, 116 | 41 | 306 | 1,528 |
-| Second | + 12, 30, 65, 73, 127 | 75 | 531 | 2,940 |
-| Third | + 29, 33, 60, 97, 147 | 111 | 736 | 4,246 |
-| Fourth | + 55, 64, 71, 106, 129 | 144 | 895 | 5,521 |
-| Fifth | + 1, 15, 27, 66, 87 | 180 | 1,064 | 6,753 |
-| Sixth | + 2, 19, 94, 110, 138 | 217 | 1,205 | 8,021 |
-| Seventh | + the remaining 124 (all 154) | 1,010 | 3,230 | 34,789 |
+| First | 18, 151, 14, 130, 116 | 70 | 308 | 1,658 |
+| Second | + 12, 30, 65, 73, 127 | 140 | 533 | 3,144 |
+| Third | + 29, 33, 60, 97, 147 | 210 | 738 | 4,555 |
+| Fourth | + 55, 64, 71, 106, 129 | 280 | 898 | 5,909 |
+| Fifth | + 1, 15, 27, 66, 87 | 350 | 1,067 | 7,217 |
+| Sixth | + 2, 19, 94, 110, 138 | 420 | 1,207 | 8,557 |
+| Seventh | + the remaining 124 (all 154) | 2,155 | 3,216 | 36,582 |
 
 The counters on the masthead, plaques, and honesty footer all update live.
 The teaching demo: seed **"when i do count the clock"** — at 5 sonnets the
@@ -128,13 +128,43 @@ Time, lion, tiger, phoenix), 94 (festering lilies), 110 (motley, gored), and 138
 (the mutual lie). Demo: "when forty winters shall" → *besiege* 73% only at 30; "two loves i
 have of comfort and" → *despair* 72% only at 154.
 
-The first thirty were transcribed by hand; the seventh folio (the remaining 124)
-is produced by rule from the Gutenberg text — `bard/normalise.py`: curly
-apostrophes to ASCII, hyphenated compounds split, `O!` to `o ,`, colons and
-semicolons (period-strength in that edition) end a line as full stops, lines
-under four words fold into the previous. Every corpus line carries a `# N`
-sonnet marker for the concordance.
-Texts from Project Gutenberg #1041, normalized to corpus format.
+All seven folios are now produced by rule from the Gutenberg text (#1041) —
+`bard/normalise.py`, the canonical spec: **verse lines kept as the quarto set them**,
+curly apostrophes to ASCII, hyphenated compounds split, `O!` to `o ,`, every point
+(`. , ; : ? !` and the em-dash) standing as its own sort, and a straight quote that
+opens or closes a word struck as the printer's quotation mark while elisions are kept
+(`'tis`, `'gainst`, `o'er`, `lov'd`, `beauty's`, `wights'`). Every corpus line carries
+a `# N` sonnet marker for the concordance.
+
+`normalise.ps1` is a transcription of the same rules for machines without Python;
+`make_corpus_blocks.ps1` groups the output into the seven folios and
+`splice_corpora.ps1` writes them into `index.html` (backing it up first, and
+asserting rather than guessing — the corpus constants are *not* contiguous in the
+page, the counting-engine definitions sitting between the fourth folio and the fifth).
+Regenerate the whole chain with:
+
+```bash
+python normalise.py --all > corpus_verse.txt && powershell -File make_corpus_blocks.ps1 && powershell -File splice_corpora.ps1
+```
+
+`sonnets.txt` and `corpus_verse.txt` are gitignored as regenerable.
+
+### The line-end sort
+
+The engine holds two marks of its own, and neither is a word: **∎** closes a
+sentence, **⏎** closes a verse line. The wheels are cut on the whole sonnet rather
+than the single line — each verse line followed by ⏎, each sentence-point by ∎, the
+counting running straight through both — so trigrams cross the line-break and the
+engine learns what follows one. That is what enjambment is, and 2,155 of the 20,446
+tokens at the top notch are line-breaks.
+
+The consequence for the press is that **the Measure Cam is now advisory**. It forbids
+a line ending before the sixth word and takes the ceiling at the tenth, but the line
+usually ends because the engine proposed ⏎. Throw the cam off and lines still come out
+at a mean of 6.0 words, 37% of them closed by the engine's own line-break. Before the
+revision the corpus held no line-breaks at all: a "line" was a sentence of median 16
+words and maximum 65, cut at 6–10 by the cam at a point the engine had no reason to
+treat as a boundary. Verse lines run 5 to 11 words, mean 8.2.
 
 ## The Sonnet Press (Appendix, Fig. 9)
 
@@ -167,7 +197,7 @@ naked model.
 | Cam | Rule | Enforcement |
 |---|---|---|
 | Comma | no point before word 2; a stop only after word 4; **the sonnet ends on a full stop** (line 14 leans to the terminal marks once the measure allows, a trailing comma is struck, and if no stop is drawn the press sets one) | logit mask / boost |
-| Measure | lines run 6–10 words (a pentameter line is ~8) | mask ∎ before 6; close, unmarked, at 10 |
+| Measure | **advisory** — the engine proposes ⏎ where it has read a line-break; the cam only forbids ending before word 6 and takes the ceiling at 10 | mask ∎ and ⏎ before 6; close, unmarked, at 10 |
 | Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
 | Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |
 | **Concord** | grammar: no two of a kind (article·article, preposition·preposition, conjunction·conjunction, auxiliary·auxiliary), an article wants its noun (no *the of*), an auxiliary wants a verb (no *doth of*), pronoun–auxiliary agreement (*i am, thou art, he is, they are*), no doubled word; **and the completion test** — no stop and no ∎ while a determiner or preposition stands unsatisfied within the last three tokens, or a conjunction stands last (no *gives life to .*) | logit mask over successors, using each slug's **part** |
@@ -196,15 +226,23 @@ the phrase is open, so the couplet is not cut short on a preposition.
 Identity is not rhyme, and neither is a word against its own possessive
 (*heart / heart's*, *time / time's*, which the phonetic key would otherwise pass).
 
-**The interlock with The Schooling** (`press_harness.js`, 20 sheets per tier,
-seed "shall i compare thee", press boiler 0.85): rhyme success **59% at 5
-sonnets, 74% at 10, 71% at 20, 79% at all 154**, while fidelity falls the other
-way — 85% at 5 sonnets down to 78% at 154 — because a larger library offers more
-roads and the sheet quotes in shorter runs. A 20-sheet sample carries a few
-points of noise, and the middle tiers are within it of each other; the ends are
-not. Same harness, more training data, more rhymes found — the harness's
-effectiveness scales with the model's capability, and it can never add a
-word the wheels have not read.
+**The interlock with The Schooling** (`press_harness.js`, 20 sheets per tier, seed
+"shall i compare thee", press boiler 0.85, after the verse-line revision):
+
+| Folio | fidelity | derailment | rhyme | mean words | line ends on a drawn point | line-break proposed by the engine |
+|---|---|---|---|---|---|---|
+| 5 sonnets | 82% | 17% | 80% | 7.9 | 37% | 24% |
+| 10 | 82% | 18% | 84% | 7.8 | 36% | 27% |
+| 20 | 81% | 16% | 87% | 7.7 | 33% | 27% |
+| all 154 | 77% | 14% | 76% | 7.9 | 29% | 25% |
+
+A 20-sheet sample carries a few points of noise and the tiers are close; what the
+sweep shows is that **fidelity falls as the library grows while derailment falls too** —
+a larger library offers more roads, so the sheet quotes in shorter runs but is less
+often left steering on one word of memory. Rhyme does not rise monotonically, and the
+older claim that it did ("roughly three in four rising to better than four in five")
+was measured on the sentence corpus and does not survive the revision. Same harness,
+more training data — and it can never add a word the wheels have not read.
 
 ## The Concordance
 
