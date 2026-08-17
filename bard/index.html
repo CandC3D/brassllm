@@ -90,7 +90,7 @@ body{
   --mh:calc(2 * 1.15 * clamp(25px,4.6vw,42px) + 18px);height:var(--mh);width:var(--mh);border-radius:50%;
   background:radial-gradient(circle at 42% 36%,#f7f0dc,#e9dcbb 62%,#d9c79b);
   border:2px solid #6b5320;box-shadow:inset 0 0 0 3px #d9b563,inset 0 0 0 4px #43310f,inset 0 2px 8px rgba(80,60,20,.35),0 3px 8px rgba(0,0,0,.45);overflow:hidden;clip-path:circle(50% at 50% 50%)}
-.portrait{display:block;height:88%;width:auto;position:absolute;left:50%;top:14%;transform:translateX(-50%);opacity:1;filter:none}   /* a cameo: the head fills the disc and the shoulders are cut off by the bezel below */
+.portrait{display:block;height:88%;width:auto;position:absolute;left:50%;top:5%;transform:translateX(-50%);opacity:1;filter:none}   /* a cameo: the head fills the disc and the shoulders are cut off by the bezel below */
   filter:drop-shadow(0 1px 0 rgba(255,242,196,.45));opacity:.92}
 @media (max-width:480px){.titlerow{flex-direction:column;gap:8px}.titlerow h1{text-align:center}}
 .masthead .rule{height:2px;max-width:520px;margin:10px auto;background:linear-gradient(90deg,rgba(67,49,15,0),#43310f,rgba(67,49,15,0))}
@@ -601,6 +601,20 @@ html.running .mbot{animation:mrollB .55s linear infinite}
 #sheet .sline .rword{border-bottom:1px dotted #8a6a2a}
 #sheet .sline.volta{margin-top:13px}
 #pressnote b{color:#e6c87d}
+/* the concordance — quoted runs underscored on the sheet, with a slip naming the sonnet */
+#concord{margin:12px auto 0;max-width:520px}
+.concrow{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:center;margin:2px 0 6px}
+.conclab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b99c58}
+#sheet .qrun{position:relative;border-bottom:1.5px solid #a8823a;padding-bottom:1px;cursor:help}
+#sheet .qrun.long{border-bottom:2.5px solid #7a5b1c}
+#sheet .qrun::after{content:attr(data-src);position:absolute;left:0;bottom:calc(100% + 6px);z-index:5;
+  background:linear-gradient(#f6eed8,#eadcba);color:#2b2011;border:1px solid #8a734a;border-radius:6px;padding:6px 9px;
+  font-style:normal;font-size:11.5px;line-height:1.35;width:max-content;max-width:min(320px,70vw);white-space:normal;
+  box-shadow:0 5px 14px rgba(0,0,0,.4);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s}
+#sheet .qrun:hover::after{opacity:1;visibility:visible}
+#conctally{margin-top:8px}
+#conctally b{color:#e6c87d}
+
 
 /* fly */
 .fly{position:fixed;z-index:99;pointer-events:none;transition:transform calc(.95s*var(--tk)) cubic-bezier(.3,.7,.25,1),opacity calc(.95s*var(--tk));will-change:transform}
@@ -1045,13 +1059,23 @@ t ●●●○●○○   s ●●●○○●●
       </div>
       <div class="mcap">The fair-copy sheet · fourteen lines to completion · quatrains &amp; couplet</div>
       <div id="sheet" aria-live="polite"><div class="stitle">Sonnet —</div></div>
+      <div id="concord" hidden>
+        <div class="mcap">The concordance · which of the press’s words stand in the sonnets, in order · quoted runs underscored</div>
+        <div class="concrow">
+          <span class="conclab">a run is</span>
+          <label class="cam"><input type="radio" name="runlen" value="3" checked autocomplete="off"><span class="lug"></span><span class="camname">three words</span></label>
+          <label class="cam"><input type="radio" name="runlen" value="4" autocomplete="off"><span class="lug"></span><span class="camname">four</span></label>
+          <label class="cam"><input type="radio" name="runlen" value="5" autocomplete="off"><span class="lug"></span><span class="camname">five or more</span></label>
+        </div>
+        <div id="conctally" class="mnote"></div>
+      </div>
       <div id="pressrow"><button class="btn primary" id="btnPress">Set the Press Running</button></div>
       <div class="mnote" id="pressnote">The press stands ready; your card seeds the first line.</div>
     </div>
     <div class="plaque">
       <p class="conceit">Designed and built in a Victorian burst of enthusiasm for Shakespeare, the press sets the engine running line upon line — fourteen to the sheet, quatrains and couplet — in the hope, sincerely held and entirely vain, that new poetic masterpieces might emerge.</p>
       <p class="truth"><span class="lead">In truth —</span> nothing can emerge but recombination. Every line is a walk through the sonnets the machine has read, spliced at the words Mr.&nbsp;Shakespeare himself repeated. What makes it <i>look</i> like a sonnet is not the engine at all but the <b>harness</b> — the rule-book of cams above the sheet. Each cam is a rule laid upon the lottery: it strikes forbidden slugs from the drum before the draw (the trade calls this <b>constrained decoding</b>), or steers the draw toward permitted ones. The cams forbid and steer; they cannot invent. Only the counting-wheels propose a word — and if the engine has never read a rhyme for <i>compass</i>, no rule can conjure one. Watch the Rhyme Cam fail, and mark it ✗ in the margin: that failure is the exhibit.</p>
-      <p class="fine">The trade term for the whole panel is <i>the harness</i>, and it is no small part of any modern engine: the good manners of a chat machine — its refusals, its formats, its stopping when it should — are largely rule-book rather than model. Two lessons follow. The harness cannot add knowledge, only shape it; and its success rises with the engine's schooling — throw the Rhyme Cam at five sonnets, then at fifteen, and count the ✗ marks. Rhyme is judged as the Bard would: by sound, with his own eye-rhymes and old pronunciations allowed (<i>love/prove</i>, <i>eyes/lies</i>) and marked in the margin as such; and, like him, the press does not stop for an imperfect rhyme. All at the boiler's present setting.</p>
+      <p class="fine">The trade term for the whole panel is <i>the harness</i>, and it is no small part of any modern engine: the good manners of a chat machine — its refusals, its formats, its stopping when it should — are largely rule-book rather than model. Two lessons follow. The harness cannot add knowledge, only shape it; and its success rises with the engine's schooling — throw the Rhyme Cam at five sonnets, then at fifteen, and count the ✗ marks. Rhyme is judged as the Bard would: by sound, with his own eye-rhymes and old pronunciations allowed (<i>love/prove</i>, <i>eyes/lies</i>) and marked in the margin as such; and, like him, the press does not stop for an imperfect rhyme. All at the boiler's present setting. When the sheet is full the <b>concordance</b> beneath it underscores every run of three or more words that stands, in order, in the sonnets — a slip names the source line — and tallies how much of the sheet is quotation and how much is seam. It is the one question every reader of an engine's output should ask, and here it can be answered exactly, because the whole of what the machine has read is on the page.</p>
     </div>
   </div>
 </section>
@@ -1200,6 +1224,7 @@ const FOLEY=(()=>{
 
 /* ---------------- the little library ---------------- */
 const CORPUS=`
+# 18
 shall i compare thee to a summer's day ?
 thou art more lovely and more temperate .
 rough winds do shake the darling buds of may , and summer's lease hath all too short a date .
@@ -1208,6 +1233,7 @@ and every fair from fair sometime declines , by chance , or nature's changing co
 but thy eternal summer shall not fade , nor lose possession of that fair thou ow'st .
 nor shall death brag thou wander'st in his shade when in eternal lines to time thou grow'st .
 so long as men can breathe or eyes can see , so long lives this , and this gives life to thee .
+# 151
 love is too young to know what conscience is .
 yet who knows not conscience is born of love ?
 then , gentle cheater , urge not my amiss , lest guilty of my faults thy sweet self prove .
@@ -1216,6 +1242,7 @@ my soul doth tell my body that he may triumph in love .
 flesh stays no farther reason , but rising at thy name doth point out thee as his triumphant prize .
 proud of this pride , he is contented thy poor drudge to be , to stand in thy affairs , fall by thy side .
 no want of conscience hold it that i call her love for whose dear love i rise and fall .
+# 14
 not from the stars do i my judgement pluck , and yet methinks i have astronomy .
 but not to tell of good or evil luck , of plagues , of dearths , or seasons' quality .
 nor can i fortune to brief minutes tell , pointing to each his thunder , rain and wind .
@@ -1224,6 +1251,7 @@ but from thine eyes my knowledge i derive , and , constant stars , in them i rea
 as truth and beauty shall together thrive , if from thyself to store thou wouldst convert .
 or else of thee this i prognosticate .
 thy end is truth's and beauty's doom and date .
+# 130
 my mistress' eyes are nothing like the sun .
 coral is far more red than her lips' red .
 if snow be white , why then her breasts are dun .
@@ -1234,6 +1262,7 @@ i love to hear her speak , yet well i know that music hath a far more pleasing s
 i grant i never saw a goddess go .
 my mistress , when she walks , treads on the ground .
 and yet , by heaven , i think my love as rare as any she belied with false compare .
+# 116
 let me not to the marriage of true minds admit impediments .
 love is not love which alters when it alteration finds , or bends with the remover to remove .
 o , no ! it is an ever fixed mark , that looks on tempests and is never shaken .
@@ -1244,6 +1273,7 @@ if this be error and upon me proved , i never writ , nor no man ever loved .
 `;
 /* the second folio — sonnets 12, 30, 65, 73, 127 */
 const CORPUS_B=`
+# 12
 when i do count the clock that tells the time , and see the brave day sunk in hideous night .
 when i behold the violet past prime , and sable curls , all silvered o'er with white .
 when lofty trees i see barren of leaves , which erst from heat did canopy the herd .
@@ -1251,12 +1281,14 @@ and summer's green all girded up in sheaves , borne on the bier with white and b
 then of thy beauty do i question make , that thou among the wastes of time must go .
 since sweets and beauties do themselves forsake and die as fast as they see others grow .
 and nothing 'gainst time's scythe can make defence save breed , to brave him when he takes thee hence .
+# 30
 when to the sessions of sweet silent thought i summon up remembrance of things past .
 i sigh the lack of many a thing i sought , and with old woes new wail my dear time's waste .
 then can i drown an eye , unused to flow , for precious friends hid in death's dateless night .
 and weep afresh love's long since cancell'd woe , and moan the expense of many a vanish'd sight .
 then can i grieve at grievances foregone , and heavily from woe to woe tell o'er the sad account of fore bemoaned moan , which i new pay as if not paid before .
 but if the while i think on thee , dear friend , all losses are restor'd and sorrows end .
+# 65
 since brass , nor stone , nor earth , nor boundless sea , but sad mortality o'ersways their power , how with this rage shall beauty hold a plea , whose action is no stronger than a flower ?
 o , how shall summer's honey breath hold out , against the wrackful siege of battering days ?
 when rocks impregnable are not so stout , nor gates of steel so strong but time decays ?
@@ -1264,6 +1296,7 @@ o fearful meditation , where , alack , shall time's best jewel from time's chest
 or what strong hand can hold his swift foot back ?
 or who his spoil of beauty can forbid ?
 o , none , unless this miracle have might , that in black ink my love may still shine bright .
+# 73
 that time of year thou mayst in me behold when yellow leaves , or none , or few , do hang upon those boughs which shake against the cold .
 bare ruin'd choirs , where late the sweet birds sang .
 in me thou see'st the twilight of such day as after sunset fadeth in the west .
@@ -1271,6 +1304,7 @@ which by and by black night doth take away , death's second self , that seals up
 in me thou see'st the glowing of such fire , that on the ashes of his youth doth lie .
 as the death bed , whereon it must expire , consum'd with that which it was nourish'd by .
 this thou perceiv'st , which makes thy love more strong , to love that well , which thou must leave ere long .
+# 127
 in the old age black was not counted fair , or if it were , it bore not beauty's name .
 but now is black beauty's successive heir , and beauty slander'd with a bastard shame .
 for since each hand hath put on nature's power , fairing the foul with art's false borrowed face .
@@ -1281,12 +1315,14 @@ yet so they mourn becoming of their woe , that every tongue says beauty should l
 `;
 /* the third folio — sonnets 29, 33, 60, 97, 147 */
 const CORPUS_C=`
+# 29
 when in disgrace with fortune and men's eyes i all alone beweep my outcast state .
 and trouble deaf heaven with my bootless cries , and look upon myself , and curse my fate .
 wishing me like to one more rich in hope , featur'd like him , like him with friends possess'd .
 desiring this man's art , and that man's scope , with what i most enjoy contented least .
 yet in these thoughts my self almost despising , haply i think on thee , and then my state , like to the lark at break of day arising from sullen earth , sings hymns at heaven's gate .
 for thy sweet love remember'd such wealth brings that then i scorn to change my state with kings .
+# 33
 full many a glorious morning have i seen flatter the mountain tops with sovereign eye .
 kissing with golden face the meadows green , gilding pale streams with heavenly alchemy .
 anon permit the basest clouds to ride with ugly rack on his celestial face .
@@ -1295,6 +1331,7 @@ even so my sun one early morn did shine , with all triumphant splendour on my br
 but out , alack , he was but one hour mine , the region cloud hath mask'd him from me now .
 yet him for this my love no whit disdaineth .
 suns of the world may stain when heaven's sun staineth .
+# 60
 like as the waves make towards the pebbled shore , so do our minutes hasten to their end .
 each changing place with that which goes before , in sequent toil all forwards do contend .
 nativity , once in the main of light , crawls to maturity , wherewith being crown'd .
@@ -1302,6 +1339,7 @@ crooked eclipses 'gainst his glory fight , and time that gave doth now his gift 
 time doth transfix the flourish set on youth and delves the parallels in beauty's brow .
 feeds on the rarities of nature's truth , and nothing stands but for his scythe to mow .
 and yet to times in hope , my verse shall stand , praising thy worth , despite his cruel hand .
+# 97
 how like a winter hath my absence been from thee , the pleasure of the fleeting year !
 what freezings have i felt , what dark days seen !
 what old december's bareness everywhere !
@@ -1310,6 +1348,7 @@ bearing the wanton burden of the prime , like widow'd wombs after their lords' d
 yet this abundant issue seem'd to me but hope of orphans , and unfather'd fruit .
 for summer and his pleasures wait on thee , and , thou away , the very birds are mute .
 or , if they sing , 'tis with so dull a cheer , that leaves look pale , dreading the winter's near .
+# 147
 my love is as a fever longing still , for that which longer nurseth the disease .
 feeding on that which doth preserve the ill , the uncertain sickly appetite to please .
 my reason , the physician to my love , angry that his prescriptions are not kept .
@@ -1320,6 +1359,7 @@ for i have sworn thee fair , and thought thee bright , who art as black as hell 
 `;
 /* the fourth folio — sonnets 55, 64, 71, 106, 129 */
 const CORPUS_D=`
+# 55
 not marble , nor the gilded monuments of princes , shall outlive this powerful rhyme .
 but you shall shine more bright in these contents than unswept stone , besmear'd with sluttish time .
 when wasteful war shall statues overturn , and broils root out the work of masonry .
@@ -1327,6 +1367,7 @@ nor mars his sword , nor war's quick fire shall burn the living record of your m
 'gainst death , and all oblivious enmity shall you pace forth .
 your praise shall still find room even in the eyes of all posterity that wear this world out to the ending doom .
 so , till the judgement that yourself arise , you live in this , and dwell in lovers' eyes .
+# 64
 when i have seen by time's fell hand defac'd the rich proud cost of outworn buried age .
 when sometime lofty towers i see down raz'd , and brass eternal slave to mortal rage .
 when i have seen the hungry ocean gain advantage on the kingdom of the shore .
@@ -1334,16 +1375,19 @@ and the firm soil win of the watery main , increasing store with loss , and loss
 when i have seen such interchange of state , or state itself confounded , to decay .
 ruin hath taught me thus to ruminate , that time will come and take my love away .
 this thought is as a death which cannot choose but weep to have , that which it fears to lose .
+# 71
 no longer mourn for me when i am dead than you shall hear the surly sullen bell give warning to the world that i am fled from this vile world with vilest worms to dwell .
 nay , if you read this line , remember not the hand that writ it , for i love you so , that i in your sweet thoughts would be forgot , if thinking on me then should make you woe .
 o if , i say , you look upon this verse , when i perhaps compounded am with clay , do not so much as my poor name rehearse .
 but let your love even with my life decay .
 lest the wise world should look into your moan , and mock you with me after i am gone .
+# 106
 when in the chronicle of wasted time i see descriptions of the fairest wights , and beauty making beautiful old rime , in praise of ladies dead and lovely knights .
 then , in the blazon of sweet beauty's best , of hand , of foot , of lip , of eye , of brow , i see their antique pen would have express'd even such a beauty as you master now .
 so all their praises are but prophecies of this our time , all you prefiguring .
 and for they looked but with divining eyes , they had not skill enough your worth to sing .
 for we , which now behold these present days , have eyes to wonder , but lack tongues to praise .
+# 129
 the expense of spirit in a waste of shame is lust in action .
 and till action , lust is perjur'd , murderous , bloody , full of blame , savage , extreme , rude , cruel , not to trust .
 enjoy'd no sooner but despised straight .
@@ -1365,6 +1409,7 @@ let uniT=0;
 function bump(m,key,next){ let e=m.get(key); if(!e){e={t:0,m:new Map()};m.set(key,e);} e.t++; e.m.set(next,(e.m.get(next)||0)+1); }
 /* the fifth folio — sonnets 1, 15, 27, 66, 87 */
 const CORPUS_E=`
+# 1
 from fairest creatures we desire increase , that thereby beauty's rose might never die .
 but as the riper should by time decease , his tender heir might bear his memory .
 but thou , contracted to thine own bright eyes , feed'st thy light's flame with self substantial fuel .
@@ -1372,6 +1417,7 @@ making a famine where abundance lies , thyself thy foe , to thy sweet self too c
 thou that art now the world's fresh ornament , and only herald to the gaudy spring .
 within thine own bud buriest thy content , and tender churl mak'st waste in niggarding .
 pity the world , or else this glutton be , to eat the world's due , by the grave and thee .
+# 15
 when i consider everything that grows holds in perfection but a little moment .
 that this huge stage presenteth nought but shows whereon the stars in secret influence comment .
 when i perceive that men as plants increase , cheered and checked even by the self same sky .
@@ -1379,12 +1425,14 @@ vaunt in their youthful sap , at height decrease , and wear their brave state ou
 then the conceit of this inconstant stay sets you most rich in youth before my sight .
 where wasteful time debateth with decay to change your day of youth to sullied night .
 and all in war with time for love of you , as he takes from you , i engraft you new .
+# 27
 weary with toil , i haste me to my bed , the dear repose for limbs with travel tir'd .
 but then begins a journey in my head to work my mind , when body's work's expired .
 for then my thoughts , from far where i abide , intend a zealous pilgrimage to thee .
 and keep my drooping eyelids open wide , looking on darkness which the blind do see .
 save that my soul's imaginary sight presents thy shadow to my sightless view , which , like a jewel hung in ghastly night , makes black night beauteous , and her old face new .
 lo , thus , by day my limbs , by night my mind , for thee , and for myself , no quiet find .
+# 66
 tired with all these , for restful death i cry .
 as to behold desert a beggar born , and needy nothing trimm'd in jollity , and purest faith unhappily forsworn .
 and gilded honour shamefully misplac'd , and maiden virtue rudely strumpeted .
@@ -1392,6 +1440,7 @@ and right perfection wrongfully disgrac'd , and strength by limping sway disable
 and art made tongue tied by authority , and folly , doctor like , controlling skill .
 and simple truth miscall'd simplicity , and captive good attending captain ill .
 tir'd with all these , from these would i be gone , save that , to die , i leave my love alone .
+# 87
 farewell , thou art too dear for my possessing , and like enough thou know'st thy estimate .
 the charter of thy worth gives thee releasing .
 my bonds in thee are all determinate .
@@ -1404,12 +1453,14 @@ thus have i had thee , as a dream doth flatter , in sleep a king , but waking no
 `;
 /* the sixth folio — sonnets 2, 19, 94, 110, 138 */
 const CORPUS_F=`
+# 2
 when forty winters shall besiege thy brow , and dig deep trenches in thy beauty's field .
 thy youth's proud livery so gazed on now , will be a tatter'd weed of small worth held .
 then being asked , where all thy beauty lies , where all the treasure of thy lusty days .
 to say , within thine own deep sunken eyes , were an all eating shame , and thriftless praise .
 how much more praise deserv'd thy beauty's use , if thou couldst answer this fair child of mine shall sum my count , and make my old excuse , proving his beauty by succession thine .
 this were to be new made when thou art old , and see thy blood warm when thou feel'st it cold .
+# 19
 devouring time , blunt thou the lion's paws , and make the earth devour her own sweet brood .
 pluck the keen teeth from the fierce tiger's jaws , and burn the long liv'd phoenix , in her blood .
 make glad and sorry seasons as thou fleets , and do whate'er thou wilt , swift footed time , to the wide world and all her fading sweets .
@@ -1417,6 +1468,7 @@ but i forbid thee one most heinous crime .
 o , carve not with thy hours my love's fair brow , nor draw no lines there with thine antique pen .
 him in thy course untainted do allow for beauty's pattern to succeeding men .
 yet do thy worst , old time , despite thy wrong , my love shall in my verse ever live young .
+# 94
 they that have power to hurt , and will do none , that do not do the thing they most do show .
 who , moving others , are themselves as stone , unmoved , cold , and to temptation slow .
 they rightly do inherit heaven's graces , and husband nature's riches from expense .
@@ -1425,6 +1477,7 @@ the summer's flower is to the summer sweet , though to itself , it only live and
 but if that flower with base infection meet , the basest weed outbraves his dignity .
 for sweetest things turn sourest by their deeds .
 lilies that fester , smell far worse than weeds .
+# 110
 alas , 'tis true , i have gone here and there , and made my self a motley to the view .
 gor'd mine own thoughts , sold cheap what is most dear , made old offences of affections new .
 most true it is , that i have look'd on truth askance and strangely .
@@ -1432,6 +1485,7 @@ but , by all above , these blenches gave my heart another youth , and worse essa
 now all is done , save what shall have no end .
 mine appetite i never more will grind on newer proof , to try an older friend , a god in love , to whom i am confin'd .
 then give me welcome , next my heaven the best , even to thy pure and most most loving breast .
+# 138
 when my love swears that she is made of truth , i do believe her though i know she lies .
 that she might think me some untutor'd youth , unlearned in the world's false subtleties .
 thus vainly thinking that she thinks me young , although she knows my days are past the best .
@@ -1444,14 +1498,16 @@ therefore i lie with her , and she with me , and in our faults by lies we flatte
 `;
 /* the schooling: the same machine may be built over three sizes of library */
 const FOLIOS=[{n:5},{n:10},{n:15},{n:20},{n:25},{n:30}];
-let FOLIO=0, LINES=[], BASE_N=0, WHEELS=0;
+let FOLIO=0, LINES=[], LINE_SONNET=[], BASE_N=0, WHEELS=0;
 function buildModel(tier){
   FOLIO=Math.min(5,Math.max(0,tier|0));
   vocabArr.length=0; vocabId.clear(); uniC.length=0; uniT=0;
   bi.clear(); tri.clear(); coocc.clear();
   FINID=intern(FIN);
   const text=[CORPUS,CORPUS_B,CORPUS_C,CORPUS_D,CORPUS_E,CORPUS_F].slice(0,FOLIO+1).join('\n');
-  LINES=text.trim().split('\n').map(l=>l.trim()).filter(Boolean);
+  LINE_SONNET.length=0; let curS=0;
+  LINES=[]; for(const raw of text.trim().split('\n')){ const l=raw.trim(); if(!l) continue;
+    if(l.startsWith('#')){ curS=parseInt(l.slice(1))||0; continue; } LINES.push(l); LINE_SONNET.push(curS); }
   for(const line of LINES){
     const seq=line.split(/\s+/).map(intern); seq.push(FINID);
     for(let i=0;i<seq.length;i++){
@@ -1469,7 +1525,7 @@ function buildModel(tier){
   for(let i=0;i<BASE_N;i++) if(uniC[i]===undefined) uniC[i]=0;
   WHEELS=uniC.filter(c=>c>0).length;
   bi.forEach(e=>WHEELS+=e.m.size); tri.forEach(e=>WHEELS+=e.m.size);
-  rebuildPressTables();
+  rebuildPressTables(); buildPhrases();
   refreshFolio();
 }
 function refreshFolio(){
@@ -2261,7 +2317,7 @@ function clearWorks(){
   buildBand(); el.pointer.style.left='2%'; el.drawres.textContent='No lot has yet been drawn.';
   el.tape.innerHTML='<span class="stamp prompt">❧</span>';
   telegraph('Idle. Write a card and begin.');
-  el.sheet.innerHTML='<div class="stitle">Sonnet —</div>';
+  el.sheet.innerHTML='<div class="stitle">Sonnet —</div>'; $('#concord').hidden=true;
   el.pressnote.textContent='The press stands ready; your card seeds the first line.';
   FOLEY.bed('hum',false); FOLEY.bed('roll',false);
   deactivate(); refreshButtons();
@@ -2367,6 +2423,62 @@ function toRoman(n){
   const T=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
   let s=''; for(const[v,r]of T){ while(n>=v){ s+=r; n-=v; } } return s||'I';
 }
+
+/* ---- the concordance: every run of n words on the sheet that stands, in order, in the sonnets ---- */
+let CONC_MIN=3, PHRASES=null;   /* Map: "w1 w2 w3" → {sonnet, line} for every 3-gram of words in the corpus */
+function buildPhrases(){
+  PHRASES=new Map();
+  LINES.forEach((line,li)=>{
+    const ws=line.split(/\s+/).filter(w=>!PUNCT.has(w));
+    for(let i=0;i+2<ws.length;i++){ const k=ws[i]+' '+ws[i+1]+' '+ws[i+2]; if(!PHRASES.has(k)) PHRASES.set(k,{s:LINE_SONNET[li],l:li}); }
+  });
+}
+function inCorpus(seq){   /* is this whole word-sequence a contiguous run in one corpus line? returns {s,l} or null */
+  if(seq.length<3) return null;
+  const first=PHRASES.get(seq.slice(0,3).join(' ')); if(!first) return null;
+  /* verify the full run against the candidate line (and any other line holding the same opening trigram) */
+  const needle=' '+seq.join(' ')+' ';
+  for(let li=0;li<LINES.length;li++){
+    const hay=' '+LINES[li].split(/\s+/).filter(w=>!PUNCT.has(w)).join(' ')+' ';
+    if(hay.indexOf(needle)>=0) return {s:LINE_SONNET[li],l:li};
+  }
+  return null;
+}
+function concordSheet(){
+  const lines=[...el.sheet.querySelectorAll('.sline')]; if(!lines.length||!PHRASES) return;
+  let total=0, quoted=0, longest=0, longestSrc=null;
+  lines.forEach(div=>{
+    /* rebuild the line's text from its tokens (kept on the element) with runs wrapped */
+    const toks=div.__toks; if(!toks) return;
+    const words=toks.map(t=>t.w), isW=toks.map(t=>!PUNCT.has(t.w)&&t.w!==FIN);
+    /* find maximal quoted runs over word tokens (punctuation may sit inside a run without breaking it) */
+    const wIdx=[]; toks.forEach((t,i)=>{ if(isW[i]) wIdx.push(i); });
+    const runs=[]; let i=0;
+    while(i<wIdx.length){
+      let best=null;
+      for(let j=wIdx.length;j-i>=CONC_MIN;j--){ const seq=wIdx.slice(i,j).map(k=>words[k]); const hit=inCorpus(seq); if(hit){ best={from:wIdx[i],to:wIdx[j-1],n:j-i,hit}; break; } }
+      if(best){ runs.push(best); i=wIdx.indexOf(best.to)+1; } else i++;
+    }
+    total+=wIdx.length;
+    let html='';
+    toks.forEach((t,k)=>{
+      const r=runs.find(r=>k>=r.from&&k<=r.to);
+      const open=r&&k===r.from, close=r&&k===r.to;
+      if(open){ const src=LINES[r.hit.l].replace(/ ([,.;:!?])/g,'$1'); html+='<span class="qrun'+(r.n>=CONC_MIN+1?' long':'')+'" data-src="Sonnet '+r.hit.s+' — “'+esc(src)+'”">'; }
+      html+=(t.seed?'<span class="seed">':'')+esc(t.w)+(t.seed?'</span>':'')+(k<toks.length-1?' ':'');
+      if(close) html+='</span>';
+    });
+    runs.forEach(r=>{ quoted+=r.n; if(r.n>longest){ longest=r.n; longestSrc=r.hit; } });
+    /* re-attach the tail (dash / mark) exactly as before */
+    const mk=div.querySelector('.rmark'); const tail=div.__tail||'';
+    div.innerHTML=html+tail; if(mk) div.appendChild(mk);
+  });
+  const pct=total?Math.round(100*quoted/total):0;
+  $('#conctally').innerHTML='of <b>'+total+'</b> words on this sheet, <b>'+quoted+'</b> stand in quoted runs of '+CONC_MIN+' or more (<b>'+pct+'%</b>)'+
+    (longest?'; the longest run is <b>'+longest+'</b> words, from Sonnet <b>'+longestSrc.s+'</b>':'')+
+    '. The rest are the seams — the lottery’s own joins.';
+  $('#concord').hidden=false;
+}
 /* ---- the rhymer: as the Bard would judge it — by sound, with his own eye-rhymes and old pronunciations ----
    proven against 106 of Mr. Shakespeare's own rhyme-pairs from the corpus (106 pass; no false pairs among controls) */
 function rhymeKey(w){
@@ -2428,7 +2540,7 @@ async function composeSonnet(){
   FOLEY.play('press'); FOLEY.bed('hum',true,170,0.045); shaftRun(true);
   let no=1; try{ no=(parseInt(localStorage.getItem('abe-sonnet-no'))||0)+1;
     localStorage.setItem('abe-sonnet-no',String(no)); }catch(e){}
-  el.sheet.innerHTML='<div class="stitle">Sonnet '+toRoman(no)+'</div>';
+  el.sheet.innerHTML='<div class="stitle">Sonnet '+toRoman(no)+'</div>'; $('#concord').hidden=true;
   S.prompt=(el.prompt.value.trim()||'shall i compare thee'); el.prompt.value=S.prompt;
   const C={comma:cam('camComma'),measure:cam('camMeasure'),rhyme:cam('camRhyme'),volta:cam('camVolta')};
   const MINW=C.measure?6:1, MAXW=12;
@@ -2454,6 +2566,7 @@ async function composeSonnet(){
       ctx=[o]; parts=[esc(vocabArr[o])];
     }
     div.innerHTML=parts.join(' ');
+    div.__toks=ctx.map((id,k)=>({w:vocabArr[id],seed:ln===0}));
     let words=ctx.filter(isWordId).length, ended=false, lastWord=null, rhymed=null;
     const target=rhymeTarget(ln);
     while(words<MAXW&&!S.halt){
@@ -2478,7 +2591,7 @@ async function composeSonnet(){
       if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; }
       const id=sample(q);
       if(id===FINID){ ended=true; break; }
-      ctx.push(id); parts.push(esc(vocabArr[id]));
+      ctx.push(id); parts.push(esc(vocabArr[id])); div.__toks.push({w:vocabArr[id]});
       if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
       div.innerHTML=parts.join(' ');
       FOLEY.play('tick',{bright:2});
@@ -2496,10 +2609,10 @@ async function composeSonnet(){
     while(!S.halt&&!ended&&extra<3&&lastWord&&DANGLE.has(lastWord)){
       const q=applyTemp(rawDist(ctx),S.T); q[FINID]=0; TERM_IDS.forEach(id=>{q[id]=0;}); SOFT_IDS.forEach(id=>{q[id]=0;});
       let Z=0; for(let i=0;i<q.length;i++) Z+=q[i]; if(Z<=1e-9) break; for(let i=0;i<q.length;i++) q[i]/=Z;
-      const id=sample(q); ctx.push(id); parts.push(esc(vocabArr[id])); if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
+      const id=sample(q); ctx.push(id); parts.push(esc(vocabArr[id])); div.__toks.push({w:vocabArr[id]}); if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
       div.innerHTML=parts.join(' '); extra++; await sleep(120);
     }
-    if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){ parts.push('—'); div.innerHTML=parts.join(' '); }
+    if(!S.halt&&!TERM_IDS.has(ctx[ctx.length-1])){ parts.push('—'); div.innerHTML=parts.join(' '); div.__tail=' —'; }
     /* THE CAPITAL CAM — capitals to the openers and to the poet's I */
     if(C.volta&&!S.halt){ let h=div.innerHTML;
       h=h.replace(/^(<span class="seed">)?([a-z])/,(m,s,c)=>(s||'')+c.toUpperCase());
@@ -2524,6 +2637,7 @@ async function composeSonnet(){
   if(!S.halt){
     const f=document.createElement('div'); f.className='finis'; f.textContent='— FINIS —';
     el.sheet.appendChild(f); FOLEY.play('bell');
+    concordSheet();
     const tally=C.rhyme?(' The Rhyme Cam: <b>'+hits+'</b> true rhyme'+(hits===1?'':'s')+(eyes?', <b>'+eyes+'</b> by the Bard’s licence':'')+
       ', <b>'+misses+'</b> the engine could not supply'+(misses?' — no rule can conjure a word the wheels never read':'')+'.'):'';
     el.pressnote.innerHTML='the sheet is full — Sonnet '+toRoman(no)+'.'+tally+' A masterpiece, the press maintains, is surely next.';
@@ -2551,7 +2665,8 @@ el.begin.addEventListener('click',async()=>{
   await revolution('tour');
 });
 el.crank.addEventListener('click',()=>revolution('quick'));
-el.pressBtn.addEventListener('click',composeSonnet);
+  el.pressBtn.addEventListener('click',composeSonnet);
+$$('input[name="runlen"]').forEach(r=>r.addEventListener('change',()=>{ CONC_MIN=parseInt(r.value)||3; if(!S.busy) concordSheet(); FOLEY.play('press'); }));
 el.run.addEventListener('click',async()=>{
   if(S.running){ S.halt=true; return; }
   if(S.busy||!S.started||S.finished) return;

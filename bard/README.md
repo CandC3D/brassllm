@@ -148,6 +148,19 @@ noise; the trend is monotone across repeated sweeps). Same harness, more trainin
 effectiveness scales with the model's capability, and it can never add a
 word the wheels have not read.
 
+## The Concordance
+
+When a sheet is full, every run of *n* consecutive words (n = 3, 4, or 5+,
+switchable) that occurs verbatim and in order in the corpus is underscored on
+the sheet — a hairline for runs of n, heavier for longer — with a hover slip
+naming the sonnet and quoting the source line. A tally beneath reports how many
+of the sheet's words lie in quoted runs, the percentage, and the longest run
+and its sonnet. Punctuation inside a run does not break it. Corpus lines carry
+`# N` sonnet markers (skipped by the model builder, recorded in `LINE_SONNET`)
+so provenance resolves to a sonnet number. This is the provenance question —
+*how much of this is actually Shakespeare?* — answered exactly, because the
+entire training set is on the page.
+
 ## Growing the corpus
 
 Add more sonnet lines to `const CORPUS` (lowercase, space the punctuation,
