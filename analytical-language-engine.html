@@ -81,6 +81,15 @@ body{
   font-size:clamp(25px,4.6vw,42px);letter-spacing:.16em;text-transform:uppercase;
   margin:6px 0 4px;line-height:1.15;text-wrap:balance;
 }
+/* the title flanked by its two patrons, etched in the brass — Mr. Babbage at the left looking in, Lady Lovelace at the right looking in;
+   each stands as tall as the two title lines, in the plate's engrave-ink with the lettering's raised highlight */
+.titlerow{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,22px);margin:6px 0 4px}
+.titlerow h1{margin:0;text-align:center;flex:0 1 auto}
+.portrait{display:block;height:calc(2 * 1.15 * clamp(25px,4.6vw,42px));width:auto;flex:none;
+  filter:drop-shadow(0 1px 0 rgba(255,242,196,.55)) drop-shadow(0 -0.5px 0 rgba(0,0,0,.25));opacity:.9}
+.portrait.pr{opacity:1;filter:drop-shadow(0 1px 0 rgba(255,242,196,.55)) drop-shadow(0 -0.5px 0 rgba(0,0,0,.25)) contrast(1.15)}
+@media (max-width:560px){.titlerow{gap:8px}.portrait{height:calc(1.6 * 1.15 * clamp(25px,4.6vw,42px))}}
+@media (max-width:420px){.portrait{display:none}}
 .masthead .rule{height:2px;max-width:520px;margin:10px auto;background:linear-gradient(90deg,rgba(67,49,15,0),#43310f,rgba(67,49,15,0))}
 .masthead .sub{color:#3f2f0f;max-width:640px;margin:0 auto 6px;font-size:15px}
 .masthead .sub2{color:#5b4517;max-width:640px;margin:0 auto;font-size:13px;font-style:italic}
@@ -569,7 +578,11 @@ h2,h3{text-wrap:balance}
 
 <header class="masthead plate screws">
   <div class="orn" aria-hidden="true">❦</div>
-  <h1>The Analytical Language Engine</h1>
+  <div class="titlerow">
+    <img class="portrait pl" src="portrait-babbage.png" alt="Engraved portrait of Charles Babbage, etched in the brass" width="405" height="520" decoding="async">
+    <h1>The Analytical<br>Language Engine</h1>
+    <img class="portrait pr" src="portrait-lovelace.png" alt="Engraved portrait of Ada Lovelace, etched in the brass" width="405" height="520" decoding="async">
+  </div>
   <div class="rule" aria-hidden="true"></div>
   <p class="sub">Being a candid mechanical account of the <b>Large Language Model</b> — what truly happens between your question and its answer — rendered in brass, in the manner of Mr.&nbsp;Charles&nbsp;Babbage.</p>
   <p class="sub2">Everything below actually runs: the gauges are moved by a real (if miniature) engine of probability computed live on this page. The plaques state, candidly, how the full-sized article differs — and terms under a dotted line yield their modern meaning to the pointer.</p>
