@@ -10,7 +10,10 @@
    Math.random is replaced by a seeded PRNG for the duration of a run, so a seed reproduces a sheet exactly.
 
    IT DUPLICATES composeSonnet AND WILL DRIFT.  Re-sync it by hand whenever the press changes, or its figures
-   will be confidently wrong.  Last synced: the verse-line revision (⏎ line-end sort, advisory Measure Cam).
+   will be confidently wrong.  Last synced: the goal-first Rhyme Cam (drawGoal / goalRoads / ROADS_SHARE).
+
+   ABE_HARNESS.validateRhymer(tier) scores rhymes() against every authentic pair the scheme names at that
+   schooling, plus non-rhyming controls — run it after any change to rhymeKey, NORHYME, EYE_RHYMES or buildLicence.
 
    Reported: fidelity (share of words standing in quoted runs of three or more, the concordance's own measure),
    derailment (share of draws with no trigram context), rhymeRate ((true+eye) / lines having a partner),
@@ -39,6 +42,8 @@
       }
       let words=ctx.filter(isWordId).length, ended=false, lastWord=null, cause=null;
       const target=rhymeTarget(ln);
+      const goal=(C.rhyme&&target)?drawGoal(target):null;
+      const roads=goal!==null?goalRoads(goal):null;
       while(words<MAXW){
         st.draws++; if(!hasTri(ctx)) st.noTri++;
         const q=applyTemp(rawDist(ctx),T);
@@ -50,18 +55,26 @@
         if(words<MINW){ cut+=q[FINID]; q[FINID]=0; if(C.measure){ cut+=q[LENDID]; q[LENDID]=0; TERM_IDS.forEach(id=>{cut+=q[id];q[id]=0;}); } }
         if(C.comma&&ln===13&&words>=MINW){
           SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
-          if(words>=MINW+2&&!unsatisfied(ctx)){
+          if(goal===null&&words>=MINW+2&&!unsatisfied(ctx)){
             let tm=0; TERM_IDS.forEach(id=>{ tm+=q[id]; });
             if(tm>1e-9&&tm<0.5){ const boost=0.5/tm, rest=0.5/(1-tm); for(let i=0;i<q.length;i++) q[i]*=TERM_IDS.has(i)?boost:rest; cut=0; }
           }
         }
         if(C.concord){ const m=concordStrike(q,ctx); if(m>1e-9){ cut+=m; st.struck++; } }
-        if(target&&words>=Math.max(MINW-1,3)&&lastWord!==null&&rhymes(lastWord,target)===null){
-          let mass=0; const good=[];
-          for(let i=0;i<q.length;i++) if(q[i]>0&&isWordId(i)&&rhymes(vocabArr[i],target)) { good.push(i); mass+=q[i]; }
-          if(good.length&&mass>1e-9){ st.boosts++; st.massSum+=mass/(1-cut);
-            const boost=0.5/mass, rest=0.5/(1-mass), G=new Set(good);
-            for(let i=0;i<q.length;i++) q[i]*=(G.has(i)?boost:rest); cut=0; }
+        /* the goal-first rhyme cam, as recut: hold open, favour the roads, set the goal on a counted road */
+        if(goal!==null){
+          cut+=q[LENDID]; q[LENDID]=0; cut+=q[FINID]; q[FINID]=0;
+          TERM_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
+          if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; cut=0; }
+          if(words>=MINW-2){
+            let rm=0; for(let i=0;i<q.length;i++) if(q[i]>0&&roads.has(i)) rm+=q[i];
+            if(ROADS_SHARE>0&&rm>1e-9&&rm<ROADS_SHARE){ const b=ROADS_SHARE/rm, r=(1-ROADS_SHARE)/(1-rm); for(let i=0;i<q.length;i++) q[i]*=roads.has(i)?b:r; }
+          }
+          const biL=bi.get(ctx[ctx.length-1]);
+          if(words>=MINW-1&&q[goal]>0&&biL&&biL.m.has(goal)){
+            const gm=q[goal]; st.boosts++; st.massSum+=gm;
+            if(gm<0.5){ const b=0.5/gm, r=0.5/(1-gm); for(let i=0;i<q.length;i++) q[i]*=(i===goal?b:r); }
+          }
         }
         if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; }
         const id=sample(q);
@@ -136,6 +149,25 @@
         rhymeCam:{boosts:st.boosts, meanNaturalMassPct:st.boosts?+(100*st.massSum/st.boosts).toFixed(2):null},
         lines:st.lines, draws:st.draws, specimens:spec
       };
+    },
+    validateRhymer(tier){
+      if(tier===undefined) tier=6;
+      if(FOLIO!==tier) buildModel(tier);
+      const bySon=new Map();
+      LINES.forEach((l,i)=>{ const s=LINE_SONNET[i]; if(!bySon.has(s)) bySon.set(s,[]); bySon.get(s).push(l); });
+      const finals=lines=>lines.map(l=>{ const ws=l.split(/\s+/); for(let k=ws.length-1;k>=0;k--){ if(!PUNCT.has(ws[k])) return ws[k]; } return null; });
+      const PAIRS=[[0,2],[1,3],[4,6],[5,7],[8,10],[9,11],[12,13]], CTRL=[[0,1],[4,5],[8,9]];
+      const auth=[], ctrl=[];
+      for(const lines of bySon.values()){ if(lines.length!==14) continue; const f=finals(lines);
+        for(const [a,b] of PAIRS){ if(f[a]&&f[b]&&f[a]!==f[b]) auth.push([f[a],f[b]]); }
+        for(const [a,b] of CTRL){ if(f[a]&&f[b]&&f[a]!==f[b]) ctrl.push([f[a],f[b]]); } }
+      let t=0,e=0,fails=[]; for(const [a,b] of auth){ const r=rhymes(a,b); if(r==='true')t++; else if(r==='eye')e++; else fails.push(a+'/'+b); }
+      let phon=0; for(const [a,b] of auth){ if(rhymes(a,b,true)) phon++; }
+      let fp=[]; for(const [a,b] of ctrl){ if(rhymes(a,b)) fp.push(a+'/'+b); }
+      return {authentic:auth.length, trueByPhonetics:t, byLicence:e, fails,
+        passPct:+(100*(t+e)/auth.length).toFixed(1), phoneticOnlyPct:+(100*phon/auth.length).toFixed(1),
+        licencePairs:LIC_PAIRS, licenceWords:LICENCE.size,
+        controls:ctrl.length, falsePositives:fp};
     },
     vocabFacts(tier){
       if(FOLIO!==tier) buildModel(tier);

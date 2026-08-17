@@ -204,7 +204,7 @@ naked model.
 |---|---|---|
 | Comma | no point before word 2; a stop only after word 4; **the sonnet ends on a full stop** (line 14 leans to the terminal marks from two words past the measure, never while the phrase is open; a trailing comma is struck, and if no stop is drawn the press sets one) | logit mask / boost |
 | Measure | **advisory** — the engine proposes ⏎ where it has read a line-break; the cam only forbids ending before word 6 and takes the ceiling at 10 | mask ∎ and ⏎ before 6; close, unmarked, at 10 |
-| Rhyme | ABAB CDCD EFEF GG | in the closing zone, rhyming candidates boosted to half the drum; a rhyme closes the line; **failure is displayed** as ✗ |
+| Rhyme | ABAB CDCD EFEF GG — **goal-first**: the line's last word is chosen before the line begins, a rhyme-fellow of the partner's last word drawn from the line-end book (`LINE_FINALS`), and the line walks to it | the cam holds the line open until the rhyme lands, favours successors with a counted bigram road to the goal (`ROADS_SHARE`, default 0.30), and gives the goal half the drum when the current word has a counted road to it; **failure is displayed** as ✗, and is known from the line's first word when the drum holds no rhyme-fellow |
 | Capital & Volta | capitalise openers and *I*; line 9 opens on a contrast word (*but/yet/or/nor…*) | post-process; weighted opener draw |
 | **Concord** | grammar: no two of a kind (article·article, preposition·preposition, conjunction·conjunction, auxiliary·auxiliary), an article wants its noun (no *the of*), an auxiliary wants a verb (no *doth of*), pronoun–auxiliary agreement (*i am, thou art, he is, they are*), no doubled word; **and the completion test** — no stop and no ∎ while a determiner or preposition stands unsatisfied within the last three tokens, or a conjunction stands last (no *gives life to .*) | logit mask over successors, using each slug's **part** |
 
@@ -213,14 +213,28 @@ naked model.
 **Rhyme is judged as the Bard would** — by sound (a clerk's phonetics on
 spelling: *day/may*, *night/bright*, *thee/be*, *shade/fade*), plus his own
 eye-rhymes and Elizabethan pronunciations (*love/prove*, *eyes/lies*,
-*past/waste*), which are marked `X*` in the margin. The rhymer was proven
-against **106 of Shakespeare's own rhyme-pairs from the corpus (106 pass)**
-with no false pairs among controls; identity is never rhyme, and slight words
-(articles, prepositions, conjunctions, auxiliaries — *the, of, and, hath, shall…*)
-may neither carry a rhyme nor be judged against one, so "memory / the" cannot
-pass. His licences (*love/prove*, *have/save*) are consulted before the phonetics
-so they are always marked as licence, not passed as true. Like him, the press
-does not stop for an imperfect rhyme.
+*past/waste*), marked `X*` in the margin. The rhymer is proven against **every
+rhyme-pair the sonnets themselves name**: the scheme is public, so the 152
+regular sonnets declare 1,060 authentic pairs (lines 1–3, 2–4, 5–7, 6–8, 9–11,
+10–12, 13–14; sonnets 99 and 126 excused). The phonetics alone hear **85.8%**
+of them; the remainder are entered in the **licence book** (`buildLicence`),
+cut at schooling-time from the Bard's own practice by union-find over the
+failing pairs — ~151 pairs, ~219 words at the full folio — and returned as
+`'eye'`, so they are always marked as licence, not passed as true. False
+positives among 456 non-rhyming control pairs: 4 (0.9%), all weak-tail
+*-ing/-est* pairs of the kind he himself rhymes. Validate any change with
+`ABE_HARNESS.validateRhymer()`.
+
+Details the 2026 recut fixed: unstressed final *-y* (three or more syllables)
+is a class of its own — *beauty/thee* no longer passes, ending the 6%-of-vocab
+collapse — while one- and two-syllable *-y* sounds as *die/eye* (*my, cry,
+deny, thereby*); *heart/art*, *days/praise* (final *s* sounds *z*), *bed/head*
+(the past-tense stripper is vowel-guarded), *young/tongue/song*, *survey/day*,
+*guest/feast*, *rhyme/time*, *deceive/leave*; NORHYME is pruned by the Bard's
+own hand — any word he set at a rhyming line-end (*by/lie*, *mine/thine*,
+*not/forgot*, *will/still*) is struck from it. Identity is never rhyme, nor a
+word against its own possessive. Like him, the press does not stop for an
+imperfect rhyme.
 
 **Line closing.** A rhyme closes a line only when it lands on a content word that
 is not itself a slight word and does not leave the phrase open — neither
