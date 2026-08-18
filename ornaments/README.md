@@ -17,14 +17,14 @@ if you ever re-export, *Type ▸ Create Outlines* first, or set *Fonts: convert 
 |---|---|---|
 | `corner-tl/tr/bl/br` | masthead spandrels, inboard of the screws | `<svg class="orn corner …">` in `.masthead`; hidden ≤700px |
 | `rule-scroll` | the rule under the title (replaces the 2px gradient) | inside `.masthead .rule` |
-| `feather-left/right` | gilt flanks on every station name | either side of `h2.stname` in `.sthead`; hidden ≤560px |
+| `feather-right` ×2, one mirrored | gilt flanks on every station name, 22px, plumes outward | either side of `h2.stname` in `.sthead`; hidden ≤560px |
 | `finial` | divider between the desk and Station I; again before the appendix (Bard) | `.orn-div` between plates |
 | `rule-dot` | the colophon's rule | `.orn-rule` above `<p class="colophon">` |
 | `curl-small` | bookplate curls, two corners of every paper plaque | CSS `.plaque::before/::after`, data URI baked in the stylesheet |
 | `banner-a` + `banner-d` | ribbon cartouche round *The Sonnet Press* (Bard only): a is the left end, d the right, and a stretched two-rule band (inline `<svg preserveAspectRatio="none">`, rules at y 17.7–19.5 and 37.6–39.3 → 19.1–20.9 and 38.9–40.7 of 58.4, measured at the cut edges) runs under the lettering | `.cartouche` in the press `.sthead`, in place of the feathers |
 
 Unused for now, kept for later: `leaf`, `swirl-small`, `swoosh-single`, `swoosh-double`,
-`feather-upright`, `rule-diamonds`, `banner-b`, `banner-c` (b is another right end, but its cut edge is buried under its own foliage, so d was used).
+`feather-left`, `feather-upright`, `rule-diamonds`, `banner-b`, `banner-c` (b is another right end, but its cut edge is buried under its own foliage, so d was used).
 
 ## How they are struck
 
