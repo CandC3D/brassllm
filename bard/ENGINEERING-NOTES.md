@@ -253,3 +253,7 @@ legend 4.80.
 `` "`r`n" `` escape are silently dropped in this environment — the earlier `#tapewrap` rule, the mangle
 comment and these two rules were all truncated to their first line, leaving unclosed CSS. Build newlines
 as `$NL=[string][char]13+[string][char]10` instead, and always assert `{` vs `}` counts after writing.
+
+## The Concord Cam, second edition (home machine, 2026-08-18)
+
+Chris asked for subject–verb–object agreement; three options were laid out (A: number/valency tables from the wheels; A+B with the object-wanted rule; C: a subject–predicate tracker across the line) and he chose A+B by his two tests — keeps the model true to itself without pretending, and is what a 19th-century brass engineer might attempt. Built: `NUM`/`VAL`/`VFORM` in `buildParts()`, rules F and G in `concordStrike`, transitive-verb-last added to `unsatisfied()`. Coverage thin by design (40 t-verbs, 434 plurals at tier 4). Measured seed 7 / 20 sheets / tier 4: number violations 3→0, fidelity 74.1→72.4, rhyme 57.9→60.7. C (the tracker) was deliberately NOT built — it is a grammar, not a cam. `press_harness.js` needs no change (it calls concordStrike). The rule chip and the plaque's Concord paragraph carry the second edition; strike-mass tally unchanged.
