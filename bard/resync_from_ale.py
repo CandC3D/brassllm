@@ -56,7 +56,7 @@ oi,oj=region(old,'/* the sonnet press — a fair-copy sheet, fourteen lines to c
 assert '/* the sonnet press' not in new
 new=new.replace(a,a+'\n\n'+old[oi:oj]); print("inserted press+rulebook css")
 # press section
-oi,oj=region(old,'<section class="station plate screws" id="press"','</section>\n\n<footer class="honesty">',False)
+oi,oj=region(old,'<div class="orn-div press-div"','</section>\n\n<footer class="honesty">',False)   # from the finial that precedes the appendix (ornaments, 2026-08-18)
 new=new.replace('<footer class="honesty">',old[oi:oj]+'<footer class="honesty">',1); print("inserted press section")
 
 # ---- honesty footer: the Bard's own candid note (plaque + button row), up to the colophon ----

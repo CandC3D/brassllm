@@ -175,3 +175,21 @@ New teaching demos, one per notch, measured (probability of the wanted word at b
 bloody" → *tyrant* (— / — / 88 / 88 / 88); "wherefore with infection should he" → *live*
 (— / 0 / 0 / 92 / 92); "two loves i have of comfort and" → *despair* (— / — / — / 0 / 85).
 The 0% entries are the instructive ones: the sort is cut but no road leads to it.
+
+## The ornaments, 2026-08-18
+
+Victorian vegetal trim on the brass of **both** engines — see `ornaments/README.md` for the
+full placement table. Chris outlined the glyphs (Adorn Ornaments / Frames / Banners) in
+Illustrator; the sheet was cut into `ornaments/svg/*.svg`; both pages carry an inline
+`<symbol>` sprite (~72 KB) directly after `<div class="cabinet">`, struck with
+`<svg class="orn" viewBox="0 0 W H"><use href="#o-…"/></svg>`. Masthead spandrels, a scroll
+rule under the title, gilt feathers flanking every station name, a finial between desk and
+works, bookplate curls on the plaques (CSS data URI), a rule over the colophon; the Bard's
+appendix wears a ribbon cartouche (banner-a, a stretched band, banner-d) round *The Sonnet Press*.
+
+Traps: (1) the outer `<svg>` must carry `viewBox="0 0 W H"` — without it there is no aspect
+ratio, and copying the symbol's own offset viewBox puts the drawing outside the window;
+(2) everything shared is outside the Bard's grafts and comes from the parent on resync — edit
+both files identically; the press pieces are inside the press graft, whose start marker in
+`resync_from_ale.py` now reads `<div class="orn-div press-div"` so the finial before the
+appendix survives; (3) `ornaments/make_sprite.ps1` regenerates the sprite/URI/proof — paste by hand.
