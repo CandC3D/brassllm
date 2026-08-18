@@ -234,3 +234,22 @@ T=0.85, all cams; off -> on, fidelity in brackets): compare-thee 5->9 (75->74) �
 mistress'-eyes 28->44 (75->69) · count-the-clock 8->13 (75->76) · love 39->49 (75->72). Rhyme within noise.
 The tally reports subject words, tilted/offered draws, and on-subject count. `press_harness.js` re-synced
 (cams.subject, subject{} block: share, full, companySize, tilted, tiltDraws, onSubjectPct).
+## Legibility of small text on brass, 2026-08-18
+
+Chris flagged the masthead fine print and the desk's option labels as hard to read. Measured (canvas
+sample of the plate's own 168° gradient under each element, WCAG contrast): `.masthead .sub2` **2.03:1**,
+`.opts label` **2.55:1**, `.masthead .sub` 3.27, `.ophelp` 3.90 — all short of 4.5.
+
+Two causes: (1) `.plate label` carries the engraved light halo, which smears text below ~14px, and
+(2) the plate's mid-band is bright (≈rgb(140,108,43)), where **even pure black reaches only 4.29:1** —
+ink alone cannot fix it. So: new `--engrave-deep: #1a1204` for small text; halo removed from `.opts label`;
+sizes up (sub2 13→14, opts 13→14, ophelp 13.5→14, deskl 11.5→12.5, boilerchip 12→12.5, and in the Bard
+schooll 11→12.5, rlab 9.5→10.5, folmarks 9.5→10.5); and a **polished-brass panel** (a ~20% warm-white
+wash with an inset top highlight) behind the three blocks that sit on the darkest band — the masthead
+fine print, `.ophelp`, and `.opts`. Now: sub 4.78 · sub2 5.53 · ophelp 7.93 · opts 5.35 · deskl 5.99 ·
+legend 4.80.
+
+**Workstation trap (bit me three times):** in a PowerShell replacement string, segments after a
+`` "`r`n" `` escape are silently dropped in this environment — the earlier `#tapewrap` rule, the mangle
+comment and these two rules were all truncated to their first line, leaving unclosed CSS. Build newlines
+as `$NL=[string][char]13+[string][char]10` instead, and always assert `{` vs `}` counts after writing.
