@@ -16,7 +16,7 @@ model, not an animation: real probability arithmetic runs live in the browser an
 drives everything you see. Its self-deprecating class-name is an **ILM —
 Infinitesimal Language Model** — the honest counterpart to the Large.
 
-**Where.** Live at https://candc3d.github.io/brassllm/ · source at
+**Where.** Live at https://brassllm.com/ · source at
 github.com/CandC3D/brassllm · a companion "About" page explains the mathematics.
 Devised by **Christopher Horrocks** and constructed by **Claude** (an engine of the
 very kind depicted). Styled throughout as the wares of "Messrs. Horrocks & Claude,

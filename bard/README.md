@@ -4,7 +4,7 @@
 the same brass machine, re-schooled upon nothing whatever but the Sonnets of
 Mr. William Shakespeare.*
 
-Live at **https://candc3d.github.io/brassllm/bard/** (source of truth: `bard/index.html`
+Live at **https://brassllm.com/bard/** (source of truth: `bard/index.html`
 in the brassllm repo). Fully self-contained; open `index.html` locally too.
 
 Search & social: `og-image.png` (1200×630, the quill-on-gear card), `favicon.svg`/`.ico`/PNGs,

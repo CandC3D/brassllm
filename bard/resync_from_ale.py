@@ -20,10 +20,12 @@ def swap(a,b,label,count=1):
     assert new.count(a)==count, f"{label}: expected {count} of anchor, found {new.count(a)}"
     new=new.replace(a,b); print("swapped",label)
 
+# DOMAIN NOTE (2026-08-18): the site moved to https://brassllm.com/ — the head-string anchors below quote the
+# parent's canonical/og:url and were updated to match. The absolute FILE paths above are the home machine's: leave them.
 # ---- head / title / masthead ----
-swap('<link rel="canonical" href="https://candc3d.github.io/brassllm/"><!-- Google Analytics (GA4) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-G7GXZPF2YR"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\'G-G7GXZPF2YR\');</script><meta name="description" content="See what happens inside a Large Language Model, from prompt to output, staged as a working Victorian brass machine — with live probabilities, station by station.">',
+swap('<link rel="canonical" href="https://brassllm.com/"><!-- Google Analytics (GA4) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-G7GXZPF2YR"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\'G-G7GXZPF2YR\');</script><meta name="description" content="See what happens inside a Large Language Model, from prompt to output, staged as a working Victorian brass machine — with live probabilities, station by station.">',
      '<meta name="description" content="An LLM schooled on nothing but Shakespeare\'s Sonnets — the Analytical Bard Engine, a working Victorian brass machine with live probabilities, station by station.">','head:desc/GA')
-swap('<meta property="og:title" content="The Analytical Language Engine"><meta property="og:description" content="How an LLM works, from prompt to output — illustrated as a working brass machine, after Mr. Babbage."><meta property="og:url" content="https://candc3d.github.io/brassllm/">',
+swap('<meta property="og:title" content="The Analytical Language Engine"><meta property="og:description" content="How an LLM works, from prompt to output — illustrated as a working brass machine, after Mr. Babbage."><meta property="og:url" content="https://brassllm.com/">',
      '<meta property="og:title" content="The Analytical Bard Engine"><meta property="og:description" content="An LLM of the Sonnets — the brass engine re-schooled on Mr. Shakespeare, after Mr. Babbage.">','head:og')
 swap('<title>The Analytical Language Engine — how an LLM works, in brass</title>','<title>The Analytical Bard Engine — an LLM of the Sonnets, in brass</title>','title')
 swap('<h1>The Analytical Language Engine</h1>','<h1>The Analytical Bard Engine</h1>','h1')

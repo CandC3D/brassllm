@@ -10,7 +10,7 @@ Double-click `analytical-language-engine.html`. It is fully self-contained — n
 
 Hosted copies:
 
-- GitHub Pages: https://candc3d.github.io/brassllm/
+- GitHub Pages: https://brassllm.com/
 - Claude artifact: https://claude.ai/code/artifact/f0c03be7-7e4f-49c5-ba5d-83f67ae0eae2
 
 The **Analytical Bard Engine** — the same machine re-schooled on

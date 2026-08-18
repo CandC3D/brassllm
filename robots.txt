@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://candc3d.github.io/brassllm/sitemap.xml
+Sitemap: https://brassllm.com/sitemap.xml
