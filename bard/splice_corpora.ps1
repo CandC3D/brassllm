@@ -7,7 +7,7 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $page = Join-Path $here 'index.html'
 $html = [IO.File]::ReadAllText($page, [Text.Encoding]::UTF8)
 $blocks = [IO.File]::ReadAllText((Join-Path $here 'corpus_blocks.js'), [Text.Encoding]::UTF8)
-$names = @('CORPUS','CORPUS_B','CORPUS_C','CORPUS_D','CORPUS_E','CORPUS_F','CORPUS_ALL')
+$names = @('CORPUS','CORPUS_B','CORPUS_C','CORPUS_D','CORPUS_ALL')   # five notches since 2026-08-18: 15/40/80/115/154
 
 # pull each new body out of corpus_blocks.js
 $new = @{}
@@ -30,6 +30,6 @@ foreach($n in $names){
   $html = $html.Substring(0, $s) + $new[$n] + $html.Substring($e)
 }
 if(-not $html.Contains("const FIN='")){ throw 'the counting-engine definitions were lost -- aborting' }
-if(([regex]::Matches($html,'const CORPUS')).Count -ne 7){ throw 'corpus count wrong after splice' }
+if(([regex]::Matches($html,'const CORPUS')).Count -ne $names.Count){ throw 'corpus count wrong after splice' }
 [IO.File]::WriteAllText($page, $html, (New-Object System.Text.UTF8Encoding($false)))
 "page $before -> $($html.Length)"

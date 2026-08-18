@@ -14,9 +14,9 @@ og:url point at `/bard/`; the page is in the site sitemap.
 
 ## What differs from the parent engine
 
-- **Corpus**: the Sonnets of 1609, in seven folios selected by the schooling lever —
-  from 70 verse lines / 308 sorts / 1,658 wheels at the first notch (Sonnets 18, 151,
-  14, 130, 116) up to all 154 sonnets at the seventh: 2,155 verse lines, 3,216 sorts,
+- **Corpus**: the Sonnets of 1609, in five folios selected by the schooling lever —
+  from 210 verse lines / 738 sorts / 4,555 wheels at the first notch (fifteen sonnets:
+  18, 151, 14, 130, 116 and ten more) up to all 154 at the fifth: 2,155 verse lines, 3,216 sorts,
   36,582 wheels. Lowercased, punctuation pre-spaced. See **The Schooling** below.
   A corpus line is a **verse line**, as the 1609 quarto set it — not a sentence. The
   engine is given the line-breaks as a sort of their own, so line shape is *learned*.
@@ -29,9 +29,11 @@ og:url point at `/bard/`; the page is in the site sitemap.
   thine…) so the copper attention head courts content words.
 - Branding, colophon ("the verses Mr. William Shakespeare's, his Sonnets,
   MDCIX — the machinery ours"), and specimen dials re-cut accordingly.
-- **Boiler default 0.95 (WARM)** on the crank, not the parent's 0.70 — see the tuning
-  sweep below. **The press runs at its own setting, `PRESS_T` = 0.85**, separately
-  measured; the sweep below is a measurement of the crank, not of the press.
+- **Boiler default 0.95 (WARM)**, not the parent's 0.70 — see the tuning sweep below.
+  There is **one boiler**: the press draws at the lever's current setting, exactly as
+  the crank does. (A press-only constant `PRESS_T = 0.85` briefly existed and was
+  removed on 2026-08-18 — a second setting hidden inside the press is precisely the
+  kind of thing this exhibit exists *not* to do.)
 - GA/canonical tags removed pending a hosting decision.
 
 ## Tuning the boiler
@@ -73,8 +75,9 @@ dominated by the cams, and the trade-off is different: measured with
 `press_harness.js` (30 sheets, all 154 sonnets, all cams), fidelity — here the
 share of words standing in quoted runs of three or more, the concordance's own
 measure — runs 71.9% at T=0.95, **76.8% at 0.85**, 77.7% at 0.80, with rhyme
-success flat across the three. The press therefore takes its own boiler,
-`PRESS_T` = 0.85, and the crank keeps 0.95.
+success flat across the three. The press has **no boiler of its own**: cool the lever
+to 0.85 before setting it running and the sheet quotes more, which is the lever doing
+its job in plain sight rather than a constant doing it behind the reader's back.
 
 ## Measuring the press — `press_harness.js`
 
@@ -84,9 +87,9 @@ and audio, driving the page's own `buildModel`, `rawDist`, `applyTemp`, `sample`
 by a seeded PRNG. Open the page, paste the file into the console, then:
 
 ```js
-ABE_HARNESS.run({sheets:30, tier:6, seed:5})            // current press
-ABE_HARNESS.run({sheets:30, tier:6, seed:5, mods:{legacy:1}, T:0.95})  // the press before the 2026 revisions
-ABE_HARNESS.vocabFacts(6)                                // sorts, wheels, rhyme classes, orphan sorts
+ABE_HARNESS.run({sheets:30, tier:4, seed:5})            // current press
+ABE_HARNESS.run({sheets:30, tier:4, seed:5, mods:{legacy:1}, T:0.95})  // the press before the 2026 revisions
+ABE_HARNESS.vocabFacts(4)                                // sorts, wheels, rhyme classes, orphan sorts
 ```
 
 It reports fidelity, derailment (share of draws with no trigram context),
@@ -101,40 +104,48 @@ to the parent. Editing notes in the parent repo's README apply here verbatim
 
 ## The Schooling (training-set & parameter-size exercise)
 
-A seven-notch brass lever on the Operator's Desk (set apart beneath a japanned band)
-rebuilds the whole model live over **5, 10, 15, 20, 25, 30, or all 154 sonnets**
-(choice persists in localStorage):
+A five-notch brass lever on the Operator's Desk (set apart beneath a japanned band)
+rebuilds the whole model live over **15, 40, 80, 115, or all 154 sonnets**
+(choice persists in localStorage). The notches were evened out on 2026-08-18: the
+old seven (5/10/15/20/25/30/154) spent six of them inside the first fifth of the
+sequence and then leapt from 30 sonnets to 154 — a jump of four times the library
+in one notch, which made the last step incomparable with the rest. The scale now
+climbs in even strides:
 
-| Folio | Sonnets | Verse lines | Sorts (vocab) | Wheels (params) |
-|---|---|---|---|---|
-| First | 18, 151, 14, 130, 116 | 70 | 308 | 1,658 |
-| Second | + 12, 30, 65, 73, 127 | 140 | 533 | 3,144 |
-| Third | + 29, 33, 60, 97, 147 | 210 | 738 | 4,555 |
-| Fourth | + 55, 64, 71, 106, 129 | 280 | 898 | 5,909 |
-| Fifth | + 1, 15, 27, 66, 87 | 350 | 1,067 | 7,217 |
-| Sixth | + 2, 19, 94, 110, 138 | 420 | 1,207 | 8,557 |
-| Seventh | + the remaining 124 (all 154) | 2,155 | 3,216 | 36,582 |
+| Notch | Sonnets | Verse lines | Sorts (vocab) | Wheels (params) | Licence pairs |
+|---|---|---|---|---|---|
+| First | 15 — the hand-picked (18, 151, 14, 130, 116; 12, 30, 65, 73, 127; 29, 33, 60, 97, 147) | 210 | 738 | 4,555 | 11 |
+| Second | 40 — + the other 15 curated (55, 64, 71, 106, 129; 1, 15, 27, 66, 87; 2, 19, 94, 110, 138), then numeric order | 560 | 1,443 | 11,063 | 33 |
+| Third | 80 | 1,120 | 2,168 | 20,482 | 77 |
+| Fourth | 115 | 1,611 | 2,666 | 28,133 | 116 |
+| Fifth | all 154 | 2,155 | 3,216 | 36,582 | 151 |
+
+The thirty hand-curated sonnets of the old lever are kept as the first two notches
+(they carry the Dark Lady, the brass-and-stone sonnets, the monumental register and
+the sequence's most violent vocabulary); each later notch fills to its size in
+numeric order from what is not yet included. Folio membership lives in
+`make_corpus_blocks.ps1`.
 
 The counters on the masthead, plaques, and honesty footer all update live.
-The teaching demo: seed **"when i do count the clock"** — at 5 sonnets the
-engine has never read Sonnet 12 and can only stammer (best guess: a comma at
-7%); at 10 it continues *"that tells the time"* at 93%. The second folio
-brings the Dark Lady explicitly (127 "raven black", 147 "black as hell, as
-dark as night") plus the brass-most sonnet, 65 ("Since brass, nor stone…").
-The fourth folio adds the monumental register (55 marble/gilded monuments;
-64 "brass eternal slave to mortal rage", towers down-razed, the hungry
-ocean), the funereal (71, the surly sullen bell and vilest worms), the
-chronicle-and-blazon of 106, and the sequence's most violent vocabulary in
-129 (lust, perjur'd, murderous, bloody, savage, extreme). Fourth-folio demo:
-"not marble, nor the gilded" → *monuments* 93% only at 20 sonnets. The fifth
-folio brings the procreation opening (1), the "huge stage" of 15, the sleepless
-27, the litany of 66 ("tired with all these"), and the legal-contract diction of
-87 (charter, patent, misprision); the sixth adds 2 (forty winters), 19 (devouring
-Time, lion, tiger, phoenix), 94 (festering lilies), 110 (motley, gored), and 138
-(the mutual lie). Demo: "when forty winters shall" → *besiege* 73% only at 30; "two loves i
-have of comfort and" → *despair* 72% only at 154.
 
-All seven folios are now produced by rule from the Gutenberg text (#1041) —
+**The teaching demos**, one to each notch, re-measured for the new scale (the
+figure is the engine's probability for the wanted word, at boiler 0.95):
+
+| Seed | Wanted | 15 | 40 | 80 | 115 | 154 |
+|---|---|---|---|---|---|---|
+| "not marble , nor the gilded" | *monuments* | — | 90% | 90% | 88% | 88% |
+| "make war upon this bloody" | *tyrant* | — | — | 88% | 88% | 88% |
+| "wherefore with infection should he" | *live* | — | 0% | 0% | 92% | 92% |
+| "two loves i have of comfort and" | *despair* | — | — | — | 0% | 85% |
+
+An em dash means the word is not in the catalogue at all; a 0% means the sort is
+cut but no road leads to it — the more instructive failure of the two, and the
+reason *despair* waits for the last notch even though the word appears at 115.
+The first notch is deliberately capable (it holds Sonnets 18, 130 and 116 whole,
+so "shall i compare thee" and "my mistress eyes" both run), which makes the
+lesson coverage rather than competence.
+
+All five folios are produced by rule from the Gutenberg text (#1041) —
 `bard/normalise.py`, the canonical spec: **verse lines kept as the quarto set them**,
 curly apostrophes to ASCII, hyphenated compounds split, `O!` to `o ,`, every point
 (`. , ; : ? !` and the em-dash) standing as its own sort, and a straight quote that
@@ -143,7 +154,7 @@ opens or closes a word struck as the printer's quotation mark while elisions are
 a `# N` sonnet marker for the concordance.
 
 `normalise.ps1` is a transcription of the same rules for machines without Python;
-`make_corpus_blocks.ps1` groups the output into the seven folios and
+`make_corpus_blocks.ps1` groups the output into the five folios and
 `splice_corpora.ps1` writes them into `index.html` (backing it up first, and
 asserting rather than guessing — the corpus constants are *not* contiguous in the
 page, the counting-engine definitions sitting between the fourth folio and the fifth).
@@ -181,7 +192,7 @@ masterpieces might emerge. Mechanics, candidly: the operator's card seeds
 line 1 (shown in blue ink); each later line opens via a weighted draw over
 the corpus's own line-opening words; the engine is forbidden ∎ *and* the
 full stop before a line's fourth word; a full stop thereafter ends the line
-honourably. All at the press boiler, `PRESS_T` = 0.85.
+honourably. All at the boiler's current setting — the lever at Station VII.
 
 **Line tails.** A line that reaches the measure's ceiling is left **unmarked** —
 that is enjambment, and it is the commonest line-ending in the sonnets themselves.
@@ -247,7 +258,7 @@ Identity is not rhyme, and neither is a word against its own possessive
 (*heart / heart's*, *time / time's*, which the phonetic key would otherwise pass).
 
 **The interlock with The Schooling** (`press_harness.js`, 20 sheets per tier, seed
-"shall i compare thee", press boiler 0.85, after the verse-line revision):
+"shall i compare thee", boiler 0.85, after the verse-line revision):
 
 | Folio | fidelity | derailment | rhyme | mean words | line ends on a drawn point | line-break proposed by the engine |
 |---|---|---|---|---|---|---|

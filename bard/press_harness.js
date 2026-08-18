@@ -1,9 +1,9 @@
 /* press_harness.js — headless harness for the Sonnet Press (bard/index.html).
    USAGE: open bard/index.html in a browser, paste this whole file into the devtools console, then e.g.
-     ABE_HARNESS.run({sheets:30, tier:6, seed:5})                 // the press as it stands
-     ABE_HARNESS.run({sheets:30, tier:6, seed:5, keep:2})         // ... and keep two sheets as specimens
-     ABE_HARNESS.run({sheets:30, tier:6, seed:5, cams:{comma:1,measure:0,rhyme:1,volta:1,concord:1}})
-     ABE_HARNESS.vocabFacts(6)                                    // sorts, wheels, line lengths, rhyme classes
+     ABE_HARNESS.run({sheets:30, tier:4, seed:5})                 // the press as it stands
+     ABE_HARNESS.run({sheets:30, tier:4, seed:5, keep:2})         // ... and keep two sheets as specimens
+     ABE_HARNESS.run({sheets:30, tier:4, seed:5, cams:{comma:1,measure:0,rhyme:1,volta:1,concord:1}})
+     ABE_HARNESS.vocabFacts(4)                                    // sorts, wheels, line lengths, rhyme classes
 
    It drives the page's own buildModel / rawDist / applyTemp / sample / drawOpener / rhymes / concordStrike /
    unsatisfied / inCorpus; only composeSonnet is re-implemented, without the DOM, animation and audio.
@@ -124,7 +124,7 @@
 
   window.ABE_HARNESS={
     run(opts){
-      const o=Object.assign({sheets:30,tier:6,T:PRESS_T,seed:1,prompt:'shall i compare thee',
+      const o=Object.assign({sheets:30,tier:4,T:S.T,seed:1,prompt:'shall i compare thee',
         cams:{comma:1,measure:1,rhyme:1,volta:1,concord:1},keep:0},opts||{});
       if(FOLIO!==o.tier) buildModel(o.tier);
       const st={draws:0,noTri:0,lines:0,words:0,quoted:0,hits:0,eyes:0,misses:0,cause:{},lw:0,drawnMark:0,struck:0,boosts:0,massSum:0};
@@ -151,7 +151,7 @@
       };
     },
     validateRhymer(tier){
-      if(tier===undefined) tier=6;
+      if(tier===undefined) tier=FOLIOS.length-1;
       if(FOLIO!==tier) buildModel(tier);
       const bySon=new Map();
       LINES.forEach((l,i)=>{ const s=LINE_SONNET[i]; if(!bySon.has(s)) bySon.set(s,[]); bySon.get(s).push(l); });
