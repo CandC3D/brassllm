@@ -44,7 +44,8 @@
       const target=rhymeTarget(ln);
       const goal=(C.rhyme&&target)?drawGoal(target):null;
       const roads=goal!==null?goalRoads(goal):null;
-      while(words<MAXW){
+      let draws=0;
+      while(words<MAXW&&draws++<MAXW*3){   /* bounded in draws: the held-open line could otherwise spin on commas */
         st.draws++; if(!hasTri(ctx)) st.noTri++;
         const q=applyTemp(rawDist(ctx),T);
         let cut=0;
@@ -65,6 +66,7 @@
         if(goal!==null){
           cut+=q[LENDID]; q[LENDID]=0; cut+=q[FINID]; q[FINID]=0;
           TERM_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
+          if(SOFT_IDS.has(ctx[ctx.length-1])) SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
           if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; cut=0; }
           if(words>=MINW-2){
             let rm=0; for(let i=0;i<q.length;i++) if(q[i]>0&&roads.has(i)) rm+=q[i];
