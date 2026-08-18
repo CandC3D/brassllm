@@ -53,3 +53,17 @@ The ornament CSS, the sprite and every shared placement live *outside* the Bard'
 so `resync_from_ale.py` carries them from the parent. The Bard-only pieces (press cartouche, the
 finial before the appendix) sit inside the press graft — the graft's start marker was moved to
 `<div class="orn-div press-div"` for exactly that reason. Edit both pages identically for anything shared.
+
+## Later placements (2026-08-18, same day)
+
+| ornament | role | how |
+|---|---|---|
+| `swirl-small` | the masthead fleuron, in place of the typographic ❦ | inside `.masthead > .orn`, 20px |
+| `swoosh-single` | the Bard's desk band, in place of its ❦ | `.deskband .dband`, 11px gilt |
+| `rule-diamonds` | the divider above every plaque's fine print (replacing a dotted border), and the head-rule under the fair-copy sheet's title | CSS mask on `.plaque .fine::before` and `#sheet .stitle::after`, painted in `currentColor` so it takes the plaque's own ink; the data URI lives in `--orn-diamonds` on `:root` |
+
+The little polished panels (`.ophelp`, `.opts`, `.masthead .sub2`) are **riveted**: `--rivet-l` / `--rivet-r`
+on `:root` are domed-brass radial gradients (highlight, body, dark rim) laid as the first two background
+layers, one each side, vertically centred; the panels carry 24px side padding to clear them.
+
+Still unused: `leaf`, `swoosh-double`, `feather-upright`, `feather-left`, `banner-b`, `banner-c`.

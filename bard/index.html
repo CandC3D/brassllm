@@ -10,7 +10,11 @@
   --verd:#67987f; --verd-deep:#3f6e58;
   --spirit:#a03828; --spirit-deep:#742517;
   --glow:#ffd98a;
-  --engrave:#43310f; --engrave-deep:#1a1204;   /* small text on brass: the mid-plate is bright, and #43310f reads at only 2-2.5:1 there */
+  --engrave:#43310f; --engrave-deep:#1a1204;
+  /* a domed brass rivet: highlight, body, dark rim — one each side of the little riveted plaques */
+  --rivet-l:radial-gradient(circle at 11px 50%, #f6e1a4 0 1.1px, #c9a24b 1.1px 2.7px, #5d4718 2.7px 3.5px, rgba(0,0,0,0) 4.3px);
+  --rivet-r:radial-gradient(circle at calc(100% - 11px) 50%, #f6e1a4 0 1.1px, #c9a24b 1.1px 2.7px, #5d4718 2.7px 3.5px, rgba(0,0,0,0) 4.3px);   /* small text on brass: the mid-plate is bright, and #43310f reads at only 2-2.5:1 there */
+  --orn-diamonds:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='322.80 313.30 68.30 6.50'%3E%3Cpath fill='%23000' d='M357.72,316.02c.25,0,.58.07.86.07h.47c.29,0,.65.04,1.37.04,1.3,0,2.2-.18,2.7-.18.25,0,.54.04.83.04s.61-.04,1.04-.14c.79-.18,1.22-.18,1.55-.43.22-.18.29-.4.47-.4.11,0,.22.07.4.29.43.5,1.26.54,1.55.68.14.07.32.11.47.11s.25-.04.29-.04c.11,0,.68.14,1.33.14s1.55-.22,1.55-.22c0,0,.58-.43.79-.43.25,0,.83.36.83.36,0,0,.32-.58.76-.58.4,0,.97.32.97.32,0,0,.32-.54.97-.54s1.22.72,1.22.72c.58,0,.58-.43.97-.43.4.07.68.14,1.22.18.43.07.47.18.68.18.07,0,.14,0,.5-.04.47,0,1.01.11,1.62.11.76,0,1.4-.4,1.76-1.01.36-.61.4-1.01.76-1.01.32,0,.5.11.65.61.07.22.36.79.65.79.32.22.36.22.83.47.43.25.65.14.94.25s1.84.14,1.84.65-1.55.54-1.84.65-.5,0-.94.25c-.47.25-.58.25-.86.43-.29.25-.4.5-.61.83-.25.47-.32.61-.65.61-.36,0-.4-.4-.76-1.01-.36-.61-1.01-1.01-1.76-1.01-.61,0-1.15.11-1.62.11-.36-.04-.43-.04-.5-.04-.22,0-.25.11-.68.18-.54.04-.83.07-1.33.18-.29,0-.29-.43-.86-.43,0,0-.58.72-1.22.72s-.97-.54-.97-.54c0,0-.58.32-.97.32-.43,0-.76-.58-.76-.58,0,0-.58.36-.83.36-.22,0-.79-.43-.79-.43,0,0-.9-.22-1.55-.22s-1.22.14-1.33.14c-.04,0-.18-.04-.32-.04s-.29.04-.43.11c-.29.14-1.12.18-1.55.68-.18.22-.29.29-.4.29-.18,0-.25-.22-.47-.4-.32-.25-.76-.25-1.55-.43-.43-.11-.76-.14-1.04-.14s-.58.04-.83.04c-.54,0-1.51-.22-2.48-.22s-1.3.07-1.58.07c-.4,0-.47-.04-.58-.04-.29,0-.58.07-.97.07-.29-.04-.61-.32-.61-.32-.18.18-.47.36-.79.36-.25,0-.54-.07-.79-.07-.83,0-1.22-.04-2.16-.07-.94,0-1.94.22-2.45.22-.29,0-.54-.04-.83-.04s-.65.04-1.04.14c-.79.18-1.26.18-1.55.43-.22.18-.29.4-.47.4-.11,0-.22-.07-.4-.29-.47-.5-1.26-.54-1.55-.68-.14-.07-.29-.11-.43-.11-.18,0-.29.04-.36.04-.11,0-.65-.14-1.3-.14s-1.58.22-1.58.22c0,0-.54.43-.79.43s-.79-.36-.79-.36c0,0-.36.58-.76.58-.43,0-.97-.32-.97-.32,0,0-.36.54-1.01.54s-1.22-.72-1.22-.72c-.58,0-.54.43-.94.43-.4-.11-.72-.14-1.26-.18-.43-.07-.68-.14-1.15-.14s-1.01-.11-1.62-.11c-.76,0-1.4.4-1.76,1.01-.36.61-.4,1.01-.76,1.01s-.5-.11-.65-.61c-.18-.5-.36-.58-.68-.83-.29-.18-.32-.18-.79-.43-.43-.25-.65-.14-.94-.25-.32-.11-1.84-.14-1.84-.65s1.51-.54,1.84-.65c.29-.11.94-.18,1.3-.43.68-.5.94-.61,1.12-1.08.14-.5.29-.61.65-.61s.4.4.76,1.01c.36.61,1.01,1.01,1.76,1.01.61,0,1.15-.11,1.62-.11.36.04.43.04.5.04.22,0,.22-.11.65-.18.54-.04.86-.11,1.37-.18.29,0,.25.43.83.43,0,0,.58-.72,1.22-.72s1.01.54,1.01.54c0,0,.54-.32.97-.32.4,0,.76.58.76.58,0,0,.54-.36.79-.36s.79.43.79.43c0,0,.94.22,1.58.22s1.19-.14,1.3-.14c.04,0,.18.04.32.04s.29-.04.47-.11c.29-.14,1.08-.18,1.55-.68.18-.22.29-.29.4-.29.18,0,.25.22.47.4.29.25.76.25,1.55.43.4.11.76.14,1.04.14s.54-.04.83-.04c.47,0,1.37.18,2.27.18,1.12-.04,1.48-.04,1.76-.04.79,0,1.08-.07,1.37-.07.07,0,.14.04.22.04.29.04.58.32.58.32.18-.18.54-.36.83-.36ZM325,316.81c.4.04,1.01.04,1.26.18s.79.14,1.15.47c.36.29.4.54.61.79.07.07.11.11.18.11.11,0,.22-.14.32-.36.14-.32.54-.79,1.15-1.04.4-.14,1.44-.32,2.02-.36-.58-.04-1.62-.18-2.02-.36-.61-.25-1.01-.76-1.15-1.08-.11-.22-.22-.36-.32-.36-.07,0-.11.04-.18.11-.22.25-.25.54-.61.83-.36.32-.9.32-1.15.47-.5.29-1.48.18-2.09.4,0,0,.4.14.83.22ZM328.17,315.95c.29,0,.54.25.54.54,0,.32-.25.54-.54.54s-.54-.22-.54-.54c0-.29.25-.54.54-.54ZM336.99,317.03c.29,0,.54-.22.54-.54,0-.29-.25-.54-.54-.54s-.54.25-.54.54c0,.32.25.54.54.54ZM345.05,316.6c.07.04.65.22.97.36.29.14.76.43.83.43.11,0,1.15-.5,1.44-.54l1.87-.25-1.87-.25c-.29-.04-1.33-.54-1.44-.54-.07,0-.54.29-.83.43-.29.14-.86.32-.97.36ZM368.74,316.6c-.07-.04-.65-.22-.94-.36-.29-.14-.76-.43-.86-.43-.07,0-1.12.5-3.28.79,2.16.29,3.2.79,3.28.79.11,0,.58-.29.86-.43.29-.14.86-.32.94-.36ZM376.84,315.95c-.32,0-.58.25-.58.54,0,.32.25.54.58.54.29,0,.54-.22.54-.54,0-.29-.25-.54-.54-.54ZM387.06,316.2c-.29-.11-.29-.14-.65-.47-.36-.29-.43-.58-.61-.83-.07-.07-.11-.11-.18-.11-.11,0-.22.14-.32.36-.14.32-.54.83-1.15,1.08-.47.18-1.48.32-2.05.36.58.04,1.58.22,2.05.36.61.25,1.01.72,1.15,1.04.11.22.22.36.32.36.07,0,.11-.04.18-.11.18-.25.25-.5.61-.79.36-.32.36-.25.65-.36.65-.22,1.8-.25,2.59-.5-.79-.25-1.98-.22-2.59-.4ZM385.66,317.03c-.32,0-.58-.22-.58-.54,0-.29.25-.54.58-.54.29,0,.54.25.54.54,0,.32-.25.54-.54.54Z'/%3E%3C/svg%3E");
   --lightink:#e9dcb8;
   --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
   --mono:'Courier New',Courier,monospace;
@@ -50,7 +54,10 @@ body{
 }
 .plaque .conceit{font-style:italic;color:#4a3510;font-size:15px;margin-bottom:10px}
 .plaque .truth .lead{font-variant:small-caps;letter-spacing:.06em;font-weight:700}
-.plaque .fine{margin-top:10px;font-size:12.5px;color:var(--ink-soft);border-top:1px dotted #b39a6b;padding-top:8px}
+.plaque .fine{margin-top:10px;font-size:12.5px;color:var(--ink-soft);padding-top:14px;position:relative}
+/* the fine print is divided by the diamond rule, struck in the plaque's own ink rather than a dotted border */
+.plaque .fine::before{content:"";position:absolute;left:0;right:0;top:0;height:7px;background:currentColor;opacity:.5;
+  -webkit-mask:var(--orn-diamonds) center/auto 7px no-repeat;mask:var(--orn-diamonds) center/auto 7px no-repeat}
 .mech{
   background:linear-gradient(#261a10,#180e07);
   border:1px solid #513e18;border-radius:10px;padding:16px;position:relative;min-width:0;
@@ -76,7 +83,8 @@ body{
 
 /* ---------- masthead ---------- */
 .masthead{padding:26px 26px 20px;text-align:center;margin-bottom:22px}
-.masthead .orn{font-size:20px;color:var(--engrave);opacity:.85}
+.masthead .orn{color:var(--engrave);opacity:.9;line-height:0}
+.masthead .orn .orn{width:auto;height:20px;filter:drop-shadow(0 1px 0 rgba(255,242,196,.5))}
 .masthead h1{
   font-size:clamp(25px,4.6vw,42px);letter-spacing:.16em;text-transform:uppercase;
   margin:6px 0 4px;line-height:1.15;text-wrap:balance;
@@ -92,7 +100,8 @@ body{
 .masthead .rule{height:2px;max-width:520px;margin:10px auto;background:linear-gradient(90deg,rgba(67,49,15,0),#43310f,rgba(67,49,15,0))}
 .masthead .sub{color:var(--engrave-deep);max-width:640px;margin:0 auto 6px;font-size:15px}
 .masthead .sub2{color:var(--engrave-deep);max-width:640px;margin:0 auto;font-size:14px;font-style:italic;
-  display:inline-block;padding:7px 15px;border-radius:9px;background:linear-gradient(rgba(255,246,220,.24),rgba(255,246,220,.10));
+  display:inline-block;padding:7px 26px;border-radius:9px;
+  background-image:var(--rivet-l),var(--rivet-r),linear-gradient(rgba(255,246,220,.24),rgba(255,246,220,.10));
   box-shadow:inset 0 1px 0 rgba(255,250,232,.36)}   /* the fine print sits on the darkest band of the plate: a polished panel to read it by */
 .legend{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:16px}
 .legend a{
@@ -107,7 +116,8 @@ body{
 .deskband{position:relative;margin:14px -22px 14px;height:22px;background:linear-gradient(#22180f,#0f0a06);
   border-top:1px solid #5a4517;border-bottom:1px solid #5a4517;display:flex;align-items:center;justify-content:center}
 .deskband::before{content:"";position:absolute;left:8px;right:8px;top:4px;bottom:4px;border:1px solid rgba(212,175,90,.45);border-radius:3px}
-.deskband span{position:relative;color:#e6c87d;font-size:13px;line-height:1;background:linear-gradient(#22180f,#0f0a06);padding:0 10px}
+.deskband span{position:relative;color:#e6c87d;font-size:13px;line-height:0;background:linear-gradient(#22180f,#0f0a06);padding:0 12px}
+.deskband .dband{height:11px;width:auto;color:#d9b563;opacity:.95}
 .schooling{margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .schooll{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--engrave-deep)}
 #folio{width:340px;height:28px;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
@@ -169,7 +179,8 @@ body{
   box-shadow:inset 0 1.5px 0 rgba(255,215,170,.26),inset 0 -2px 3px rgba(0,0,0,.4),0 5px 9px rgba(0,0,0,.55)}
 .desk h2{font-size:16px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
 .ophelp{font-size:14px;color:var(--engrave-deep);max-width:900px;margin-bottom:14px;
-  padding:9px 12px;border-radius:8px;background:linear-gradient(rgba(255,246,220,.26),rgba(255,246,220,.12));
+  padding:9px 24px;border-radius:8px;
+  background-image:var(--rivet-l),var(--rivet-r),linear-gradient(rgba(255,246,220,.26),rgba(255,246,220,.12));
   box-shadow:inset 0 1px 0 rgba(255,250,232,.4)}   /* a polished panel: the mid-plate is too dark for text this small, and ink alone tops out near 4.3:1 */
 .deskgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px}
 @media (max-width:820px){.deskgrid{grid-template-columns:1fr}}
@@ -205,7 +216,8 @@ body{
 .btn:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
 .btn.primary{font-size:14px;padding:12px 18px;background:linear-gradient(#f2d98e,#c9a24b 58%,#a8823a)}
 .opts{margin-top:14px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--engrave-deep);
-  padding:9px 12px;border-radius:8px;background:linear-gradient(rgba(255,246,220,.26),rgba(255,246,220,.12));
+  padding:9px 24px;border-radius:8px;
+  background-image:var(--rivet-l),var(--rivet-r),linear-gradient(rgba(255,246,220,.26),rgba(255,246,220,.12));
   box-shadow:inset 0 1px 0 rgba(255,250,232,.4)}
 .plate .opts label{color:var(--engrave-deep);text-shadow:none}   /* the engraved highlight smears text this small: ink only */
 .opts label{display:flex;align-items:center;gap:8px;cursor:pointer}
@@ -615,7 +627,10 @@ html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
   padding:22px 26px 18px;max-width:520px;margin:0 auto;box-shadow:0 4px 10px rgba(0,0,0,.5);color:var(--ink);
   font-style:italic;font-size:15.5px;line-height:1.75;min-height:130px}
 #sheet .stitle{font-style:normal;font-variant:small-caps;letter-spacing:.22em;text-align:center;color:#43310f;
-  font-size:13px;margin-bottom:12px}
+  font-size:13px;margin-bottom:16px;padding-bottom:11px;position:relative}
+/* the fair copy is headed by the diamond rule, as a printer would head a sheet */
+#sheet .stitle::after{content:"";position:absolute;left:12%;right:12%;bottom:0;height:6px;background:currentColor;opacity:.45;
+  -webkit-mask:var(--orn-diamonds) center/auto 6px no-repeat;mask:var(--orn-diamonds) center/auto 6px no-repeat}
 #sheet .sline{min-height:1.7em;overflow-wrap:anywhere}
 #sheet .sline.qgap{margin-top:13px}
 #sheet .sline.couplet{margin-left:26px}
@@ -751,7 +766,7 @@ h2,h3{text-wrap:balance}
 
 <header class="masthead plate screws">
   <svg class="orn corner tl" viewBox="0 0 37.20 37.20" aria-hidden="true"><use href="#o-corner-tl"/></svg><svg class="orn corner tr" viewBox="0 0 37.20 37.20" aria-hidden="true"><use href="#o-corner-tr"/></svg><svg class="orn corner bl" viewBox="0 0 37.20 37.20" aria-hidden="true"><use href="#o-corner-bl"/></svg><svg class="orn corner br" viewBox="0 0 37.20 37.20" aria-hidden="true"><use href="#o-corner-br"/></svg>
-  <div class="orn" aria-hidden="true">❦</div>
+  <div class="orn" aria-hidden="true"><svg class="orn" viewBox="0 0 29.30 26.50" aria-hidden="true"><use href="#o-swirl-small"/></svg></div>
   <div class="titlerow">
     <h1>The Analytical<br>Bard Engine</h1>
     <img class="portrait" src="portrait.svg" alt="Engraved portrait of William Shakespeare, etched in the brass" width="120" height="112" decoding="async">
@@ -786,7 +801,7 @@ h2,h3{text-wrap:balance}
       <div class="reg"><div class="rwin" data-reg="wheels" data-digits="5"></div><div class="rlab">counting-wheels</div></div>
     </div>
   </div>
-  <div class="deskband" aria-hidden="true"><span>❦</span></div>
+  <div class="deskband" aria-hidden="true"><span><svg class="orn dband" viewBox="0 0 42.70 11.10" aria-hidden="true"><use href="#o-swoosh-single"/></svg></span></div>
   <p class="ophelp">To operate: <b>1</b> — set the schooling above; <b>2</b> — write a few opening words upon the card, or take a ready-punched card from the rack; <b>3</b> — pull <b>Begin the Demonstration</b> and follow the works, pressing <i>Proceed</i> at each station; <b>4</b> — thereafter <b>Turn the Crank</b> for each further word, or let the engine <b>Run</b>. Mind the boiler.</p>
   <div class="deskgrid">
     <div class="deskleft">
