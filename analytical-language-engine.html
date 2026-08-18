@@ -311,10 +311,12 @@ body{
 .dial::after{content:"";position:absolute;left:calc(50% - 2px);top:calc(50% - 2px);width:4px;height:4px;border-radius:50%;background:#43310f}
 #specimens{display:flex;flex-wrap:wrap;gap:10px}
 /* the eight slugs at hand always fill whole rows: 8 across, else 4, else 2 — never a lone straggler */
-#dialrow{display:grid;grid-template-columns:repeat(8,max-content);gap:10px;justify-content:start}
+/* eight equal tracks that shrink to the cabinet; 4 or 2 across only when eight truly cannot fit */
+#dialrow{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;justify-content:stretch}
+#dialrow .dcol{min-width:0}
 .dialhost{container-type:inline-size}
-@container (max-width:579px){#dialrow{grid-template-columns:repeat(4,max-content)}}
-@container (max-width:287px){#dialrow{grid-template-columns:repeat(2,max-content)}}
+@container (max-width:479px){#dialrow{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@container (max-width:239px){#dialrow{grid-template-columns:repeat(2,minmax(0,1fr))}}
 #specimens .dcol{background:linear-gradient(#e6dab8,#d5c497)}
 .speccap{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b99c58;margin:14px 0 8px}
 
