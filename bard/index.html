@@ -511,33 +511,15 @@ html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
 
 /* station VIII — tape & crank */
 .tapegrid{display:grid;grid-template-columns:1fr;gap:14px}   /* always stacked: tape above the crank */
-/* the mangle — the tape is drawn between two fluted brass rollers */
-.tapeworks{display:flex;align-items:flex-start;gap:11px}
-.mangle{flex:none;width:84px;margin-top:-8px}
-.mangle .mfin{width:9px;height:8px;margin:0 auto;border-radius:50% 50% 35% 35%;
-  background:linear-gradient(#f2d98e,#a8823a);border:1px solid #43310f;border-bottom:none}
-.mangle .mscrew{width:4px;height:7px;margin:0 auto;
-  background:repeating-linear-gradient(180deg,#e8cd85 0 1px,#6b5320 1px 2px)}
-.mangle .myoke{height:6px;border-radius:3px;border:1px solid #43310f;
-  background:linear-gradient(#d9b563,#8a6a2a);box-shadow:inset 0 1px 0 rgba(255,245,210,.5)}
-.mangle .mrollers{position:relative;padding:4px 8px;display:flex;flex-direction:column;gap:3px}
-.mangle .mrollers::before,.mangle .mrollers::after{content:"";position:absolute;top:0;bottom:0;width:8px;
-  border:1px solid #3a3d42;border-radius:2px;background:linear-gradient(90deg,#7f858c,#d6dae0 42%,#63686e)}
-.mangle .mrollers::before{left:0}
-.mangle .mrollers::after{right:0}
-.mroller{height:17px;border-radius:9px;border:1px solid #43310f;position:relative;z-index:1;
-  background-image:repeating-linear-gradient(180deg,rgba(67,49,15,.34) 0 1px,rgba(255,242,200,.10) 1px 4px),
-                   linear-gradient(180deg,#6b5320 0%,#f2d98e 34%,#c9a24b 60%,#5c4718 100%);
-  background-size:100% 8px,100% 100%;
-  box-shadow:inset 0 1px 0 rgba(255,245,210,.45),0 2px 5px rgba(0,0,0,.5)}
-html.running .mtop{animation:mrollA .55s linear infinite}
-html.running .mbot{animation:mrollB .55s linear infinite}
-@keyframes mrollA{to{background-position:0 8px,0 0}}
-@keyframes mrollB{to{background-position:0 -8px,0 0}}
-.mangle .mfoot{height:6px;margin:0 7px;border-radius:0 0 4px 4px;
-  border:1px solid #3a3d42;border-top:none;background:linear-gradient(#6c7178,#33373b)}
-@media (max-width:560px){.tapeworks{gap:7px}.mangle{width:56px}}
-#tapewrap{padding:6px 0;line-height:60px;position:relative;flex:1;min-width:0}
+/* The tape, and the sprocket roller that prints it.
+   The tape is laid out from its END: #tapewrap is mirrored left-for-right and words are prepended, each stamp mirrored
+   back upright. So the newest word stands at the RIGHT of the FIRST row, under the roller that printed it; every row
+   reads left to right; and as the tape lengthens the older rows travel downward, as tape draping from a machine does.
+   Every row is anchored at the visual right, so the roller never leaves the first row. Plain CSS cannot break lines
+   from the end of the text; this mirror is the trick that does.
+   The strip: line box 60px, the inked strip 43px of it, its perforations 7px in from either edge, 16px apart.  */
+.tapeworks{display:flex;align-items:flex-start;gap:0;position:relative}
+#tapewrap{padding:6px 4px;line-height:60px;position:relative;flex:1;min-width:0;transform:rotateY(180deg)}
 #tape{
   display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;
   border-radius:3px;padding:13px 22px;
@@ -550,12 +532,45 @@ html.running .mbot{animation:mrollB .55s linear infinite}
   background-repeat:repeat-x,repeat-x,repeat;
   box-shadow:0 3px 8px rgba(0,0,0,.45);
 }
-.stamp{font-family:var(--mono);font-size:15.5px;letter-spacing:.04em;padding:1px 4px;white-space:nowrap;display:inline-block}
+/* the mangle, seen from above: a sprocket roller lying across the tape, pinned to the first row. Its axis stands
+   across the tape in plan, so the tape it drives runs off to the left. Placed absolutely against the works box: the
+   strip (43px, padding included) sits at y 14..57 of the wrap, its hole rows at y 21 and 50; the roller's bearings
+   overhang the tape by 8px top and bottom, and the pin rings are set at those hole rows (measured, not derived). */
+.mangle{position:absolute;right:-16px;top:6px;width:36px;height:59px;z-index:2;
+  display:flex;flex-direction:column;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.mangle .mcheek{flex:none;height:7px;margin:0 1px;border-radius:2px;border:1px solid #2f3237;
+  background:linear-gradient(90deg,#585d63,#c2c7cd 38%,#474c52)}
+.mangle .mcheek::after{content:"";position:absolute;left:50%;width:5px;height:5px;margin-left:-3px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f2d98e,#a8823a);border:1px solid #43310f}
+.mangle .mcheek:first-child::after{top:1px}
+.mangle .mcheek:last-child::after{bottom:1px}
+.mangle .mrollers{flex:1;position:relative;margin:-2px 0;border-radius:4px;border:1px solid #43310f;
+  background-image:repeating-linear-gradient(90deg,rgba(67,49,15,.30) 0 1px,rgba(255,242,200,.10) 1px 5px),
+                   linear-gradient(90deg,#5c4718,#f2d98e 30%,#c9a24b 56%,#6b5320);
+  background-size:10px 100%,100% 100%;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.5),inset 0 -2px 4px rgba(60,40,10,.45)}
+/* the two rings of pins, at the ENDS of the roller, on the gauge of the tape's own perforations: 16px apart and
+   standing 7px in from the strip's edges. 'right 10px' sets their phase: the roller's right edge is 20px beyond the
+   strip's, the first hole 15px inside it, and a pin sits 9px in from its 16px tile's right: 20+15-9 = 26, i.e. 10 mod 16.
+   The roller covers 16px of the strip -- inside its 22px margin, clear of the newest word. */
+.mroller{position:absolute;left:0;right:0;height:7px;
+  background-image:radial-gradient(circle at 7px 3.5px,#2b2109 0 2.2px,rgba(0,0,0,0) 3px),
+                   radial-gradient(circle at 7px 2.3px,rgba(255,245,210,.5) 0 .9px,rgba(0,0,0,0) 1.4px);
+  background-size:16px 7px,16px 7px;background-repeat:repeat-x,repeat-x;
+  background-position:right 10px top 0,right 10px top 0}
+.mroller.mtop{top:6.5px}
+.mroller.mbot{bottom:6.5px}
+/* it turns only while a word is going through it, and turns right-to-left, the way the tape travels */
+.mangle.feed .mrollers{animation:mrollFlute .5s linear infinite}
+.mangle.feed .mroller{animation:mrollPins .5s linear infinite}
+@keyframes mrollFlute{to{background-position:-10px 0,0 0}}
+@keyframes mrollPins{to{background-position:right 26px top 0,right 26px top 0}}
+@media (max-width:560px){.mangle{width:30px;right:-14px}}
+.stamp{font-family:var(--mono);font-size:15.5px;letter-spacing:.04em;padding:1px 4px;white-space:nowrap;display:inline-block;transform:rotateY(180deg)}
 .stamp.inked{animation:inkpress calc(.32s*var(--tk)) ease-out}
-@keyframes inkpress{0%{transform:scale(1.3);opacity:.35}55%{transform:scale(.93);opacity:1}100%{transform:scale(1)}}
+@keyframes inkpress{0%{transform:rotateY(180deg) scale(1.3);opacity:.35}55%{transform:rotateY(180deg) scale(.93);opacity:1}100%{transform:rotateY(180deg) scale(1)}}
 #tapewrap.thud{animation:thud calc(.3s*var(--tk)) ease-out}
-@keyframes thud{30%{transform:translateY(2px)}}
-.stamper{position:absolute;z-index:98;pointer-events:none;width:30px;height:52px;
+@keyframes thud{30%{transform:rotateY(180deg) translateY(2px)}}.stamper{position:absolute;z-index:98;pointer-events:none;width:30px;height:52px;
   transform:translate(-50%,calc(-100% - 26px))}
 .stamper::before{content:"";position:absolute;left:calc(50% - 4px);top:0;width:8px;height:28px;
   background:linear-gradient(#8a6a2a,#5c4718);border-radius:3px}
@@ -711,7 +726,7 @@ h2,h3{text-wrap:balance}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes spinccw{to{transform:rotate(-360deg)}}
 @keyframes lampblink{50%{opacity:.4}}
-@keyframes inkin{from{opacity:0;transform:translateY(-7px) scale(1.25)}}
+@keyframes inkin{from{opacity:0;transform:rotateY(180deg) translateY(-7px) scale(1.25)}}
 @keyframes crankturn{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){
   :root{--tk:.02}
@@ -1046,12 +1061,12 @@ t ●●●○●○○   s ●●●○○●●
       <div class="mcap">The tape · and the crank that turns it all again</div>
       <div class="tapegrid">
         <div class="tapeworks">
-          <div class="mangle" aria-hidden="true">
-            <div class="mfin"></div><div class="mscrew"></div><div class="myoke"></div>
-            <div class="mrollers"><div class="mroller mtop"></div><div class="mroller mbot"></div></div>
-            <div class="mfoot"></div>
-          </div>
           <div id="tapewrap"><div id="tape"><span class="stamp prompt">❧</span></div></div>
+          <div class="mangle" aria-hidden="true">
+            <div class="mcheek"></div>
+            <div class="mrollers"><div class="mroller mtop"></div><div class="mroller mbot"></div></div>
+            <div class="mcheek"></div>
+          </div>
         </div>
         <div class="crankbox">
           <svg id="cranksvg" width="210" height="130" viewBox="0 0 210 130" aria-hidden="true"></svg>
@@ -4257,7 +4272,7 @@ function stampTape(id,kind){
   const sp=document.createElement('span');
   sp.className='stamp '+kind+(kind!=='prompt'?' justnow':'');
   sp.textContent=vocabArr[id];
-  el.tape.appendChild(sp);
+  el.tape.insertBefore(sp,el.tape.firstChild);   /* the tape is laid out from its end (see #tapewrap) */
 }
 /* the tour's smooth scroll can still be in flight when a stamp begins — hold until it settles */
 function scrollSettle(maxMs){
@@ -4276,15 +4291,15 @@ async function stampAction(id,kind,q){
   sp.className='stamp '+kind;
   sp.textContent=vocabArr[id];
   sp.style.visibility='hidden';
-  el.tape.appendChild(sp);
+  el.tape.insertBefore(sp,el.tape.firstChild);
   await sleep(q?40:80);
   if(!q) await scrollSettle(1100);
-  const r=sp.getBoundingClientRect(), wr=el.tapewrap.getBoundingClientRect();
+  const r=sp.getBoundingClientRect(), wr=el.tapewrap.parentElement.getBoundingClientRect();   /* the works box: unrotated */
   const st=document.createElement('div');
   st.className='stamper';
   st.style.left=(r.left-wr.left+r.width/2).toFixed(1)+'px';
   st.style.top=(r.top-wr.top).toFixed(1)+'px';
-  el.tapewrap.appendChild(st);
+  el.tapewrap.parentElement.appendChild(st);
   st.getBoundingClientRect();
   st.style.animationDuration=((q?0.3:0.5)*PACE).toFixed(3)+'s';
   st.classList.add('strike');
@@ -4295,8 +4310,9 @@ async function stampAction(id,kind,q){
   sp.style.visibility='visible';
   sp.classList.add('inked');
   el.tapewrap.classList.remove('thud'); void el.tapewrap.offsetWidth; el.tapewrap.classList.add('thud');
+  const mg=el.tapewrap.parentElement.querySelector('.mangle'); if(mg) mg.classList.add('feed');   /* the roller turns while the word feeds through */
   await sleep(q?180:330);
-  st.remove();
+  st.remove(); if(mg) mg.classList.remove('feed');
 }
 function crankTurn(){
   for(const sel of ['#crankgrp','#pulleygrp','#belt']){
@@ -4400,7 +4416,7 @@ async function phPrint(q){
   fly.style.transitionDuration=((q?0.45:0.95)*PACE)+'s,'+((q?0.45:0.95)*PACE)+'s';
   document.body.appendChild(fly);
   fly.getBoundingClientRect();
-  fly.style.transform=`translate(${to.right-40-from.left}px,${to.top+8-from.bottom}px) scale(.7)`;
+  fly.style.transform=`translate(${to.right-58-from.left}px,${to.top+22-from.bottom}px) scale(.7)`;
   fly.style.opacity='0.15';
   await sleep(q?480:1000);
   fly.remove();
@@ -5195,6 +5211,6 @@ function init(){
 }
 init();
 window.ENGINE={S,rawDist,applyTemp,tokenize,vocabArr,revolution,
-  get tape(){return el.tape.textContent;}};
+  get tape(){return [...el.tape.children].reverse().map(s=>s.textContent).join('');}};   /* DOM order is newest-first */
 </script>
 </body></html>

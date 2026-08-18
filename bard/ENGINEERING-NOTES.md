@@ -193,3 +193,22 @@ ratio, and copying the symbol's own offset viewBox puts the drawing outside the 
 both files identically; the press pieces are inside the press graft, whose start marker in
 `resync_from_ale.py` now reads `<div class="orn-div press-div"` so the finial before the
 appendix survives; (3) `ornaments/make_sprite.ps1` regenerates the sprite/URI/proof — paste by hand.
+
+## The tape and the sprocket roller, 2026-08-18
+
+Station VIII redrawn in both engines. The mangle is now a sprocket roller seen from above, fixed at the
+right end of the FIRST row; the tape issues from under it right-to-left, newest word at the roller, and
+older rows travel downward. The roller's pin rings sit at the ENDS of the roller on the tape's own hole
+gauge (16px, phase measured — see the CSS comment) and turn only while a word feeds through
+(`.mangle.feed`, set in `stampAction`), turning right-to-left.
+
+**The layout trick, so nobody "fixes" it:** CSS cannot break lines from the END of a text, and that is
+what a tape hanging from a printer needs (last row full and anchored at the roller, first row the
+partial one). So `#tapewrap` is mirrored with `transform:rotateY(180deg)`, words are PREPENDED to
+`#tape` (`insertBefore(sp, firstChild)`), and every `.stamp` is mirrored back. Consequences: DOM order
+is newest-first (`ENGINE.tape` reverses it); every transform in the stamp/thud/inkin keyframes must keep
+`rotateY(180deg)` or the word flips for a frame; the stamper is appended to `.tapeworks` (unmirrored),
+not `#tapewrap`. Wrapping still works — that was the point; a single scrolling strip was tried and rejected.
+
+`.claude/serve.ps1` + `.claude/launch.json`: a PowerShell static server so the browser pane can run the
+page live (file:// snapshots strip scripts). No Python/Node needed.
