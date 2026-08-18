@@ -739,8 +739,8 @@ t ●●●○●○○   s ●●●○○●●
     </div>
     <div class="plaque">
       <p class="conceit">Your words are punched upon a card at the clavier — a stroke to the column — and fed to the reader. The engine does not hear you — it receives marks.</p>
-      <p class="truth"><span class="lead">In truth —</span> a language model receives nothing but text: no voice, no view of the world, no notion of who is asking beyond what the words themselves carry. Everything that follows is determined by these characters and by the settings of the machine’s parts.</p>
-      <p class="fine">A note on the manner of address. To a chat engine you write whole questions; this cabinet asks instead for a few opening words to continue. There is no contradiction — a chat engine is a continuation engine too: the clerks lay the conversation out as a transcript (<i>Operator: … Engine: —</i>) and the machine simply continues the document, which lands, every time, precisely upon the engine’s reply. The instructions that govern its manners — the <i>system prompt</i> — are more cards still, read before yours. The clavier above the slot is no fancy, either: real cards were cut at just such a hand-punch, a stroke to the column — somebody must first turn words into holes.</p>
+      <p class="truth"><span class="lead">In truth —</span> a language model gets only text. It has no voice to hear, no eyes to see the world, and no idea who is asking — except what the words themselves give away. Everything it does next comes from those letters, and from how its parts are set.</p>
+      <p class="fine">Why a few words and not a question? A chat engine seems to answer questions, but underneath it only ever <i>continues text</i>. Behind the scenes, the conversation is written out like a script — <i>Operator: … Engine: —</i> — and the machine carries the script on from where it stops. The next thing in the script is always the engine’s reply, so it looks like an answer. The rules for how it should behave (the <i>system prompt</i>) are just more text, put in front of yours. This cabinet skips the script and asks for opening words directly. The punch above the slot is real history, too: cards like these were cut one column at a time on a hand punch. Someone always has to turn words into holes.</p>
     </div>
   </div>
 </section>
@@ -762,7 +762,7 @@ t ●●●○●○○   s ●●●○○●●
     </div>
     <div class="plaque">
       <p class="conceit">The card is read and matched to slugs — standard pieces from the engine’s type-case. Each slug bears a catalogue number, and from here onward the engine handles numbers only.</p>
-      <p class="truth"><span class="lead">In truth —</span> text is broken into <b>tokens</b> from a fixed catalogue of roughly 50,000–200,000 pieces. Common words are one token; rarer words are cut into fragments (<i>un·fathom·able</i>). The machine never sees letters or words as you do — only these numbers.</p>
+      <p class="truth"><span class="lead">In truth —</span> the text is chopped into <b>tokens</b> — pieces from a fixed list of about 50,000 to 200,000. A common word is one token. A rare word is cut into parts (<i>un·fathom·able</i>). Each piece has a number, and the number is all the machine ever sees. It never sees letters or words the way you do.</p>
       <p class="fine">This cabinet’s catalogue holds <b><span id="vN">—</span> slugs</b>; a slug marked ✶ was cut fresh and is a stranger to it. The rack holds only <b>24 slugs</b> — its <i>context window</i>. Push in more and the oldest fall off the far end, forgotten. (A modern engine’s rack holds 200,000 or more.)</p>
     </div>
   </div>
@@ -802,7 +802,7 @@ t ●●●○●○○   s ●●●○○●●
     </div>
     <div class="plaque">
       <p class="conceit">Each catalogue number is looked up in the Great Ledger, and the slug is exchanged for a column of dial-settings — its position upon the map of meaning.</p>
-      <p class="truth"><span class="lead">In truth —</span> every token becomes an <b>embedding</b>: a list of thousands of numbers (this cabinet shows eight dials; a large engine uses more than ten thousand). Nobody wrote the ledger by hand — the settings were <i>learned</i>, and they place words used in similar ways at similar settings. Meaning, to the machine, is position.</p>
+      <p class="truth"><span class="lead">In truth —</span> each token is turned into an <b>embedding</b>: a long list of numbers. This cabinet shows eight dials; a big engine uses more than ten thousand. Nobody wrote those numbers by hand. The machine <i>learned</i> them, and it learned to give words that are used alike numbers that are alike. To the machine, a word’s meaning is just where it sits among the others.</p>
     </div>
   </div>
 </section>
@@ -826,7 +826,7 @@ t ●●●○●○○   s ●●●○○●●
     <div class="plaque">
       <p class="conceit">Here is the celebrated mechanism. Every slug is joined to every earlier slug by an adjustable linkage; the engine draws some taut and lets others hang slack. A word discovers what it means by choosing what to regard.</p>
       <p class="truth"><span class="lead">In truth —</span> this is <b>attention</b>, the invention (2017) that makes these engines possible. For each position the model computes how much every earlier token should bear upon it — how <i>it</i> finds its noun, how <i>bank</i> leans toward the river or the counting-house. Dozens of <b>heads</b> work in parallel, each minding a different sort of relation: shown here, a nickel head that favours the recent, a copper head that favours old acquaintances.</p>
-      <p class="fine">Depicted schematically — in the full engine these weights are computed afresh, at every layer, from the dial-settings themselves.</p>
+      <p class="fine">This is a sketch. In the real engine these links are worked out fresh at every floor, from the numbers on the dials.</p>
     </div>
   </div>
 </section>
@@ -845,7 +845,7 @@ t ●●●○●○○   s ●●●○○●●
     </div>
     <div class="plaque">
       <p class="conceit">The columns now descend through the Mill — floor after identical floor of linkage-and-gearwork, each refining the settings handed down by the last.</p>
-      <p class="truth"><span class="lead">In truth —</span> attention plus a small calculating network make one <b>layer</b>, and layers are stacked by the dozen (a large model, near a hundred). A token’s numbers are revised at every floor — coarse matters of spelling and grammar low down, subtler matters of sense and intent above, or so the anatomists report. The adjustable parts — the <b>parameters</b> — number in the hundreds of billions, and none was set by hand: in <b>training</b>, the engine read a vast library, guessed each next token, and every screw was turned a hair’s-breadth whenever it guessed wrong. Repeated a very great many times, that is the whole of its education. A finishing school follows — training on human preference — to make it helpful, honest, and polite.</p>
+      <p class="truth"><span class="lead">In truth —</span> attention plus a small calculator makes one <b>layer</b>. Layers are stacked — dozens of them, close to a hundred in a big model. A word’s numbers are changed a little at every floor. Low floors seem to handle spelling and grammar; higher floors handle meaning and intent — or so the people who study these machines report. The adjustable parts are called <b>parameters</b>. A big model has hundreds of billions of them, and not one was set by hand. In <b>training</b>, the engine read a huge library and guessed each next word. Every time it guessed wrong, every screw was turned a hair. Do that a great many times and that is the whole of its schooling. A finishing school comes after — training on what people prefer — to make it helpful, honest, and polite.</p>
       <p class="fine">This cabinet, for comparison, owns <b><span id="vK">—</span> counting-wheels</b>, learned from a library of <b><span id="vL">—</span> sentences</b>.</p>
     </div>
   </div>
@@ -865,8 +865,8 @@ t ●●●○●○○   s ●●●○○●●
     </div>
     <div class="plaque">
       <p class="conceit">At the mill’s outfall the engine renders its judgment — not a word, but a pressure upon every gauge in the house: a score for every slug in the catalogue at once.</p>
-      <p class="truth"><span class="lead">In truth —</span> the model’s output at each step is a <b>probability for every token in its vocabulary</b> — all 50,000-odd, most of them minuscule. It does not <i>decide</i> the next word; it rates all possible ones. These gauges are live: they show this engine’s true arithmetic for the present context — and they obey the boiler lever at Station VII, should you care to move it.</p>
-      <p class="fine">One courtesy, disclosed: for the first two words after a fresh card the stop-mark and the full stops are held at nought and their pressure returned to the rest, so that a card of a single word cannot be answered with silence. From the third word the engine is naked, and may rest when it likes.</p>
+      <p class="truth"><span class="lead">In truth —</span> at every step the machine gives <b>a score to every token it knows</b> — all 50,000-odd of them, most tiny. It does not <i>pick</i> the next word here. It rates them all. These gauges are real: they show this engine’s actual arithmetic for the words on the rack right now, and they answer to the boiler lever at Station VII if you move it.</p>
+      <p class="fine">One small kindness, admitted here: for the first two words after a new card, the stop-mark and the full stops are held at zero, so a one-word card cannot be answered with silence. From the third word on, the engine is left alone and may stop when it likes.</p>
     </div>
   </div>
 </section>
@@ -938,7 +938,7 @@ t ●●●○●○○   s ●●●○○●●
     </div>
     <div class="plaque">
       <p class="conceit">One slug must be drawn. The lots are cast in proportion to the gauges — and the boiler decides how strictly. Run cold, the favourite is all but certain; run feverish, and outsiders take their chance.</p>
-      <p class="truth"><span class="lead">In truth —</span> the next token is chosen by weighted lottery — <b>sampling</b> — and <b>temperature</b> reshapes the odds exactly as shown: low temperature sharpens the distribution toward the favourite (predictable, sometimes repetitious); high temperature flattens it (inventive, and at the extreme, incoherent). This is why the same question, asked twice, may be answered differently. Try the lever — the gauges obey at once.</p>
+      <p class="truth"><span class="lead">In truth —</span> the next word is chosen by a weighted lottery — the trade word is <b>sampling</b>. <b>Temperature</b> changes the odds exactly as the drum shows. Turn it down and the favourite almost always wins: safe, but it repeats itself. Turn it up and the odds flatten: more surprising, and at the far end, nonsense. That is why the same question, asked twice, can get two different answers. Try the lever — the gauges change at once.</p>
     </div>
   </div>
 </section>
@@ -971,7 +971,7 @@ t ●●●○●○○   s ●●●○○●●
     <div class="plaque">
       <p class="conceit">The chosen slug is stamped upon the tape — and carried straight back to the rack, where it joins your question. The whole engine then turns over again, from card to lottery, to choose the word after. One revolution, one word.</p>
       <p class="truth"><span class="lead">In truth —</span> a language model writes <b>autoregressively</b>: one token per pass, each pass re-reading all that came before. There is no finished answer waiting inside; each word is minted the moment before you read it. And the engine stops as it speaks — by predicting a special <b>stop token</b> (printed here as <b>∎</b>), whereupon it rests.</p>
-      <p class="fine">The full engine keeps notes — a <i>cache</i> — so as not to redo old arithmetic on every revolution; but in principle, every turn reads the whole rack afresh.</p>
+      <p class="fine">A real engine keeps notes (a <i>cache</i>) so it need not redo old sums on every turn. But in principle, every turn reads the whole rack again from the start.</p>
     </div>
   </div>
 </section>
