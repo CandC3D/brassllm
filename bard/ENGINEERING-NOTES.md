@@ -212,3 +212,21 @@ not `#tapewrap`. Wrapping still works — that was the point; a single scrolling
 
 `.claude/serve.ps1` + `.claude/launch.json`: a PowerShell static server so the browser pane can run the
 page live (file:// snapshots strip scripts). No Python/Node needed.
+
+## The Subject Cam, 2026-08-18
+
+A sixth cam on the press, at Chris's request (after Maillardet's automaton, whose cams held each poem to
+its subject). **What it reads:** the card's full words (`subjectOf`: not STOPW, not `SUBJ_AUX`, not points,
+must be a sort the wheels have counted). **What it knows:** `coocc` only — the shared-verse-line counts the
+Attention station reads; the subject's *company* (`companyOf`) is every sort with a shared line, plus the
+subject words themselves. **What it does:** at every draw where the drum offers any company, scale the
+company up to `SUBJECT_SHARE` of the drum's remaining mass (same lever pattern as ROADS_SHARE; done on the
+un-renormalised q so the `cut` bookkeeping holds). It never adds a sort; with an unknown card it idles and
+the tally says so. Applied after the Concord strike and before the Rhyme Cam, so the rhyme goal's half-drum
+still wins the last word.
+
+Measured (harness, 12 sheets, seed 7, tier 4, T=0.85, all cams; `subject.onSubjectPct` is scored with the
+cam on or off): share 0 → fid 75, on-subject 25/36/13/50 for summer-day / mistress'-eyes / count-the-clock /
+love; 0.15 → 71, 37/44/27/56; **0.20 → 70, 42/48/38/58 (default)**; 0.25 → 67, 46/50/43/60; 0.30 → 64,
+49/53/44/63. Rhyme within noise. Tally reports subject words, tilted/offered draws, and on-subject count.
+`press_harness.js` re-synced (cams.subject, subject{} block).
