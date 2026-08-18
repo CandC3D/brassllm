@@ -225,8 +225,12 @@ un-renormalised q so the `cut` bookkeeping holds). It never adds a sort; with an
 the tally says so. Applied after the Concord strike and before the Rhyme Cam, so the rhyme goal's half-drum
 still wins the last word.
 
-Measured (harness, 12 sheets, seed 7, tier 4, T=0.85, all cams; `subject.onSubjectPct` is scored with the
-cam on or off): share 0 → fid 75, on-subject 25/36/13/50 for summer-day / mistress'-eyes / count-the-clock /
-love; 0.15 → 71, 37/44/27/56; **0.20 → 70, 42/48/38/58 (default)**; 0.25 → 67, 46/50/43/60; 0.30 → 64,
-49/53/44/63. Rhyme within noise. Tally reports subject words, tilted/offered draws, and on-subject count.
-`press_harness.js` re-synced (cams.subject, subject{} block).
+**Revised the same day after Chris's samples** (*shall* five times in one sheet): the small words and
+SUBJ_AUX are excluded from the company as well as the subject; and the share is scaled by company size,
+`SUBJECT_SHARE * min(1, company.size/SUBJECT_FULL)` (0.20, 100). Reason, measured: an unscaled fifth on a
+one-word subject with 17 fellows cost fidelity 75 -> 60 for on-subject 5 -> 33; a flat cap on the multiplier
+(3-6x) did nearly nothing, 10x held half as well as the scaled share. Final (12 sheets, seed 7, tier 4,
+T=0.85, all cams; off -> on, fidelity in brackets): compare-thee 5->9 (75->74) · summer-day 21->37 (75->67) ·
+mistress'-eyes 28->44 (75->69) · count-the-clock 8->13 (75->76) · love 39->49 (75->72). Rhyme within noise.
+The tally reports subject words, tilted/offered draws, and on-subject count. `press_harness.js` re-synced
+(cams.subject, subject{} block: share, full, companySize, tilted, tiltDraws, onSubjectPct).

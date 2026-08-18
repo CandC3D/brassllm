@@ -66,7 +66,7 @@
         }
         if(C.concord){ const m=concordStrike(q,ctx); if(m>1e-9){ cut+=m; st.struck++; } }
         if(C.subject&&company.size){ let T=0, sm=0; for(let i=0;i<q.length;i++){ T+=q[i]; if(q[i]>0&&company.has(i)) sm+=q[i]; }
-          if(sm>1e-9){ st.tiltDraws++; if(sm<SUBJECT_SHARE*T){ const b=SUBJECT_SHARE*T/sm, r=(T-SUBJECT_SHARE*T)/(T-sm); for(let i=0;i<q.length;i++) q[i]*=company.has(i)?b:r; st.tilted++; } } }
+          if(sm>1e-9){ st.tiltDraws++; const sh=SUBJECT_SHARE*Math.min(1,company.size/SUBJECT_FULL); if(sm<sh*T){ const b=sh*T/sm, r=(T-sh*T)/(T-sm); for(let i=0;i<q.length;i++) q[i]*=company.has(i)?b:r; st.tilted++; } } }
         /* the goal-first rhyme cam, as recut: hold open, favour the roads, set the goal on a counted road */
         if(goal!==null){
           cut+=q[LENDID]; q[LENDID]=0; cut+=q[FINID]; q[FINID]=0;
@@ -156,7 +156,7 @@
         drawnMarkPct:+(100*st.drawnMark/st.lines).toFixed(1),
         cause:Object.fromEntries(Object.entries(st.cause).map(([k,v])=>[k,+(100*v/st.lines).toFixed(1)])),
         rhymeCam:{boosts:st.boosts, meanNaturalMassPct:st.boosts?+(100*st.massSum/st.boosts).toFixed(2):null},
-        subject:{share:SUBJECT_SHARE, companySize:st.company.size, tilted:st.tilted, tiltDraws:st.tiltDraws, onSubjectPct:st.cw?+(100*st.onSubj/st.cw).toFixed(1):null},
+        subject:{share:SUBJECT_SHARE, full:SUBJECT_FULL, companySize:st.company.size, tilted:st.tilted, tiltDraws:st.tiltDraws, onSubjectPct:st.cw?+(100*st.onSubj/st.cw).toFixed(1):null},
         lines:st.lines, draws:st.draws, specimens:spec
       };
     },
