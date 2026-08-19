@@ -32,10 +32,12 @@ def load(path='sonnets.txt'):
 # the same character between letters, or ending a word after a vowel-less stem, is an elision
 # and is kept: o'er, lov'd, beauty's, wights', 'gainst, 'tis, th'
 ELIDE_HEAD = ("tis","twas","twixt","gainst","greeing","scap'd","fore","mongst","neath","gan")
+ELIDE_TAIL = ("th","o","t","i","y","wi","gi","ha","ne")   # th' executor, o' the, t' other: a closing elision, kept
 def strip_quotes(w):
     core=w
-    # closing: a trailing quote is possessive-plural (wights') only after s
-    if core.endswith("'") and not core[:-1].endswith('s'): core=core[:-1]
+    # closing: a trailing quote is possessive-plural (wights') after s, or an elision on the known short
+    # heads (th' executor, o' the, t' other) — struck otherwise
+    if core.endswith("'") and not core[:-1].endswith('s') and core[:-1] not in ELIDE_TAIL: core=core[:-1]
     # opening: a leading quote is an elision only for the known heads
     if core.startswith("'"):
         rest=core[1:]
@@ -47,6 +49,7 @@ def normalise(body):
     s=s.replace('’',"'").replace('‘',"'").replace('“','').replace('”','')
     s=s.replace('—',' — ').replace('–',' — ')      # the em-dash is a sort of its own, and the engine may propose it
     s=s.lower()
+    s=re.sub(r'\bre-(\w)',r're\1',s)                          # re-survey → resurvey: a split would orphan the prefix
     s=re.sub(r'(\w)-(\w)',r'\1 \2',s)                        # hyphenated compounds split
     s=re.sub(r'[()\[\]]',' ',s)
     s=re.sub(r'\bo\s*!','o ,',s)                             # 'O!' is an interjection, not a sentence end
