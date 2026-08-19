@@ -478,44 +478,44 @@ A real engine keeps notes (a <i>cache</i>) so it need not redo old sums on every
 
 ## BARD · press
 
-### BARD-038 · mcap · 12w
+### BARD-038 · mcap · 14w
 >>>
-The sonnet-master’s rule-book · cams the harness sets upon the engine
+Prof. Rashbold-Wordsmith’s rule-book · his rules for how Shakespeare writes, cut as cams
 <<<
 
-### BARD-039 · camrule · 19w
+### BARD-039 · camrule · 20w
 >>>
-no point before the 2nd word; a stop only after the 4th; the sonnet ends on a full stop
+“He never points before the second word, nor stops before the fourth; and a sonnet ends on a full stop.”
 <<<
 
-### BARD-040 · camrule · 14w
+### BARD-040 · camrule · 21w
 >>>
-the engine ends its own lines; this cam only keeps them between 6 and 10 words
+“His lines run six words to ten.” The engine ends its own lines; this cam only holds them to that measure.
 <<<
 
-### BARD-041 · camrule · 16w
+### BARD-041 · camrule · 24w
 >>>
-ABAB CDCD EFEF GG — picks the line's last word first, then steers the line toward it
+“He rhymes ABAB CDCD EFEF GG, by sound, with his own licences.” Picks the line’s last word first, then steers the line to it.
 <<<
 
-### BARD-042 · camrule · 9w
+### BARD-042 · camrule · 11w
 >>>
-capitals to the openers; the turn at line nine
+“He capitals every line, and turns his argument at the ninth.”
 <<<
 
-### BARD-043 · camrule · 26w
+### BARD-043 · camrule · 38w
 >>>
-no two of a kind; an article wants its noun, an auxiliary its verb; <i>i am, thou art</i>; a subject its number, a verb its object
+“He never sets two of a kind together; his articles find their nouns, his auxiliaries their verbs; <i>i am, thou art</i>; his subjects agree, his verbs take their objects; and he does not echo a word within three.”
 <<<
 
-### BARD-044 · camrule · 25w
+### BARD-044 · camrule · 26w
 >>>
-the card names the subject; every draw tilts toward words the sonnets set in a line with it — the poem is kept to its matter
+“He keeps to his subject.” The card names it; every draw tilts toward the words he set beside it — the poem is held to its matter.
 <<<
 
-### BARD-045 · rbnote · 15w
+### BARD-045 · rbnote · 21w
 >>>
-the cams forbid and steer — they cannot invent; only the counting-wheels propose a word
+every rule is true of Shakespeare — the cams forbid and steer, they cannot invent; only the counting-wheels propose a word
 <<<
 
 ### BARD-046 · mcap · 11w
@@ -582,11 +582,11 @@ Each notch teaches it words it could not say before. Try these cards, and watch 
 <i>“two loves i have of comfort and”</i> — <i>despair</i> waits for all one hundred and fifty-four. This last is the interesting one: at a hundred and fifteen the engine already knows the word <i>despair</i>, but has never seen it follow <i>and</i>, so it cannot get there. Knowing a word and knowing where it goes are two different things. At the top notch the sheets change character. They quote just as much, but in shorter stretches, stitched together more often — the engine has more roads to choose from, so it takes more turnings. That is what training data really is: not cleverness, but coverage.
 <<<
 
-### BARD-056 · truth · 416w
+### BARD-056 · truth · 588w
 >>>
-<span class="lead">On the press and its rule-book.</span> The press writes fourteen lines because the rule-book makes it, not because the engine has any idea what a sonnet is.<br>
+<span class="lead">On the press and its rule-book.</span> The rule-book is the work of Prof. J. G. Rashbold-Wordsmith of Baillie College, Oxford, who studied the quarto of 1609 and satisfied himself that he had worked out how Shakespeare writes: that the manner of the sonnets — the pointing, the measure, the rhyme, the turn, the grammar, the keeping to a subject — comes down to a finite set of habits, and that a machine given the habits as rules, and the words as counting-wheels, would write as he did. Each cam above is one of his habits, cut in brass. The press writes fourteen lines because his rule-book makes it, not because the engine has any idea what a sonnet is.<br>
 The rule-book — the <b>harness</b> — can forbid and it can steer, but it cannot invent. It may strike a full stop out of the lottery, or tilt the odds toward a rhyming word. But if the engine has never read a rhyme for <i>compass</i>, no rule can conjure one, and the margin admits it with a ✗. Much of a modern chat machine's good behaviour works exactly this way.<br>
-The <b>Concord Cam</b> shows the limit best. It lays a rule of grammar on the lottery: no two articles in a row, an article wants its noun, an auxiliary wants its verb, <i>i am</i> and <i>thou art</i> rather than <i>i art</i>. In its second edition it reads two more tables off the same wheels: each noun’s number, from the little words the sonnets set before it, and whether each verb takes an object; so a plural subject may not have a singular verb, and a verb that wants its object may not end the line. It can forbid every shape that could never parse — and a line may still pass it and mean nothing whatever. Grammar is not sense.<br>
+The <b>Concord Cam</b> shows the limit best. It lays a rule of grammar on the lottery: no two articles in a row, an article wants its noun, an auxiliary wants its verb, <i>i am</i> and <i>thou art</i> rather than <i>i art</i>. In its second edition it reads two more tables off the same wheels: each noun’s number, from the little words the sonnets set before it, and whether each verb takes an object; so a plural subject may not have a singular verb, and a verb that wants its object may not end the line. It can forbid every shape that could never parse — and a line may still pass it and mean nothing whatever. Grammar is not sense.<br><span class="lead">The Professor’s finding, which he did not intend.</span> Every rule in his book is true of Shakespeare. Every sheet the press prints satisfies every rule he cut. And no sheet is Shakespeare. He set out to show that a manner is a set of habits; the machine shows instead that the habits are what is left of a manner when the meaning is taken away. That is the whole finding, and it is the reason the press is kept running.<br>
 The <b>Subject Cam</b> is the one nearest to what a modern engine does with your question. The card names the subject. The engine already keeps a book of which words have stood in a verse line together — the same book the Attention station reads — and this cam tilts every draw toward the subject's company in that book, so the poem is held to its matter instead of drifting wherever the last two words lead. Maillardet's automaton kept its poems on their subject the same way, by cams cut for each poem; ours is cut afresh from the card. It can hold the poem to a subject; it cannot know what a subject is, and it cannot supply company the sonnets never gave. If the card names no word the wheels have read, it idles, and the tally says so.<br>
 Nor are its guesses infallible. It works out each word's part of speech from the company that word keeps in the sonnets, and it gets some wrong: <i>love</i> is both noun and verb, and <i>shines</i> it takes for a thing, having once seen it follow <i>heaven</i>. The tally beneath the sheet reports what it struck, so you can judge it yourself.
 <<<
