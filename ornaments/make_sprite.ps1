@@ -18,6 +18,16 @@ foreach($n in $use){
 [IO.File]::WriteAllText((Join-Path $PSScriptRoot 'sprite.html'),$sb.ToString(),$enc)
 "sprite.html  $($sb.Length) bytes"
 
+# the little sprite for the sub-pages (about.html, educators.html): corners and the scroll rule only
+$lite=@('corner-tl','corner-tr','corner-bl','corner-br','rule-scroll')
+$lb=New-Object Text.StringBuilder
+[void]$lb.Append('<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><!-- the ornament case, in little: corners and the scroll rule (ornaments/svg) -->')
+foreach($n in $lite){ $s=[IO.File]::ReadAllText("$dir\$n.svg"); $vb=[regex]::Match($s,'viewBox="([^"]*)"').Groups[1].Value; $d=[regex]::Match($s,' d="([^"]*)"').Groups[1].Value
+  [void]$lb.Append('<symbol id="o-'+$n+'" viewBox="'+$vb+'"><path fill="currentColor" d="'+$d+'"/></symbol>') }
+[void]$lb.Append('</svg>')
+[IO.File]::WriteAllText((Join-Path $PSScriptRoot 'sprite-lite.html'),$lb.ToString(),$enc)
+"sprite-lite.html  $($lb.Length) bytes"
+
 # NOTE for whoever strikes a symbol: the outer <svg class="orn"> MUST carry viewBox="0 0 W H" (W,H from the
 # symbol's viewBox) or it has no aspect ratio and falls to 300x150. Several symbols have offset viewBox origins;
 # the outer one is always 0 0.

@@ -116,9 +116,15 @@ body{
 .erpair{display:flex;gap:14px}
 .eswitch{display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;width:94px}
 /* the switch itself: a brass disc carrying an engraved face */
-.eswitch .disc{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
-  border:1px solid #4f3c15;background:radial-gradient(circle at 36% 28%,#f4e0a6,#c9a24b 58%,#93712c);
-  box-shadow:inset 0 1px 0 rgba(255,248,220,.75), inset 0 -3px 5px rgba(70,50,15,.5), 0 3px 6px rgba(0,0,0,.5);
+/* the stud: a brass key face inside a turned nickel rim, after the round keys of a classic typewriter.
+   The rim is a gradient border (border-box layer) round a brass padding-box face, so it lights top-left
+   and darkens bottom-right like turned metal. */
+.eswitch .disc{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  border:3px solid transparent;
+  background:radial-gradient(circle at 36% 28%,#f4e0a6,#c9a24b 58%,#93712c) padding-box,
+             linear-gradient(155deg,#fdfefe 0%,#c8ced4 22%,#8d949b 46%,#eef2f5 60%,#7e858c 82%,#b9c0c6 100%) border-box;
+  box-shadow:inset 0 1px 0 rgba(255,248,220,.75), inset 0 -3px 5px rgba(70,50,15,.5),
+             0 0 0 1px rgba(45,50,55,.55), 0 3px 6px rgba(0,0,0,.5);
   transition:box-shadow .12s, transform .12s, background .12s}
 .eswitch .disc img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;
   filter:sepia(1) saturate(.55) brightness(.42) contrast(1.5);mix-blend-mode:multiply;opacity:.88}
@@ -130,7 +136,8 @@ body{
 .eswitch:focus-visible{outline:3px solid var(--glow);outline-offset:3px;border-radius:9px}
 /* pushed IN — this is the engine you are looking at: it sits low in its bezel, and takes no click */
 .eswitch.on{cursor:default}
-.eswitch.on .disc{transform:translateY(2px);background:radial-gradient(circle at 36% 28%,#c8a659,#a07e34 58%,#6f5520);
+.eswitch.on .disc{transform:translateY(2px);background:radial-gradient(circle at 36% 28%,#c8a659,#a07e34 58%,#6f5520) padding-box,
+  linear-gradient(155deg,#c9d0d6 0%,#9aa1a8 26%,#767d84 50%,#c3cad0 64%,#666d74 84%,#98a0a7 100%) border-box;
   box-shadow:inset 0 3px 6px rgba(45,30,6,.75), inset 0 -1px 0 rgba(255,245,210,.35), 0 1px 1px rgba(0,0,0,.35)}
 .eswitch.on .elab{font-weight:700}
 .eswitch.on .disc img{opacity:.95}

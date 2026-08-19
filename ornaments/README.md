@@ -96,3 +96,28 @@ take the other discs' `brightness(.42)`, which would grey the card and wash out 
 `.card` gives it `sepia(1) saturate(.6) contrast(1.5) brightness(1.05)` and `transform: scale(1.35)`,
 the engraving sitting small inside wide margins. The same portrait stands beside the title on
 `about.html`, as Shakespeare does on the Bard, with the same multiply treatment.
+## The sub-pages, and the nickel rims (2026-08-19)
+
+`about.html` (the mathematics) and `educators.html` now carry the engines' own plate treatment: four
+screws (`.screws`, corner radial-gradients over the brass), acanthus spandrels at the corners, and the
+scroll rule beneath the title. They take `sprite-lite.html` (~34 KB: the four corners and `rule-scroll`
+only) rather than the full case, pasted after `<div class="wrap">`. `make_sprite.ps1` builds it alongside
+the big one.
+
+A portrait stands beside each title as Shakespeare does on the Bard: **Markov** on the mathematics page,
+**Lady Lovelace** on the educators' page. They need *different* treatments and this matters —
+
+* Lovelace is a head-and-shoulders engraving on clear ground, so she takes the engines' masthead
+  treatment (the plate's ink, raised highlight, no blend) and no crop.
+* Markov is half-length on an opaque white card, so he keeps `mix-blend-mode: multiply` and is cropped
+  to the bust with `object-fit: cover; object-position: 50% 14%`. Measured, not guessed: his ink sits at
+  x 98–1061, y 104–1293 of 1121×1403, the head at x 340–884, y 104–604 — sampled by drawing the SVG to a
+  canvas and scanning for dark pixels. Uncropped at title height his head reads far smaller than
+  Shakespeare's.
+* Below 560px the mathematics title stacks with the portrait above it; the forced `<br>` is hidden, and
+  it is written `Mathematics <br> Behind` **with spaces** so hiding it does not weld the words together.
+
+**The studs wear a nickel rim** — after the round keys of a classic typewriter. It is a gradient border:
+the brass face is a `padding-box` layer, the rim a `linear-gradient(155deg, …)` `border-box` layer on a
+3px transparent border, so it lights top-left and darkens bottom-right like turned metal. The pressed
+switch keeps the rim but dulls it, and both keep a 1px dark line outside to seat them on the plate.
