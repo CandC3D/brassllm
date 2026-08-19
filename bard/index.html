@@ -122,6 +122,9 @@ body{
   transition:box-shadow .12s, transform .12s, background .12s}
 .eswitch .disc img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;
   filter:sepia(1) saturate(.55) brightness(.42) contrast(1.5);mix-blend-mode:multiply;opacity:.88}
+/* a source that is dark line-work on a white card (Markov) keeps its whites: multiply drops the card into the brass,
+   and it is scaled up because the engraving sits small in its margins */
+.eswitch .disc img.card{object-position:50% 20%;transform:scale(1.35);opacity:1;filter:sepia(1) saturate(.6) contrast(1.5) brightness(1.05)}
 .eswitch .elab{font-size:10.5px;letter-spacing:.04em;color:var(--engrave-deep);text-align:center;line-height:1.25;white-space:nowrap}
 .eswitch:hover .disc{filter:brightness(1.07)}
 .eswitch:focus-visible{outline:3px solid var(--glow);outline-offset:3px;border-radius:9px}
@@ -828,11 +831,15 @@ h2,h3{text-wrap:balance}
       </div>
     </div>
     <div class="ersec">
-      <div class="ertitle">For Educators</div>
+      <div class="ertitle">Behind the Page</div>
       <div class="erpair">
         <a class="eswitch" href="../educators.html">
           <span class="disc"><img src="../portrait-lovelace.png" alt="" width="405" height="520" loading="lazy" decoding="async"></span>
-          <span class="elab">Lady Lovelace</span>
+          <span class="elab">For Educators</span>
+        </a>
+        <a class="eswitch" href="../about.html">
+          <span class="disc"><img class="card" src="../portrait-markov.svg" alt="" width="1121" height="1403" loading="lazy" decoding="async"></span>
+          <span class="elab">Mathematics</span>
         </a>
       </div>
     </div>

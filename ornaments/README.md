@@ -76,16 +76,23 @@ Still unused: `leaf`, `swoosh-double`, `feather-upright`, `feather-left`, `banne
 | `hand-up` | cut and kept, not yet placed | — |
 
 **The engine rail** (`.engrail`) sits on the masthead plate between the fine print and the station
-legend, so a visitor can change engines without hunting for the foot of the page. It is built as one
-more riveted panel and holds two sections divided by a brass line: *Choose the Engine* (Babbage →
-Language Engine, Shakespeare → Bard Engine) and, set apart, *For Educators* (Lady Lovelace →
-`educators.html`).
+legend, so a visitor can change engines or step behind the page without hunting for the foot of it.
+It is built as one more riveted panel and holds two sections divided by a brass line: *Choose the Engine*
+(Babbage -> Language Engine, Shakespeare -> Bard Engine) and *Behind the Page* (Lady Lovelace ->
+`educators.html`, Markov -> `about.html`).
 
-Each switch is a 46px brass disc carrying an engraved face — the existing `portrait-babbage.png`,
-`bard/portrait.svg` and `portrait-lovelace.png`, filtered to sepia and multiplied into the brass so
-they read as struck rather than pasted on. The engine you are looking at is **pushed in**: `.eswitch.on`
-drops 2px, darkens, and takes an inset shadow instead of a dome, its label goes bold, and it is a
-`<span>` (not a link) with `aria-current="page"` — the other stands proud and is an `<a>`. Paths differ
-per page (`bard/…` from the root, `../…` from the Bard), so this block is **not** identical between the
-two files; everything else about the rail is. Below 480px the rail stacks and the division turns from a
-wall into a floor.
+Each switch is a 46px brass disc carrying an engraved face, filtered to sepia and multiplied into the
+brass so it reads as struck rather than pasted on. The engine you are looking at is **pushed in**:
+`.eswitch.on` drops 2px, darkens, and takes an inset shadow instead of a dome, its label goes bold, and
+it is a `<span>` (not a link) with `aria-current="page"` - the others stand proud and are `<a>`.
+Paths differ per page (plain names and `bard/…` from the root, `../…` from the Bard), so this block is
+**not** identical between the two files; everything else about the rail is. Below 480px the rail stacks
+and the division turns from a wall into a floor.
+
+**Markov** (`portrait-markov.svg`) is unlike the other portraits: dark line-work on an **opaque white
+card**, not dark-on-transparent. `mix-blend-mode: multiply` is what makes it usable - white multiplies
+to nothing, so the card vanishes into the brass and only the engraving remains. It must therefore NOT
+take the other discs' `brightness(.42)`, which would grey the card and wash out the whole disc: class
+`.card` gives it `sepia(1) saturate(.6) contrast(1.5) brightness(1.05)` and `transform: scale(1.35)`,
+the engraving sitting small inside wide margins. The same portrait stands beside the title on
+`about.html`, as Shakespeare does on the Bard, with the same multiply treatment.

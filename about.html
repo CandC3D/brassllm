@@ -26,6 +26,14 @@ body{
 .masthead .kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.85}
 .masthead h1{font-size:clamp(23px,4.4vw,34px);letter-spacing:.06em;margin:6px 0 3px;text-wrap:balance}
 .masthead .sub{font-style:italic;font-size:14.5px}
+/* Mr. Markov beside the title, as Mr. Shakespeare stands beside the Bard's — his chains are what the
+   engine actually runs on.  The source is dark line-work on a white card, so multiply drops the card
+   into the brass and leaves only the engraving. */
+.titlerow{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.4vw,22px)}
+.titlerow h1{margin:6px 0 3px}
+.portrait{display:block;height:calc(2.35 * clamp(23px,4.4vw,34px));width:auto;flex:none;
+  mix-blend-mode:multiply;filter:sepia(1) saturate(.6) contrast(1.5) brightness(1.05)}
+@media (max-width:560px){.titlerow{gap:9px}.portrait{height:calc(1.7 * clamp(23px,4.4vw,34px))}}
 .sheet{
   background:linear-gradient(178deg,var(--paper),var(--paper2));
   border:1px solid #ac9366;border-radius:11px;padding:34px clamp(20px,5vw,46px) 30px;
@@ -77,7 +85,10 @@ h2,h1{text-wrap:balance}
 <div class="wrap">
   <header class="masthead">
     <div class="kicker">The Analytical Language Engine</div>
-    <h1>The Mathematics Behind the Engine</h1>
+    <div class="titlerow">
+      <h1>The Mathematics Behind the Engine</h1>
+      <img class="portrait" src="portrait-markov.svg" alt="Engraved portrait of Andrey Markov, etched in the brass" width="1121" height="1403" decoding="async">
+    </div>
     <div class="sub">what actually computes the numbers you see move</div>
   </header>
 
