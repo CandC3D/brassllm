@@ -4904,6 +4904,9 @@ function concordStrike(q,ctx){
     else if((lt==='V'||lt==='NV')&&VAL[ctx[n-1]]==='t'&&(t==='.'||t==='R'||t==='C')&&!SOFT_IDS.has(i)) bad=true;
     /* D. no doubling of the same slug (word word) unless the corpus does it (most most) */
     else if(w===last&&!/^(most|so|very|no|far)$/.test(w)) bad=true;
+    /* H. no short-cycle echo — a content word may not return within three slugs (rotten mine compare rotten;
+       correct since each day correct): the small words are free to recur, as they must */
+    else if(!(t==='D'||t==='P'||t==='R'||t==='C'||t==='X'||t==='.')&&(w===prev||(n>2&&w===vocabArr[ctx[n-3]]))) bad=true;
     if(bad){ cut+=q[i]; q[i]=0; }
   }
   /* E. the completion test — a line may not be ruled complete while a determiner, preposition or conjunction stands
