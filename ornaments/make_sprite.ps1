@@ -7,7 +7,7 @@ $dir=Join-Path $PSScriptRoot 'svg'
 $enc=New-Object Text.UTF8Encoding($false)
 
 # the symbols the pages actually strike (the rest stay in svg/ for later)
-$use=@('corner-tl','corner-tr','corner-bl','corner-br','rule-scroll','feather-left','feather-right','finial','rule-dot','banner-a','banner-d','swirl-small','swoosh-single')
+$use=@('corner-tl','corner-tr','corner-bl','corner-br','rule-scroll','feather-left','feather-right','finial','rule-dot','banner-a','banner-d','swirl-small','swoosh-single','hand-right')
 $sb=New-Object Text.StringBuilder
 [void]$sb.Append('<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><!-- the ornament case: cast once, struck wherever the page wants a flourish (ornaments/svg, from the Adorn sheet) -->')
 foreach($n in $use){

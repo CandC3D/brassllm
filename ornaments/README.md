@@ -67,3 +67,25 @@ on `:root` are domed-brass radial gradients (highlight, body, dark rim) laid as 
 layers, one each side, vertically centred; the panels carry 24px side padding to clear them.
 
 Still unused: `leaf`, `swoosh-double`, `feather-upright`, `feather-left`, `banner-b`, `banner-c`.
+
+## The manicule and the engine rail (2026-08-19)
+
+| ornament | role | how |
+|---|---|---|
+| `hand-right` | the printer's pointing hand, at the left of the buttons that *do* something: **Begin the Demonstration** (both engines) and **Set the Press Running** (Bard) | `<svg class="orn manicule">` inside `.btn`; `.btn:has(.manicule)` becomes an inline-flex row with a 9px gap |
+| `hand-up` | cut and kept, not yet placed | — |
+
+**The engine rail** (`.engrail`) sits on the masthead plate between the fine print and the station
+legend, so a visitor can change engines without hunting for the foot of the page. It is built as one
+more riveted panel and holds two sections divided by a brass line: *Choose the Engine* (Babbage →
+Language Engine, Shakespeare → Bard Engine) and, set apart, *For Educators* (Lady Lovelace →
+`educators.html`).
+
+Each switch is a 46px brass disc carrying an engraved face — the existing `portrait-babbage.png`,
+`bard/portrait.svg` and `portrait-lovelace.png`, filtered to sepia and multiplied into the brass so
+they read as struck rather than pasted on. The engine you are looking at is **pushed in**: `.eswitch.on`
+drops 2px, darkens, and takes an inset shadow instead of a dome, its label goes bold, and it is a
+`<span>` (not a link) with `aria-current="page"` — the other stands proud and is an `<a>`. Paths differ
+per page (`bard/…` from the root, `../…` from the Bard), so this block is **not** identical between the
+two files; everything else about the rail is. Below 480px the rail stacks and the division turns from a
+wall into a floor.
