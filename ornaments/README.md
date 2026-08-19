@@ -121,3 +121,11 @@ A portrait stands beside each title as Shakespeare does on the Bard: **Markov** 
 the brass face is a `padding-box` layer, the rim a `linear-gradient(155deg, …)` `border-box` layer on a
 3px transparent border, so it lights top-left and darkens bottom-right like turned metal. The pressed
 switch keeps the rim but dulls it, and both keep a 1px dark line outside to seat them on the plate.
+**The rail is on all four pages** (2026-08-19): both engines, `about.html` and `educators.html`. The CSS
+is identical everywhere; the markup differs only in the link paths and in which switch is pressed. On the
+engines, the engine you are on is pressed; on the sub-pages **no engine is pressed** — neither page is an
+engine — and instead the page's own switch in *Behind the Page* is. The sub-pages needed four variables
+the engines already had on `:root`: `--engrave-deep`, `--glow`, `--rivet-l` and `--rivet-r`.
+
+Any change to the rail must therefore be made in **four** files. The CSS block can be copied verbatim;
+the markup cannot.

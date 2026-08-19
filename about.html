@@ -4,7 +4,11 @@
 :root{
   --wood:#191009; --brass:#c9a24b; --brass-hi:#f2d98e; --brass-lo:#6b5320; --brass-deep:#453310;
   --paper:#efe5c8; --paper2:#e3d4af; --paper3:#dcca9f; --ink:#2b2011; --ink-soft:#5c4c33;
-  --engrave:#43310f; --spirit:#8e2f1d; --verd:#3f6e58;
+  --engrave:#43310f;
+  --engrave-deep:#1a1204; --glow:#ffd98a;
+  /* a domed brass rivet: highlight, body, dark rim — one each side of the little riveted plaques */
+  --rivet-l:radial-gradient(circle at 11px 50%, #f6e1a4 0 1.1px, #c9a24b 1.1px 2.7px, #5d4718 2.7px 3.5px, rgba(0,0,0,0) 4.3px);
+  --rivet-r:radial-gradient(circle at calc(100% - 11px) 50%, #f6e1a4 0 1.1px, #c9a24b 1.1px 2.7px, #5d4718 2.7px 3.5px, rgba(0,0,0,0) 4.3px); --spirit:#8e2f1d; --verd:#3f6e58;
   --serif:Georgia,'Iowan Old Style','Times New Roman',serif; --mono:'Courier New',Courier,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -61,6 +65,50 @@ body{
 @media (max-width:560px){.titlerow{flex-direction:column;gap:9px;width:100%}
   .titlerow br{display:none}
   .portrait{order:-1;height:calc(2.4 * clamp(23px,4.4vw,34px));width:calc(2.1 * clamp(23px,4.4vw,34px))}}
+/* ---------- the engine rail: switch gear on the masthead, to change engines without hunting for the foot of the page.
+   Two switches on one rail (the engine in use is pushed IN, the other stands proud, as an old brass light switch),
+   and, set apart to the right behind its own division, the way to the schoolroom. ---------- */
+.engrail{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:0 26px;margin:18px auto 4px;width:max-content;max-width:100%;
+  padding:10px 26px 9px;border-radius:10px;
+  background-image:var(--rivet-l),var(--rivet-r),linear-gradient(rgba(255,246,220,.22),rgba(255,246,220,.09));
+  box-shadow:inset 0 1px 0 rgba(255,250,232,.36)}
+.ersec{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ersec+.ersec{border-left:1px solid rgba(67,49,15,.35);box-shadow:-1px 0 0 rgba(255,245,210,.3);padding-left:26px;margin-left:0}
+.ertitle{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--engrave-deep);white-space:nowrap}
+.erpair{display:flex;gap:14px}
+.eswitch{display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;width:94px}
+/* the switch itself: a brass disc carrying an engraved face */
+/* the stud: a brass key face inside a turned nickel rim, after the round keys of a classic typewriter.
+   The rim is a gradient border (border-box layer) round a brass padding-box face, so it lights top-left
+   and darkens bottom-right like turned metal. */
+.eswitch .disc{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  border:3px solid transparent;
+  background:radial-gradient(circle at 36% 28%,#f4e0a6,#c9a24b 58%,#93712c) padding-box,
+             linear-gradient(155deg,#fdfefe 0%,#c8ced4 22%,#8d949b 46%,#eef2f5 60%,#7e858c 82%,#b9c0c6 100%) border-box;
+  box-shadow:inset 0 1px 0 rgba(255,248,220,.75), inset 0 -3px 5px rgba(70,50,15,.5),
+             0 0 0 1px rgba(45,50,55,.55), 0 3px 6px rgba(0,0,0,.5);
+  transition:box-shadow .12s, transform .12s, background .12s}
+.eswitch .disc img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;
+  filter:sepia(1) saturate(.55) brightness(.42) contrast(1.5);mix-blend-mode:multiply;opacity:.88}
+/* a source that is dark line-work on a white card (Markov) keeps its whites: multiply drops the card into the brass,
+   and it is scaled up because the engraving sits small in its margins */
+.eswitch .disc img.card{object-position:50% 20%;transform:scale(1.35);opacity:1;filter:sepia(1) saturate(.6) contrast(1.5) brightness(1.05)}
+.eswitch .elab{font-size:10.5px;letter-spacing:.04em;color:var(--engrave-deep);text-align:center;line-height:1.25;white-space:nowrap}
+.eswitch:hover .disc{filter:brightness(1.07)}
+.eswitch:focus-visible{outline:3px solid var(--glow);outline-offset:3px;border-radius:9px}
+/* pushed IN — this is the engine you are looking at: it sits low in its bezel, and takes no click */
+.eswitch.on{cursor:default}
+.eswitch.on .disc{transform:translateY(2px);background:radial-gradient(circle at 36% 28%,#c8a659,#a07e34 58%,#6f5520) padding-box,
+  linear-gradient(155deg,#c9d0d6 0%,#9aa1a8 26%,#767d84 50%,#c3cad0 64%,#666d74 84%,#98a0a7 100%) border-box;
+  box-shadow:inset 0 3px 6px rgba(45,30,6,.75), inset 0 -1px 0 rgba(255,245,210,.35), 0 1px 1px rgba(0,0,0,.35)}
+.eswitch.on .elab{font-weight:700}
+.eswitch.on .disc img{opacity:.95}
+@media (max-width:560px){.engrail{gap:0 14px;padding:9px 18px}.ersec+.ersec{padding-left:14px}.eswitch{width:80px}
+  .eswitch .disc{width:40px;height:40px}}
+/* narrow enough that the rail must stack: the division turns from a wall into a floor */
+@media (max-width:480px){.engrail{flex-direction:column;gap:11px 0;width:auto}
+  .ersec{width:100%}
+  .ersec+.ersec{border-left:none;border-top:1px solid rgba(67,49,15,.35);box-shadow:0 -1px 0 rgba(255,245,210,.3);padding:11px 0 0}}
 .sheet{
   background:linear-gradient(178deg,var(--paper),var(--paper2));
   border:1px solid #ac9366;border-radius:11px;padding:34px clamp(20px,5vw,46px) 30px;
@@ -129,6 +177,34 @@ h2,h1{text-wrap:balance}
     </div>
     <div class="ornrule" aria-hidden="true"><svg class="orn" viewBox="0 0 105.40 14.60"><use href="#o-rule-scroll"/></svg></div>
     <div class="sub">what actually computes the numbers you see move</div>
+  <div class="engrail">
+    <div class="ersec" role="group" aria-label="Choose the engine">
+      <div class="ertitle">Choose the Engine</div>
+      <div class="erpair">
+        <a class="eswitch" href="analytical-language-engine.html">
+          <span class="disc"><img src="portrait-babbage.png" alt="" width="405" height="520" loading="lazy" decoding="async"></span>
+          <span class="elab">Language Engine</span>
+        </a>
+        <a class="eswitch" href="bard/">
+          <span class="disc"><img src="bard/portrait.svg" alt="" width="120" height="112" loading="lazy" decoding="async"></span>
+          <span class="elab">Bard Engine</span>
+        </a>
+      </div>
+    </div>
+    <div class="ersec">
+      <div class="ertitle">Behind the Page</div>
+      <div class="erpair">
+        <a class="eswitch" href="educators.html">
+          <span class="disc"><img src="portrait-lovelace.png" alt="" width="405" height="520" loading="lazy" decoding="async"></span>
+          <span class="elab">For Educators</span>
+        </a>
+        <span class="eswitch on" aria-current="page">
+          <span class="disc"><img class="card" src="portrait-markov.svg" alt="" width="1121" height="1403" loading="lazy" decoding="async"></span>
+          <span class="elab">Mathematics</span>
+        </span>
+      </div>
+    </div>
+  </div>
   </header>
 
   <article class="sheet">
