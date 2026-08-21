@@ -312,3 +312,36 @@ the visitor throws it themselves. UI: chip in the rule-book plus a three-stud `f
 dead metal (`opacity .42`) until the cam is thrown; seventh disc on the camshaft, one dwell of a quarter
 turn. All of it sits inside the resync's grafted press regions (JS 4702–5279, CSS 674–738), so
 `resync_from_ale.py` carries it — checked, not assumed.
+
+### The echo, and "no second helping" (same day, from Chris's sample)
+
+Chris's Fair Youth sheet repeated *day arising* three times and *summer's* four. I assumed the cam was
+hammering single words and nearly "fixed" that — but measuring first showed **single-word echo was not
+worse with the cam on** (4.30 per 100 content words off, 3.73 on). The real regression was in **phrases**:
+bigram repetition ran **0.76 per 100 with the cam off and 2.16 with the Fair Youth thrown**, with a phrase
+appearing three times in a sheet. A small tilt-set keeps steering back onto the same few high-probability
+roads.
+
+Fix: **a word the cam has already laid on the sheet drops out of its tilt-set** (`laid`, per sheet).
+Nothing is forbidden — the wheels may draw it again, and do — the cam simply stops pushing the same word
+twice. Measured after (12 sheets, seed 23, tier 4, T = 0.85):
+
+| arm | fidelity | on-addressee | word-echo /100 | phrase-echo /100 | worst phrase |
+|---|---|---|---|---|---|
+| summer's day, cam off | 68.4 | — | 4.30 | 0.76 | 2× |
+| …Fair Youth, before | 67.4 | 21.0 | 3.73 | **2.16** | **3×** |
+| …Fair Youth, after | 67.5 | 22.5 | 2.23 | **0.95** | 2× |
+| mistress' eyes, cam off | 66.4 | — | 3.73 | 0.81 | 2× |
+| …Dark Lady, after | 63.6 | 25.0 | 2.47 | 1.22 | 2× |
+
+The excess phrase-echo is gone at no cost to the cam's hold (21.0 → 22.5) or to quotation. `press_harness.js`
+now reports `echo{per100Words,typesPerSheet,worst,worstWord}` so this stays measurable.
+
+**Not done, and deliberately:** the card's own words are not seeded into `laid`, so the cam may still push a
+word the card supplied (*summer's* recurs in the sample sheet — drawn by the wheels, not pushed). Worth a
+measurement if it ever grates.
+
+**Workstation trap, again:** `Rep 'a'+$NL+'b' (…)` in PowerShell does NOT concatenate in argument position —
+it silently matched and replaced the wrong text, deleting `if(isWordId(id)){…}` and leaving
+`parts.join(+' '+)`, which broke the whole page. Always parenthesise: `Rep ('a'+$NL+'b') (…)`, or use the
+Edit tool for anything multi-line.

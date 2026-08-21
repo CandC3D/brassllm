@@ -1291,6 +1291,7 @@ Nor are its guesses infallible. It works out each word's part of speech from the
 <b>How the Rhyme Cam works.</b> It picks the line's last word first, from the words Shakespeare ends lines with, then steers the line toward it. When it fails, it fails honestly: a ✗ means the engine knows no path to any rhyming word, and it knows that before the line begins. Roughly three lines in four find their rhyme — at the smallest schooling and the largest alike.<br>
 <b>How the Subject Cam works.</b> The card names the subject. The engine keeps a book of which words have stood in a verse line together (the Attention station reads the same book), and the cam gives the subject’s company a share of the drum — up to a fifth, more the more company the sonnets gave it. Measured over five cards: a subject the sonnets surround richly (<i>summer’s day</i>, <i>mistress’ eyes</i>, <i>love</i>) has ten to sixteen more of every hundred full words keeping its company, at a price of three to nine points of quotation; a subject they scarcely mention is barely moved — the cam has nothing to hold it with. Turn it up and the poem holds tighter and quotes less; there is no free setting.<br>
 <b>How the Addressee Cam works.</b> We tell it only which sonnets belong to which addressee — 1–126 the Fair Youth, 127–152 the Dark Lady, 78–86 the Rival Poet, all three from the printed book. The words it steers by are counted here: a word counts as an addressee’s if it appears twice or more in those sonnets and at a higher rate there than in the rest. At the full schooling that gives the Dark Lady 170 words, the Fair Youth 273, the Rival Poet 73. Measured over ten sheets: with the cam off, about 4 in 10 of a sheet’s full words belong to the chosen voice by chance; set to the matching voice that rises to about 24 in 100 of all words being distinctively hers, and quotation falls three to six points. Set it to the <i>wrong</i> voice and it tilts just as hard — it has no way to know.<br>
+<b>No second helping.</b> A word the cam has already put on the sheet drops out of its tilt-set. Nothing is forbidden by this — the counting-wheels may still draw that word again, and often do — but the cam stops pushing the same one twice. Without the rule it echoed: set to the Fair Youth it repeated whole phrases three times to the sheet, and measured phrase-repetition ran at 2.2 per hundred against 0.8 with the cam off. With it, 0.95, and the cam holds the voice just as firmly.<br>
 <b>What the schooling does to it.</b> Turn the lever down and watch this cam go blind. Below 115 sonnets the engine has read no Rival Poet at all, and the cam idles and says so. Stranger still, the Fair Youth’s own vocabulary <i>shrinks</i> from 35 words at 40 sonnets to 26 at 80: by then 74 of the 80 sonnets are his, so there is almost nothing left for him to be distinctive against. A word is only ever distinctive compared with something.<br>
 <b>Sources.</b> The Sonnets of 1609, from Project Gutenberg (№ 1041). We lowercase them, give each punctuation mark its own space, drop the printer's quotation marks, and keep the lines as the original set them. The machinery is the parent cabinet's, and its notes apply here too.</p>
   </div>
@@ -5101,6 +5102,10 @@ async function composeSonnet(){
     if(both.size>=12){ addrSet=both; interlocked=true; }
   }
   let aTilted=0, aDraws=0;
+  /* no second helping: a word the cam has already put on the sheet drops out of its tilt-set.  The wheels may
+     still draw it — nothing is forbidden — but the cam stops pushing the same word twice, which is what made
+     it echo (phrase-echo measured at 0.76 per hundred with the cam off, 2.16 with the Fair Youth thrown). */
+  const laid=new Set();
   const MINW=C.measure?6:1, MAXW=C.measure?10:12;   /* a pentameter line runs to about eight words; ten is the measure's ceiling */
   const lastWords=[];   /* the closing word of every line laid, for the rhyme cam */
   let hits=0, eyes=0, misses=0;
@@ -5168,9 +5173,9 @@ async function composeSonnet(){
          the Subject Cam, toward the words the two share).  Same bargain as the sixth: it raises what the wheels
          already offer, adds nothing, and does nothing at a draw where none of its words stand on the drum. */
       if(C.addressee&&addrSet.size){
-        let T=0, am=0; for(let i=0;i<q.length;i++){ T+=q[i]; if(q[i]>0&&addrSet.has(i)) am+=q[i]; }
+        let T=0, am=0; for(let i=0;i<q.length;i++){ T+=q[i]; if(q[i]>0&&addrSet.has(i)&&!laid.has(i)) am+=q[i]; }
         if(am>1e-9){ aDraws++; const sh=ADDR_SHARE*Math.min(1,addrSet.size/ADDR_FULL);
-          if(am<sh*T){ const b=sh*T/am, r=(T-sh*T)/(T-am); for(let i=0;i<q.length;i++) q[i]*=addrSet.has(i)?b:r; aTilted++; } }
+          if(am<sh*T){ const b=sh*T/am, r=(T-sh*T)/(T-am); for(let i=0;i<q.length;i++) q[i]*=(addrSet.has(i)&&!laid.has(i))?b:r; aTilted++; } }
       }
       /* THE RHYME CAM, recut — the goal was set before the line began; the cam now (i) holds the line open until
          the goal lands, (ii) favours successors with a counted road to the goal, and (iii) sets the goal itself
@@ -5196,7 +5201,7 @@ async function composeSonnet(){
       if(id===FINID){ ended=true; cause='fin'; break; }
       if(id===LENDID){ ended=true; cause='lend'; break; }   /* the engine proposes the line-break itself */
       ctx.push(id); parts.push(esc(vocabArr[id])); div.__toks.push({w:vocabArr[id]});
-      if(isWordId(id)){ words++; lastWord=vocabArr[id]; }
+      if(isWordId(id)){ words++; lastWord=vocabArr[id]; laid.add(id); }
       div.innerHTML=parts.join(' ');
       FOLEY.play('tick',{bright:2});
       if(TERM_IDS.has(id)){ ended=true; cause='term'; break; }
