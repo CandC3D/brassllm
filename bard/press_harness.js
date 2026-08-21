@@ -10,7 +10,8 @@
    Math.random is replaced by a seeded PRNG for the duration of a run, so a seed reproduces a sheet exactly.
 
    IT DUPLICATES composeSonnet AND WILL DRIFT.  Re-sync it by hand whenever the press changes, or its figures
-   will be confidently wrong.  Last synced: the Subject Cam (subjectOf / companyOf / SUBJECT_SHARE), 2026-08-18.
+   will be confidently wrong.  Last synced: the fellowship Rhyme Cam with the closing squeeze (rhymeFellows /
+   fellowRoads / squeeze 0.75 from MAXW-3 / fellow boost 0.92 from MAXW-2), 2026-08-19.
    subject.onSubjectPct = share of the sheet's full words that share a sonnet line with a card word, scored with the cam
    on OR off, so the two can be compared.
 
@@ -49,8 +50,10 @@
       }
       let words=ctx.filter(isWordId).length, ended=false, lastWord=null, cause=null;
       const target=rhymeTarget(ln);
-      const goal=(C.rhyme&&target)?drawGoal(target):null;
-      const roads=goal!==null?goalRoads(goal):null;
+      const fell=(C.rhyme&&target)?rhymeFellows(target):[];
+      const goal=fell.length?1:null;
+      const FELLOWS=goal?new Set(fell):null;
+      const roads=goal?fellowRoads(fell):null;
       let draws=0;
       while(words<MAXW&&draws++<MAXW*3){   /* bounded in draws: the held-open line could otherwise spin on commas */
         st.draws++; if(!hasTri(ctx)) st.noTri++;
@@ -73,20 +76,23 @@
           if(sm>1e-9){ st.tiltDraws++; const sh=SUBJECT_SHARE*Math.min(1,company.size/SUBJECT_FULL); if(sm<sh*T){ const b=sh*T/sm, r=(T-sh*T)/(T-sm); for(let i=0;i<q.length;i++) q[i]*=company.has(i)?b:r; st.tilted++; } } }
         if(C.addressee&&addrSet.size){ let T=0, am=0; for(let i=0;i<q.length;i++){ T+=q[i]; if(q[i]>0&&addrSet.has(i)&&!laid.has(i)) am+=q[i]; }
           if(am>1e-9){ st.aDraws++; const sh=ADDR_SHARE*Math.min(1,addrSet.size/ADDR_FULL); if(am<sh*T){ const b=sh*T/am, r=(T-sh*T)/(T-am); for(let i=0;i<q.length;i++) q[i]*=(addrSet.has(i)&&!laid.has(i))?b:r; st.aTilted++; } } }
-        /* the goal-first rhyme cam, as recut: hold open, favour the roads, set the goal on a counted road */
+        /* the fellowship rhyme cam: hold open, favour roads to ANY fellow, squeeze as the ceiling nears */
         if(goal!==null){
           cut+=q[LENDID]; q[LENDID]=0; cut+=q[FINID]; q[FINID]=0;
           TERM_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
           if(SOFT_IDS.has(ctx[ctx.length-1])) SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
           if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; cut=0; }
           if(words>=MINW-2){
+            const share=(words>=MAXW-3)?Math.max(ROADS_SHARE,0.75):ROADS_SHARE;   /* the closing squeeze */
             let rm=0; for(let i=0;i<q.length;i++) if(q[i]>0&&roads.has(i)) rm+=q[i];
-            if(ROADS_SHARE>0&&rm>1e-9&&rm<ROADS_SHARE){ const b=ROADS_SHARE/rm, r=(1-ROADS_SHARE)/(1-rm); for(let i=0;i<q.length;i++) q[i]*=roads.has(i)?b:r; }
+            if(share>0&&rm>1e-9&&rm<share){ const b=share/rm, r=(1-share)/(1-rm); for(let i=0;i<q.length;i++) q[i]*=roads.has(i)?b:r; }
           }
           const biL=bi.get(ctx[ctx.length-1]);
-          if(words>=MINW-1&&q[goal]>0&&biL&&biL.m.has(goal)){
-            const gm=q[goal]; st.boosts++; st.massSum+=gm;
-            if(gm<0.5){ const b=0.5/gm, r=0.5/(1-gm); for(let i=0;i<q.length;i++) q[i]*=(i===goal?b:r); }
+          if(words>=MINW-1&&biL){
+            const gshare=(words>=MAXW-2)?0.92:0.5;
+            let gm=0; for(const g of fell){ if(q[g]>0&&biL.m.has(g)) gm+=q[g]; }
+            if(gm>1e-9){ st.boosts++; st.massSum+=gm;
+              if(gm<gshare){ const b=gshare/gm, r=(1-gshare)/(1-gm); for(let i=0;i<q.length;i++) q[i]*=(FELLOWS.has(i)&&biL.m.has(i))?b:r; } }
           }
         }
         if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; }

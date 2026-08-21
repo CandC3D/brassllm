@@ -84,11 +84,11 @@ because it had no line-final distribution to draw on.
     cliff are gone; the curve is a plateau (product within ~2 points, 0.70–1.05), collapsing
     past ~1.1. The crank keeps 0.95.
 
-## Current measured state (unseeded, ~16–20 sheets, full schooling, all cams, lever at 0.85)
+## Current measured state — SUPERSEDED 2026-08-19, see "The rhyme scheme, mended" below
 
-fidelity ~77% · derailment ~14% · rhyme ~76% (three in four at the first notch and the last —
-it does **not** climb with the schooling; that old claim is withdrawn) · mean line 8.8 words ·
-line closes: ~26% rhyme-goal, ~24% engine's own ⏎, ~8% drawn stop, rest at the ceiling.
+~~fidelity ~77% · derailment ~14% · rhyme ~76% · mean line 8.8 words~~ → after the fellowship recut and
+with the Subject Cam standing: fidelity ~68–72 · **rhyme pairs ~86%, roughly a third of sheets fully
+clean and another third one miss short** · line closes ~33% rhyme, ~18% engine's own ⏎.
 
 ## Decisions taken by Chris along the way (do not relitigate)
 
@@ -352,3 +352,78 @@ then the caption on its own line and the three studs in a single centred row. Th
 `div.addrsel` holding `div.addrrow[role=radiogroup]`, because a fieldset with a legend will not lay out
 as a centred flex column. Only the studs dim when the cam is up; the cam itself stays lit, being the
 thing you throw. **No more cams are planned** — the bank is closed at seven.
+
+## The rhyme scheme, mended — the fellowship and the closing squeeze, 2026-08-19
+
+Chris: "my main concern is that the rhyme scheme is broken in almost every generated text." True by
+arithmetic: at the measured ~50–75% per pair, seven pairs a sheet means a clean sheet is somewhere
+between 1-in-8 and 1-in-16,000. Measured before touching anything (40 sheets, 4 cards, 280 pairs,
+seeds 31/38/45/52): **50.4% of pairs passed, 0 clean sheets in 40.**
+
+**Diagnosis first — the split that decided everything.** Of 139 missed pairs, only **14 (10%) were
+goalless** (no rhyme-fellow in the drum at all); **125 (90%) had a fellow and never landed it.** So it
+was the walk, not the vocabulary.
+
+**The Macbeth question (asked and answered).** Chris proposed feeding Macbeth to the engine for extra
+rhymes; extended to The Taming of the Shrew and Twelfth Night, and (Chris's catch) A Lover's Complaint —
+which is NOT in the corpus (Gutenberg №1041 is the sonnets alone) despite sharing the 1609 quarto.
+Line-final vocabularies: Macbeth 1,200 / Shrew 1,192 / Twelfth Night 988 / ALC 278. Of the 11 distinct
+goalless words (thou ×3, world ×2, putt'st, firm, poor, praises, wrinkles, winter, shall, off, broad),
+Macbeth covers 2, Shrew 2, Twelfth Night 1, ALC 0, **all four together 3**. Ceiling of the whole idea:
+~4 of 139 misses. **Rejected on the numbers** — recorded on the plaque as "What would not have fixed it."
+Play texts live in `bard/_plays/` (gitignored, regenerable: PG 1533/1508/1526 + ALC sliced from PG 100).
+
+**The recut, in two moves** (both engine and harness):
+1. **The fellowship** (replaces steps 1–3 as proposed — steering at the whole class subsumes reachable-goal
+   choice and goal re-drawing). `drawGoal` → `rhymeFellows(target)`: ALL rhyme-fellows in the drum, tiered
+   (LINE_FINALS members; whole catalogue as fallback). `roads` = `fellowRoads(fell)`, one pass over the
+   bigram book checking the smaller side. The boost goes to every fellow one counted road from the current
+   word, not to one chosen goal. A ✗ is still known before the line's first word (fellowship empty).
+   Alone this bought only 50.4 → 53.9% — because a fellow stood one road away at only ~23% of closing
+   draws (harness `rhymeCam.boosts`: 80 in 1,201 draws). The walk needed force, not just breadth.
+2. **The closing squeeze**: the cam bears down as the measure runs out. Roads share raised to
+   max(ROADS_SHARE, 0.75) from `words >= MAXW-3`; the fellows' boost raised from 0.5 to **0.92** from
+   `words >= MAXW-2`. Variant sweep (same 280 pairs; fid = mean fidelity):
+   V1 squeeze@-2/.6, boost .85@-1 → 70.7% / 6 clean / fid 69.8 · V2 @-3/.6, .85@-2 → 76.4 / 5 / 69.1 ·
+   V3 @-2/.75, .92@-1 → 76.8 / 7 / 70.2 · **V4 @-3/.75, .92@-2 → 85.7 / 14 / 68.8 (chosen)** ·
+   V5 @-2/.85, .97@-1 → 81.4 / 9 / 69.2 · V6 @-4/.75, .95@-2 → 87.9 / 16 / 67.5 (curve flat: rejected).
+
+**Result: pairs 50.4% → 85.7%; clean sheets 0 → 14 of 40, one-miss another 15; cost ~1.5 points of
+quotation.** First live run on the page: a clean sheet (5 true + 2 licence, 0 ✗). Exhibit text updated:
+Rhyme Cam chip, "How the Rhyme Cam works" (now tells the recut story with the numbers), new "What would
+not have fixed it" marginalia, ROADS_SHARE comment (the old single-goal sweep figures are labelled as
+predating the fellowship; the lever now matters little — the squeeze governs).
+
+**For the future:** the remaining ~14% of missed pairs are roughly half goalless (irreducible without
+new vocabulary that measurement says no play supplies) and half lines that close early by `term`/dangle
+or genuinely cannot thread a road in time. Do not chase 100%: Shakespeare's own licences are marked with
+an asterisk, and a press that never missed would out-rhyme the Bard — the occasional honest ✗ is part of
+the exhibit's argument.
+
+---
+
+## Index of 2026-08-19 (one day's work, in order — for whoever reads this next)
+
+1. **The Addressee Cam** (§ above): seventh cam, off by default. Told only the quarto's division
+   (Youth 1–126, Dark Lady 127–152, Rival 78–86); counts each voice's vocabulary itself by likelihood
+   ratio; interlocks with the Subject Cam (intersection when ≥12 words survive). Its two teaching facts:
+   the Rival Poet does not exist below 115 sonnets, and the Youth's vocabulary *shrinks* at notch 2
+   because there is nothing left to be distinctive against.
+2. **"No second helping"** (§ above): Chris's sample sheet echoed phrases; measurement showed the cam
+   tripled *bigram* echo (word echo was fine — the first hypothesis was wrong, measure before fixing).
+   A word the cam has laid drops out of its tilt-set. Echo back to baseline, hold undiminished.
+3. **Rule-book layout**: six cams in the bank, the seventh centred in its own bordered box with its
+   three studs (caption on its own line, studs in one row). The bank is **closed at seven** — Chris.
+4. **The rhyme investigation** (§ above): "scheme broken in almost every sheet" → measured 50.4% of
+   pairs, 0/40 clean. Split the misses: 90% had a fellow and couldn't reach it. Macbeth/Shrew/Twelfth
+   Night/A Lover's Complaint measured as vocabulary donors: 3 of 11 goalless words covered, ceiling
+   ~4 of 139 misses — **rejected on the numbers**, recorded on the plaque as the Professor's
+   instructive failure.
+5. **The fellowship + closing squeeze** (§ above): Rhyme Cam steers at every fellow, bearing down as
+   the measure runs out (0.75 roads / 0.92 boost in the last words). **Pairs 50.4 → 85.7%, clean
+   sheets 0 → 14/40**, ~1.5 points of quotation. Harness re-synced; exhibit text updated with the
+   real numbers, including the honest account of the failed single-goal design it replaces.
+
+Constants to know: `ROADS_SHARE` (mid-line, now minor) · squeeze 0.75 from `MAXW-3` and boost 0.92 from
+`MAXW-2` (in the cam code, engine + harness, keep them identical) · `ADDR_SHARE`/`ADDR_FULL` 0.22/90 ·
+`SUBJECT_SHARE`/`SUBJECT_FULL` 0.20/100 · `ADDR_LIFT`/`ADDR_MIN` 1.6/2.

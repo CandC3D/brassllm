@@ -1225,7 +1225,7 @@ t ●●●○●○○   s ●●●○○●●
           <label class="cam"><input type="checkbox" id="camMeasure" checked autocomplete="off"><span class="lug"></span>
             <span><span class="camname">The Measure Cam</span><br><span class="camrule">“His lines run six words to ten.” The engine ends its own lines; this cam only holds them to that measure.</span></span></label>
           <label class="cam"><input type="checkbox" id="camRhyme" checked autocomplete="off"><span class="lug"></span>
-            <span><span class="camname">The Rhyme Cam</span><br><span class="camrule">“He rhymes ABAB CDCD EFEF GG, by sound, with his own licences.” Picks the line’s last word first, then steers the line to it.</span></span></label>
+            <span><span class="camname">The Rhyme Cam</span><br><span class="camrule">“He rhymes ABAB CDCD EFEF GG, by sound, with his own licences.” Holds every rhyme-fellow in view and steers the line toward the nearest, bearing down as the measure runs out.</span></span></label>
           <label class="cam"><input type="checkbox" id="camVolta" checked autocomplete="off"><span class="lug"></span>
             <span><span class="camname">The Capital &amp; Volta Cam</span><br><span class="camrule">“He capitals every line, and turns his argument at the ninth.”</span></span></label>
           <label class="cam"><input type="checkbox" id="camConcord" checked autocomplete="off"><span class="lug"></span>
@@ -1296,7 +1296,8 @@ Nor are its guesses infallible. It works out each word's part of speech from the
 <b>There is one boiler.</b> It is the lever at Station VII, and it drives the press as well as the crank. Whatever setting stands there is the setting your sheet is printed at. Turn it down and the engine quotes more and wanders less; turn it up and it takes wilder turns. Nothing is hidden in the press.<br>
 <b>Why 0.95?</b> Every setting from 0.70 to 1.30 was run three hundred times and scored two ways: how much of the output is real Shakespeare, and how much is new rather than copied out whole. From 0.70 to 1.05 the scores are much the same; past about 1.1 the engine falls apart. The lever stands at 0.95; for printing sonnets, 0.85 quotes a little more. Try both.<br>
 <b>How rhyme is judged.</b> The rhyme scheme of a sonnet is no secret, so the sonnets tell us which words Shakespeare rhymed: 1,060 pairs of them. Our rhymer sounds out spelling, and gets about six in seven right that way. The rest — <i>love</i> with <i>prove</i>, <i>done</i> with <i>sun</i>, <i>die</i> with <i>memory</i> — it simply learns from him, and only from the sonnets it has been given. A word never rhymes with itself, nor with its own possessive. <i>Beauty</i> and <i>memory</i> chime, but faintly; we mark them as his licence, not true rhyme.<br>
-<b>How the Rhyme Cam works.</b> It picks the line's last word first, from the words Shakespeare ends lines with, then steers the line toward it. When it fails, it fails honestly: a ✗ means the engine knows no path to any rhyming word, and it knows that before the line begins. Roughly three lines in four find their rhyme — at the smallest schooling and the largest alike.<br>
+<b>How the Rhyme Cam works.</b> Before a line begins, the cam gathers every rhyme-fellow of its partner's last word that the wheels contain — preferring words Shakespeare himself ends lines with — and steers the line toward whichever comes in reach, bearing down harder as the measure runs out. It began life steering toward a single chosen word, and lines missed half their rhymes: measured, nine misses in ten were lines that could not reach that one word, not lines with no rhyme to reach. Steering at the whole fellowship raised the rhyme from about half the pairs to six in seven, at about a word and a half of quotation per sheet. When it fails now it still fails honestly: a ✗ means the wheels hold no rhyme for that word at all, known before the line begins.<br>
+<b>What would not have fixed it.</b> The Professor's first thought was more vocabulary — throw Macbeth into the hopper for its extra rhymes. Measured first: of 139 missed rhymes, only 14 lacked a fellow, and the line-endings of Macbeth, The Taming of the Shrew and Twelfth Night together would have supplied just 3 of those 11 words. The fault was in the steering, not the drum, and five thousand lines of blank verse would have bought two rhymes at the price of the whole machine talking like a tragedy.<br>
 <b>How the Subject Cam works.</b> The card names the subject. The engine keeps a book of which words have stood in a verse line together (the Attention station reads the same book), and the cam gives the subject’s company a share of the drum — up to a fifth, more the more company the sonnets gave it. Measured over five cards: a subject the sonnets surround richly (<i>summer’s day</i>, <i>mistress’ eyes</i>, <i>love</i>) has ten to sixteen more of every hundred full words keeping its company, at a price of three to nine points of quotation; a subject they scarcely mention is barely moved — the cam has nothing to hold it with. Turn it up and the poem holds tighter and quotes less; there is no free setting.<br>
 <b>How the Addressee Cam works.</b> We tell it only which sonnets belong to which addressee — 1–126 the Fair Youth, 127–152 the Dark Lady, 78–86 the Rival Poet, all three from the printed book. The words it steers by are counted here: a word counts as an addressee’s if it appears twice or more in those sonnets and at a higher rate there than in the rest. At the full schooling that gives the Dark Lady 170 words, the Fair Youth 273, the Rival Poet 73. Measured over ten sheets: with the cam off, about 4 in 10 of a sheet’s full words belong to the chosen voice by chance; set to the matching voice that rises to about 24 in 100 of all words being distinctively hers, and quotation falls three to six points. Set it to the <i>wrong</i> voice and it tilts just as hard — it has no way to know.<br>
 <b>No second helping.</b> A word the cam has already put on the sheet drops out of its tilt-set. Nothing is forbidden by this — the counting-wheels may still draw that word again, and often do — but the cam stops pushing the same one twice. Without the rule it echoed: set to the Fair Youth it repeated whole phrases three times to the sheet, and measured phrase-repetition ran at 2.2 per hundred against 0.8 with the cam off. With it, 0.95, and the cam holds the voice just as firmly.<br>
@@ -4725,30 +4726,37 @@ function rebuildPressTables(){
     for(let k=ws.length-1;k>=0;k--){ if(!PUNCT.has(ws[k])){ const id=vocabId.get(ws[k]);
       if(id!==undefined) LINE_FINALS.set(id,(LINE_FINALS.get(id)||0)+1); break; } } }
 }
-/* THE RHYME CAM, recut: the goal-word is set before the line is composed — drawn from the rhyme-fellows of the
-   partner line's last word, weighted by the line-end book — and the line then walks toward it: successors with a
-   counted road to the goal are favoured, the goal itself is placed when the wheels offer a road, and the line may
-   not close until it lands (or the measure's ceiling cuts it).  One word steered, not thirty-six catapulted. */
-function drawGoal(target){
-  const cands=[];
-  let Z=0;
+/* THE RHYME CAM, recut a second time: the line no longer walks to ONE drawn goal — it holds the whole
+   FELLOWSHIP in view, every rhyme-fellow of the partner's word the drum contains.  The close always accepted
+   any fellow; now the steering does too.  Measured cause of the old failures (40 sheets, 280 pairs): of 139
+   misses only 14 lacked a fellow altogether — the other 125 had one and never landed it, because the single
+   drawn goal was so often unreachable from where the line happened to walk.  With the fellowship, every
+   reachable fellow is a live goal, so no goal can die and none need be re-drawn. */
+function rhymeFellows(target){
+  const f=[];
   LINE_FINALS.forEach((n,id)=>{ const w=vocabArr[id];
     if(!isWordId(id)||DANGLE.has(w)) return;
-    if(rhymes(w,target)){ cands.push([id,n]); Z+=n; } });
-  if(!cands.length){ /* no line-end fellow: fall back to any rhyme-fellow in the drum, by frequency */
+    if(rhymes(w,target)) f.push(id); });
+  if(!f.length){ /* no line-end fellow: fall back to any rhyme-fellow in the drum */
     for(let id=0;id<vocabArr.length;id++){ if(!isWordId(id)||DANGLE.has(vocabArr[id])) continue;
-      if(rhymes(vocabArr[id],target)){ cands.push([id,uniC[id]||1]); Z+=uniC[id]||1; } }
+      if(rhymes(vocabArr[id],target)) f.push(id); }
   }
-  if(!cands.length) return null;
-  let r=Math.random()*Z;
-  for(const [id,n] of cands){ r-=n; if(r<=0) return id; }
-  return cands[cands.length-1][0];
+  return f;
 }
 const goalRoads=G=>{ const P=new Set(); bi.forEach((e,a)=>{ if(e.m.has(G)) P.add(a); }); return P; };
-let ROADS_SHARE=0.30;   /* how much of the drum the goal's counted approaches may claim in the closing zone.
-   The rhyme-against-sense lever, measured at the full schooling: 0 gives quotation 81% / rhyme 57%,
-   0.20 gives 77% / 73%, 0.35 gives 75% / 82%.  Set at 0.30 — and, unlike the old cam, at 0 the press
-   still rhymes when the wheels happen to offer a road, and every failure is honest from the first word. */
+/* every sort with a counted road to ANY fellow — one pass over the bigram book, checking the smaller side */
+function fellowRoads(fell){
+  const F=new Set(fell), P=new Set();
+  bi.forEach((e,a)=>{
+    if(e.m.size<fell.length){ for(const k of e.m.keys()){ if(F.has(k)){ P.add(a); return; } } }
+    else { for(const g of fell){ if(e.m.has(g)){ P.add(a); return; } } }
+  });
+  return P;
+}
+let ROADS_SHARE=0.30;   /* how much of the drum the fellows' counted approaches may claim through the middle of
+   the line; the closing squeeze overrides it to 0.75 in the last three words (see the cam, below).  The old
+   single-goal sweep (0 → 81/57, 0.20 → 77/73, 0.35 → 75/82) predates the fellowship recut of 2026-08-19;
+   under the fellowship the pair rate is set almost entirely by the squeeze, and this lever matters little. */
 /* THE SUBJECT CAM — what it may read.  The card names the subject: its content words (not the small words, not the
    points).  The subject's COMPANY is every sort the sonnets themselves have set in a verse line with a subject word,
    read straight from the co-occurrence book the Attention station uses (coocc: counts of shared lines, nothing else).
@@ -5141,8 +5149,10 @@ async function composeSonnet(){
     let words=ctx.filter(isWordId).length, ended=false, lastWord=null, cause='cap';   /* cause: why the line closed — cap | term | fin | lend | rhyme */
     const target=rhymeTarget(ln);
     /* the goal-word is set before a word of the line is laid; null when the wheels hold no rhyme-fellow at all */
-    const goal=(C.rhyme&&target)?drawGoal(target):null;
-    const roads=goal!==null?goalRoads(goal):null;
+    const fell=(C.rhyme&&target)?rhymeFellows(target):[];
+    const goal=fell.length?1:null;                       /* a ✗ is still known before the line's first word */
+    const FELLOWS=goal?new Set(fell):null;
+    const roads=goal?fellowRoads(fell):null;
     /* the guard: a line is bounded in DRAWS, not merely in words.  With the Rhyme Cam holding the line open, the
        stop, the line-break and the points are all struck from the drum, and a context that answers with commas
        for ever would spin here without the word-count ever advancing. */
@@ -5194,14 +5204,19 @@ async function composeSonnet(){
         /* no point may follow a point while the line is held open, else the drum may answer with commas for ever */
         if(SOFT_IDS.has(ctx[ctx.length-1])) SOFT_IDS.forEach(id=>{ cut+=q[id]; q[id]=0; });
         if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; cut=0; }
-        if(words>=MINW-2){                                         /* (ii) the roads: successors the goal is counted after */
+        /* (ii) the roads: sorts a fellow is counted after.  The share steepens as the measure runs out — the
+           squeeze — because a fellow must stand one road away by the line's last word or the line dies at the
+           ceiling; measured before the squeeze, a fellow was in reach at only a quarter of the closing draws. */
+        if(words>=MINW-2){
+          const share=(words>=MAXW-3)?Math.max(ROADS_SHARE,0.75):ROADS_SHARE;
           let rm=0; for(let i=0;i<q.length;i++) if(q[i]>0&&roads.has(i)) rm+=q[i];
-          if(ROADS_SHARE>0&&rm>1e-9&&rm<ROADS_SHARE){ const b=ROADS_SHARE/rm, r=(1-ROADS_SHARE)/(1-rm); for(let i=0;i<q.length;i++) q[i]*=roads.has(i)?b:r; }
+          if(share>0&&rm>1e-9&&rm<share){ const b=share/rm, r=(1-share)/(1-rm); for(let i=0;i<q.length;i++) q[i]*=roads.has(i)?b:r; }
         }
         const biL=bi.get(ctx[ctx.length-1]);
-        if(words>=MINW-1&&q[goal]>0&&biL&&biL.m.has(goal)){        /* (iii) the goal stands on a counted road: half the drum */
-          const gm=q[goal];
-          if(gm<0.5){ const b=0.5/gm, r=0.5/(1-gm); for(let i=0;i<q.length;i++) q[i]*=(i===goal?b:r); }
+        if(words>=MINW-1&&biL){        /* (iii) fellows standing on a counted road from HERE share the boost — half the drum at first, nearly all of it once the ceiling looms */
+          const gshare=(words>=MAXW-2)?0.92:0.5;
+          let gm=0; for(const g of fell){ if(q[g]>0&&biL.m.has(g)) gm+=q[g]; }
+          if(gm>1e-9&&gm<gshare){ const b=gshare/gm, r=(1-gshare)/(1-gm); for(let i=0;i<q.length;i++) q[i]*=(FELLOWS.has(i)&&biL.m.has(i))?b:r; }
         }
       }
       if(cut>1e-9&&cut<1){ const z=1-cut; for(let i=0;i<q.length;i++) q[i]/=z; }
