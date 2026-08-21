@@ -28,6 +28,9 @@
   function compose(C,T,st,prompt){
     const MINW=C.measure?6:1, MAXW=C.measure?10:12;
     const subject=C.subject?subjectOf(tokenize(prompt)):[], company=C.subject?companyOf(subject):new Set();
+    const addr=C.addressee?addresseeWords(C.addressee):{set:new Set(),sonnets:0};
+    let addrSet=addr.set;
+    if(addr.set.size&&company.size){ const both=new Set([...company].filter(id=>addr.set.has(id))); if(both.size>=12) addrSet=both; }
     const lastWords=[], sheet=[];
     const rhymeTarget=ln=>{ if(!C.rhyme) return null; const L=SCHEME[ln]; const j=SCHEME.indexOf(L); return (j<ln&&lastWords[j])?lastWords[j]:null; };
     for(let ln=0;ln<14;ln++){
@@ -67,6 +70,8 @@
         if(C.concord){ const m=concordStrike(q,ctx); if(m>1e-9){ cut+=m; st.struck++; } }
         if(C.subject&&company.size){ let T=0, sm=0; for(let i=0;i<q.length;i++){ T+=q[i]; if(q[i]>0&&company.has(i)) sm+=q[i]; }
           if(sm>1e-9){ st.tiltDraws++; const sh=SUBJECT_SHARE*Math.min(1,company.size/SUBJECT_FULL); if(sm<sh*T){ const b=sh*T/sm, r=(T-sh*T)/(T-sm); for(let i=0;i<q.length;i++) q[i]*=company.has(i)?b:r; st.tilted++; } } }
+        if(C.addressee&&addrSet.size){ let T=0, am=0; for(let i=0;i<q.length;i++){ T+=q[i]; if(q[i]>0&&addrSet.has(i)) am+=q[i]; }
+          if(am>1e-9){ st.aDraws++; const sh=ADDR_SHARE*Math.min(1,addrSet.size/ADDR_FULL); if(am<sh*T){ const b=sh*T/am, r=(T-sh*T)/(T-am); for(let i=0;i<q.length;i++) q[i]*=addrSet.has(i)?b:r; st.aTilted++; } } }
         /* the goal-first rhyme cam, as recut: hold open, favour the roads, set the goal on a counted road */
         if(goal!==null){
           cut+=q[LENDID]; q[LENDID]=0; cut+=q[FINID]; q[FINID]=0;
@@ -112,7 +117,7 @@
       const last=ctx[ctx.length-1];
       if(TERM_IDS.has(last)||SOFT_IDS.has(last)) st.drawnMark++;
       /* on-subject: full words of the line that keep the subject's company (scored even with the cam off, against the card's company) */
-      for(const id of ctx){ if(isWordId(id)&&!STOPW.has(vocabArr[id])&&!PUNCT.has(vocabArr[id])){ st.cw++; if(st.company.has(id)) st.onSubj++; } }
+      for(const id of ctx){ if(isWordId(id)&&!STOPW.has(vocabArr[id])&&!PUNCT.has(vocabArr[id])){ st.cw++; if(st.company.has(id)) st.onSubj++; if(st.addrScore.has(id)) st.onAddr++; } }
       sheet.push({toks,cause});
     }
     return sheet;
@@ -134,9 +139,9 @@
   window.ABE_HARNESS={
     run(opts){
       const o=Object.assign({sheets:30,tier:4,T:S.T,seed:1,prompt:'shall i compare thee',
-        cams:{comma:1,measure:1,rhyme:1,volta:1,concord:1,subject:1},keep:0},opts||{});
+        cams:{comma:1,measure:1,rhyme:1,volta:1,concord:1,subject:1,addressee:0},keep:0},opts||{});   /* cams.addressee is '' or 'dark'|'youth'|'rival' */
       if(FOLIO!==o.tier) buildModel(o.tier);
-      const st={draws:0,noTri:0,lines:0,words:0,quoted:0,hits:0,eyes:0,misses:0,cause:{},lw:0,drawnMark:0,struck:0,boosts:0,massSum:0,tilted:0,tiltDraws:0,cw:0,onSubj:0,company:companyOf(subjectOf(tokenize(o.prompt)))};
+      const st={draws:0,noTri:0,lines:0,words:0,quoted:0,hits:0,eyes:0,misses:0,cause:{},lw:0,drawnMark:0,struck:0,boosts:0,massSum:0,tilted:0,tiltDraws:0,cw:0,onSubj:0,aTilted:0,aDraws:0,onAddr:0,company:companyOf(subjectOf(tokenize(o.prompt))),addrScore:(o.cams.addressee?addresseeWords(o.cams.addressee).set:new Set())};
       const saved=Math.random, spec=[];
       try{
         for(let s=0;s<o.sheets;s++){
@@ -157,6 +162,7 @@
         cause:Object.fromEntries(Object.entries(st.cause).map(([k,v])=>[k,+(100*v/st.lines).toFixed(1)])),
         rhymeCam:{boosts:st.boosts, meanNaturalMassPct:st.boosts?+(100*st.massSum/st.boosts).toFixed(2):null},
         subject:{share:SUBJECT_SHARE, full:SUBJECT_FULL, companySize:st.company.size, tilted:st.tilted, tiltDraws:st.tiltDraws, onSubjectPct:st.cw?+(100*st.onSubj/st.cw).toFixed(1):null},
+        addressee:{who:o.cams.addressee||null, share:ADDR_SHARE, words:st.addrScore.size, tilted:st.aTilted, tiltDraws:st.aDraws, onAddresseePct:st.cw?+(100*st.onAddr/st.cw).toFixed(1):null},
         lines:st.lines, draws:st.draws, specimens:spec
       };
     },

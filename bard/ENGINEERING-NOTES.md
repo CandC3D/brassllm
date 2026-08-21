@@ -263,3 +263,52 @@ Chris asked for subject–verb–object agreement; three options were laid out (
 - **`strip_quotes` in normalise.py struck closing elisions** — *th' executor* → bare `th`, *th' inviting* likewise — because it exempted only possessive-plural `s'`. Now exempts the short elision heads (`ELIDE_TAIL`: th, o, t, i, y, wi, gi, ha, ne). Also `re-survey` was hyphen-split into an orphan `re`; now `re-` prefixes are joined before the split. Three corpus lines changed; sorts 3,216, wheels 36,580.
 - **On a machine WITH Python, the PowerShell chain still runs under PowerShell 5.1** and read the BOM-less UTF-8 `corpus_verse.txt` as ANSI: one em-dash (Sonnet 17) came through as U+FFFD, and `splice_corpora.ps1` wrote the corpus block with LF into a CRLF file. Both caught by diffing before commit (`git diff | grep '^[-+]'` should show only the intended lines; `grep -c $'ï¿½'` should be 0; check CRLF/LF counts). Fixed by hand this once. If the chain must run here again, write `corpus_verse.txt` with a UTF-8 BOM, or splice with Python `newline=''`.
 - The goal-first Rhyme Cam's ✗s are **not** lonely goals: only 3 of 1,020 line-final words lack any rhyme fellow (*her, both, growth*). The misses are unreachable goals — no counted road within the measure — which is the disclosed limit, not a defect. Do not 'fix' by filtering goals to fellowed words.
+
+## The Addressee Cam (the seventh), 2026-08-19
+
+Chris's brief: a seventh cam "invented in a fit of pique at the nonsensical outputs", forcing the poem to
+one of Shakespeare's three addressees, interlocking with the Subject Cam — the Victorians' last attempt to
+get a masterpiece out of the machine.
+
+**What it is told** (the only external fact): which sonnets belong to whom — Fair Youth 1–126, Dark Lady
+127–152, Rival Poet 78–86, the Rival group held out of the Youth's so the three are disjoint; 153–154
+excluded. This is a fact of the printed book, of the same kind as the rhyme scheme, which the press already
+uses. **What it counts for itself:** the vocabulary. `addresseeWords(key)` tallies content words inside and
+outside the group and keeps those with count ≥ `ADDR_MIN` (2) and a likelihood ratio ≥ `ADDR_LIFT` (1.6),
+i.e. oftener there than elsewhere. Nothing about who these people were enters the machine — and it finds,
+unaided, *muse / verse / pen / taught / dumb / ignorance* for the Rival Poet, *summer / buds / eternal /
+shade / grow'st* for the Youth, *conscience / faults / soul / proud / poor* for the Dark Lady.
+
+**The interlock:** with the Subject Cam also thrown, the target narrows to `company ∩ addressee` when that
+holds ≥ 12 words, else the addressee's set alone; the tally reports which. Both cams then tilt in turn, so
+they compound. Lever `ADDR_SHARE` = 0.22, scaled by set size against `ADDR_FULL` = 90 — the same bargain,
+and the same scaling fix, as the Subject Cam.
+
+**Measured** (harness, 10 sheets, seed 11, tier 4, T = 0.85, all cams; `addressee.onAddresseePct` = share
+of the sheet's full words distinctive to the chosen voice):
+
+| card | cam | fidelity | on-addressee |
+|---|---|---|---|
+| *my mistress' eyes* | off | 72.4 | — |
+| | Dark Lady | 66.3 | **23.9** |
+| | Fair Youth | 63.9 | 17.2 |
+| | Rival Poet | 65.9 | 11.8 |
+| *shall i compare thee to a summer day* | off | 67.7 | — |
+| | Fair Youth | 64.6 | **24.4** |
+| | Dark Lady | 64.1 | 15.3 |
+
+The matched voice always scores highest, which is the cam working; the mismatched voice still tilts hard,
+which is the cam not knowing it is wrong. Cost 3–6 points of quotation; rhyme within noise.
+
+**By schooling** (sonnets read / distinctive words): notch 0 — dark 4/26, youth 11/19, rival **0/0**;
+notch 1 — 6/46, 34/35, 0/0; notch 2 — 6/48, 74/26, 0/0; notch 3 — 6/46, 100/93, 9/71; notch 4 — 26/170,
+117/273, 9/73. Two teaching results fell out of this and are on the plaque: **the Rival Poet does not exist
+for the engine below 115 sonnets** (the cam idles and says so), and **the Fair Youth's vocabulary shrinks**
+from 35 words at 40 sonnets to 26 at 80 — by then 74 of 80 sonnets are his, so there is nothing left to be
+distinctive against. A word is only distinctive compared with something.
+
+The cam is **off by default**: it is the odd one out, it costs quotation, and the argument is stronger when
+the visitor throws it themselves. UI: chip in the rule-book plus a three-stud `fieldset.addrsel` selector,
+dead metal (`opacity .42`) until the cam is thrown; seventh disc on the camshaft, one dwell of a quarter
+turn. All of it sits inside the resync's grafted press regions (JS 4702–5279, CSS 674–738), so
+`resync_from_ale.py` carries it — checked, not assumed.

@@ -19,7 +19,7 @@ if you ever re-export, *Type ▸ Create Outlines* first, or set *Fonts: convert 
 | `rule-scroll` | the rule under the title (replaces the 2px gradient) | inside `.masthead .rule` |
 | `feather-right` ×2, one mirrored | gilt flanks on every station name, 22px, plumes outward | either side of `h2.stname` in `.sthead`; hidden ≤560px |
 | `finial` | divider between the desk and Station I; again before the appendix (Bard) | `.orn-div` between plates |
-| `rule-dot` | the colophon's rule | `.orn-rule` above `<p class="colophon">` |
+| `rule-diamonds` | the divider above the fine print, the head-rule on the fair-copy sheet, and (since 2026-08-19) the colophon rule, replacing `rule-dot` | CSS mask in `currentColor`; see below |
 | `curl-small` | bookplate curls, two corners of every paper plaque | CSS `.plaque::before/::after`, data URI baked in the stylesheet |
 | `banner-a` + `banner-d` | ribbon cartouche round *The Sonnet Press* (Bard only): a is the left end, d the right, and a stretched two-rule band (inline `<svg preserveAspectRatio="none">`, rules at y 17.7–19.5 and 37.6–39.3 → 19.1–20.9 and 38.9–40.7 of 58.4, measured at the cut edges) runs under the lettering | `.cartouche` in the press `.sthead`, in place of the feathers |
 
@@ -129,3 +129,5 @@ the engines already had on `:root`: `--engrave-deep`, `--glow`, `--rivet-l` and 
 
 Any change to the rail must therefore be made in **four** files. The CSS block can be copied verbatim;
 the markup cannot.
+**`rule-dot` is now unused** (2026-08-19): the colophon takes the diamond rule instead, so the same ornament
+separates every note on the page. It stays in the sprite in case it is wanted again.

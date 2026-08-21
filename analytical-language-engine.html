@@ -251,8 +251,9 @@ body{
 .orn-div{display:flex;justify-content:center;margin:-22px 0 20px}
 .orn-div .orn{height:24px;width:auto;color:#a8823a;opacity:.85;filter:drop-shadow(0 1px 1px rgba(0,0,0,.6))}
 /* the colophon's rule */
-.orn-rule{display:flex;justify-content:center;margin:26px 0 -10px}
-.orn-rule .orn{width:min(320px,80%);height:auto;color:#8d7947;opacity:.9}
+/* the colophon takes the same diamond rule that divides the notes elsewhere on the page, not a rule of its own */
+.orn-rule{margin:26px auto -8px;width:min(300px,72%);height:9px;color:#8d7947;opacity:.85;background:currentColor;
+  -webkit-mask:var(--orn-diamonds) center/auto 9px no-repeat;mask:var(--orn-diamonds) center/auto 9px no-repeat}
 /* bookplate curls at two corners of every paper plaque */
 .plaque{position:relative}
 .plaque::before,.plaque::after{content:"";position:absolute;width:15px;height:21px;pointer-events:none;opacity:.6;
@@ -1064,7 +1065,7 @@ t ●●●○●○○   s ●●●○○●●
     <p class="fine">Marginalia — <b>demand:</b> ~1&nbsp;GW at the prime movers, as computed above. <b>A treader:</b> ~60&nbsp;W for a ten-hour day; a child at the crank, ~15&nbsp;W. <b>Replacement:</b> 10⁹&nbsp;÷&nbsp;60 ≈ 17 million treading at every hour, ×2.4 for relays ≈ 40 million; ÷&nbsp;20 places the wheel ≈ 850,000 wheels, whose sheds ≈ 42&nbsp;km² — a five-hundredth part of Wales, the scheme’s one economy. <b>As found:</b> Britain’s ~1.5 million paupers yield ~37&nbsp;MW ≈ 4 per cent ≈ four days the word; its ~65,000 workhouse orphans ~0.4&nbsp;MW ≈ an hour. <b>The ledger:</b> a pauper’s keep, ~5d the day, buys ~2&nbsp;MJ of work; a ton of coal at 10s buys 1.5&nbsp;GJ — near thirty-fold the value. The penal wheel was struck off by the Prison Act of 1898.</p>
   </div>
   <p style="text-align:center;margin-top:20px"><a href="https://brassllm.com/bard/" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">✒</span> The Bard Engine ▸</a><a href="https://brassllm.com/about.html" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">⟁</span> The Mathematics Behind the Engine ▸</a><a href="https://brassllm.com/educators.html" style="display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:#3c2d10;background:linear-gradient(#e8cd85,#bb9647);border:1px solid #6b5320;border-radius:22px;padding:9px 19px;margin:0 5px 8px;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 7px rgba(0,0,0,.4)"><span class="bicon">✎</span> For Educators ▸</a></p>
-  <div class="orn-rule" aria-hidden="true"><svg class="orn" viewBox="0 0 78.90 4.60" aria-hidden="true"><use href="#o-rule-dot"/></svg></div>
+  <div class="orn-rule" aria-hidden="true"></div>
   <p class="colophon">Devised by <b>MESSRS. HORROCKS &amp; CLAUDE</b> (an engine of the very kind depicted)<br>
   <span class="warrant"><span class="crown" aria-hidden="true">♛ </span>By Warrant of Her Majesty — Purveyors of Analytical Language Engines — © MMXXVI</span>
   <span class="addr">Oldham, Lancs.</span></p>
