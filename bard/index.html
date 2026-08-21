@@ -702,9 +702,15 @@ html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
   background:radial-gradient(circle at 35% 30%,#f2d98e,#a8823a);border:1px solid #43310f;transition:left .18s}
 .cam input:checked+.lug{background:linear-gradient(#b0713d,#8a5426)}
 /* the addressee selector: three studs on the rule-book, only one of which may stand down at a time */
-.addrsel{border:1px solid #4a3a18;border-radius:8px;padding:8px 12px 9px;margin:10px 0 2px;
-  background:linear-gradient(#241a10,#1a1109);display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center}
-.addrsel legend{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a68b52;padding:0 6px}
+/* the seventh cam and its selector stand together in one box, centred: the cam is the odd one out, and the
+   studs belong to it rather than to the bank of six above */
+.addrsel{border:1px solid #4a3a18;border-radius:8px;padding:11px 14px 12px;margin:12px 0 2px;
+  background:linear-gradient(#241a10,#1a1109);display:flex;flex-direction:column;align-items:center;gap:10px}
+.addrsel .addrcam{max-width:620px;align-items:flex-start}
+.addrsel .addrcam .lug{margin-top:2px}
+.addrrow{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:center;
+  padding-top:9px;border-top:1px solid rgba(160,130,60,.28);width:100%}
+.addrcap{width:100%;text-align:center;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a68b52}
 .addrsel label{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:#e6d9b5}
 .addrsel input{position:absolute;opacity:0;width:0;height:0}
 .addrsel .stud{flex:none;width:13px;height:13px;border-radius:50%;border:2px solid transparent;
@@ -716,7 +722,7 @@ html.running #govspin{animation:govwhirl 1.5s ease-in-out infinite}
   box-shadow:0 0 7px rgba(255,217,138,.5), inset 0 1px 0 rgba(255,245,210,.6)}
 .addrsel input:focus-visible+.stud{outline:3px solid var(--glow);outline-offset:2px}
 .addrsel label i{color:#a68b52;font-size:10.5px;font-style:italic}
-#rulebook:has(#camAddressee:not(:checked)) .addrsel{opacity:.42}   /* the selector is dead metal until the cam is thrown */
+.addrsel:has(#camAddressee:not(:checked)) .addrrow{opacity:.42}   /* the studs are dead metal until the cam is thrown — the cam itself stays lit, being the thing you throw */
 .cam input:checked+.lug::after{left:19px}
 .cam input:focus-visible+.lug{outline:2px solid var(--glow);outline-offset:2px}
 .cam .camname{font-variant:small-caps;letter-spacing:.06em;color:#e8cd85}
@@ -1226,15 +1232,17 @@ t ●●●○●○○   s ●●●○○●●
             <span><span class="camname">The Concord Cam</span><br><span class="camrule">“He never sets two of a kind together; his articles find their nouns, his auxiliaries their verbs; <i>i am, thou art</i>; his subjects agree, his verbs take their objects; and he does not echo a word within three.”</span></span></label>
           <label class="cam"><input type="checkbox" id="camSubject" checked autocomplete="off"><span class="lug"></span>
             <span><span class="camname">The Subject Cam</span><br><span class="camrule">“He keeps to his subject.” The card names it; every draw tilts toward the words he set beside it — the poem is held to its matter.</span></span></label>
+        </div>
+        <div class="addrsel">
           <label class="cam addrcam"><input type="checkbox" id="camAddressee" autocomplete="off"><span class="lug"></span>
             <span><span class="camname">The Addressee Cam</span><br><span class="camrule">“He wrote to three people, and to no one else.” Cut in a temper, when the sheets would not come right: it forces the poem toward one addressee’s own words, and interlocks with the Subject Cam.</span></span></label>
+          <div class="addrrow" role="radiogroup" aria-label="To whom the sonnet is addressed">
+            <span class="addrcap">To whom the sonnet is addressed</span>
+            <label><input type="radio" name="addr" value="dark" checked autocomplete="off"><span class="stud"></span><span>The Dark Lady <i>127–152</i></span></label>
+            <label><input type="radio" name="addr" value="youth" autocomplete="off"><span class="stud"></span><span>The Fair Youth <i>1–126</i></span></label>
+            <label><input type="radio" name="addr" value="rival" autocomplete="off"><span class="stud"></span><span>The Rival Poet <i>78–86</i></span></label>
+          </div>
         </div>
-        <fieldset class="addrsel">
-          <legend>To whom the sonnet is addressed</legend>
-          <label><input type="radio" name="addr" value="dark" checked autocomplete="off"><span class="stud"></span><span>The Dark Lady <i>127–152</i></span></label>
-          <label><input type="radio" name="addr" value="youth" autocomplete="off"><span class="stud"></span><span>The Fair Youth <i>1–126</i></span></label>
-          <label><input type="radio" name="addr" value="rival" autocomplete="off"><span class="stud"></span><span>The Rival Poet <i>78–86</i></span></label>
-        </fieldset>
         <div class="rbnote">every rule is true of Shakespeare — the cams forbid and steer, they cannot invent; only the counting-wheels propose a word</div>
       </div>
       <div class="mcap">The fair-copy sheet · fourteen lines to completion · quatrains &amp; couplet</div>

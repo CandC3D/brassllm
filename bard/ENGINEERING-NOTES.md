@@ -345,3 +345,10 @@ measurement if it ever grates.
 it silently matched and replaced the wrong text, deleting `if(isWordId(id)){…}` and leaving
 `parts.join(+' '+)`, which broke the whole page. Always parenthesise: `Rep ('a'+$NL+'b') (…)`, or use the
 Edit tool for anything multi-line.
+
+**Layout, at Chris's direction:** the bank above is the six cams (a tidy 3×2), and the seventh stands
+below them in its own bordered box together with its three studs — the cam centred, a hairline divider,
+then the caption on its own line and the three studs in a single centred row. The `<fieldset>` became a
+`div.addrsel` holding `div.addrrow[role=radiogroup]`, because a fieldset with a legend will not lay out
+as a centred flex column. Only the studs dim when the cam is up; the cam itself stays lit, being the
+thing you throw. **No more cams are planned** — the bank is closed at seven.
